@@ -28,14 +28,22 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 
+// 导入台标图片
+import logo2 from '@/assets/yz/01/logos/2.png'
+import logo3 from '@/assets/yz/01/logos/3.png'
+import logo4 from '@/assets/yz/01/logos/4.png'
+import logo5 from '@/assets/yz/01/logos/5.png'
+import logo6 from '@/assets/yz/01/logos/6.png'
+import logo7 from '@/assets/yz/01/logos/7.png'
+
 // 台标数据
 const logos = [
-  { src: 'src/assets/yz/01/logos/2.png' },
-  { src: 'src/assets/yz/01/logos/3.png' },
-  { src: 'src/assets/yz/01/logos/4.png' },
-  { src: 'src/assets/yz/01/logos/5.png' },
-  { src: 'src/assets/yz/01/logos/6.png' },
-  { src: 'src/assets/yz/01/logos/7.png' }
+  { src: logo2 },
+  { src: logo3 },
+  { src: logo4 },
+  { src: logo5 },
+  { src: logo6 },
+  { src: logo7 }
 ]
 
 // 主标题动画
