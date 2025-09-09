@@ -26,7 +26,9 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, onMounted } from 'vue'
+import { WeChatShare } from '@/utils/wechat'
+import { getWxConfig } from '@/api/wechat'
 
 // 导入台标图片
 import logo1 from '@/assets/yz/01/logos/1.png'
@@ -46,7 +48,7 @@ const logos = [
   { src: logo5 },
   { src: logo6 },
   { src: logo7 }
-0]
+]
 
 // 主标题动画
 const titleMotion = computed(() => ({
@@ -96,6 +98,42 @@ const getLogoMotion = (index: number) => ({
       duration: 500, 
       ease: [0.34, 1.56, 0.64, 1] // 弹性缓动
     }
+  }
+})
+
+// 初始化微信分享
+onMounted(async () => {
+  // 检查是否在微信浏览器中
+  if (WeChatShare.isWeChatBrowser()) {
+    try {
+      const wechatShare = WeChatShare.getInstance()
+      
+      // 获取微信配置参数
+      const wxConfig = await getWxConfig({ url: window.location.href })
+      
+      // 分享配置
+      const shareConfig = {
+        title: '纪念中国人民抗日战争暨世界反法西斯战争胜利80周年',
+        desc: '苏皖6家县级融媒体中心联合报道，共同缅怀历史，珍爱和平',
+        link: window.location.href,
+        imgUrl: `${window.location.origin}/src/assets/yz/01/标题.png`
+      }
+      
+      // 配置微信JSSDK
+      await wechatShare.configWx(wxConfig)
+      
+      // 设置分享内容
+      wechatShare.setShareContent(shareConfig)
+      
+      // 隐藏不需要的菜单项
+      wechatShare.hideMenuItems()
+      
+      console.log('微信分享功能初始化成功')
+    } catch (error) {
+      console.error('微信分享初始化失败:', error)
+    }
+  } else {
+    console.log('非微信环境，跳过微信分享配置')
   }
 })
 
