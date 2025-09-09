@@ -29,6 +29,7 @@
 import { computed } from 'vue'
 
 // 导入台标图片
+import logo1 from '@/assets/yz/01/logos/1.png'
 import logo2 from '@/assets/yz/01/logos/2.png'
 import logo3 from '@/assets/yz/01/logos/3.png'
 import logo4 from '@/assets/yz/01/logos/4.png'
@@ -38,13 +39,14 @@ import logo7 from '@/assets/yz/01/logos/7.png'
 
 // 台标数据
 const logos = [
+  { src: logo1 },
   { src: logo2 },
   { src: logo3 },
   { src: logo4 },
   { src: logo5 },
   { src: logo6 },
   { src: logo7 }
-]
+0]
 
 // 主标题动画
 const titleMotion = computed(() => ({
