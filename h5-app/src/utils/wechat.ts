@@ -2,7 +2,7 @@ import wx from 'weixin-js-sdk'
 
 interface WeChatConfig {
   appId: string
-  timestamp: string
+  timestamp: number
   nonceStr: string
   signature: string
 }
@@ -129,7 +129,7 @@ export class WeChatShare {
     ]
 
     wx.hideMenuItems({
-      menuList: [...defaultHideMenus, ...menuList],
+      menuList: [...defaultHideMenus, ...menuList] as any,
       success: () => {
         console.log('隐藏菜单项成功')
       },

@@ -6,7 +6,7 @@ interface WxConfigParams {
 
 interface WxConfigResponse {
   appId: string
-  timestamp: string
+  timestamp: number
   nonceStr: string
   signature: string
 }
@@ -36,7 +36,7 @@ export async function getWxConfig(params: WxConfigParams): Promise<WxConfigRespo
     
     return {
       appId: 'wx1234567890abcdef', // 替换为真实的appId
-      timestamp: Math.floor(Date.now() / 1000).toString(),
+      timestamp: Math.floor(Date.now() / 1000),
       nonceStr: Math.random().toString(36).substring(2, 15),
       signature: 'mock-signature-' + Math.random().toString(36).substring(2, 10)
     }
