@@ -5,28 +5,28 @@
       <img src="@/assets/yz/04/角标.png" alt="纪念抗日战争胜利80周年" class="badge-img" />
     </div>
     
-    <!-- 关闭按钮放在最高层级 -->
-    <button class="close-btn" @click="close">
-      <img src="@/assets/yz/04/关闭.png" alt="关闭" class="close-icon" />
-    </button>
-    
-    
+    <!-- 模态框主体 -->
     <div class="city-modal" @click.stop v-motion="modalMotion">
-      <div class="modal-bg-container">
+      <!-- 居中容器 -->
+      <div class="modal-inner">
+        <!-- 背景图片 -->
+        <img src="@/assets/yz/04/bg1.png" alt="模态框背景" class="modal-bg-image" />
         
+        <!-- 关闭按钮 -->
+        <button class="close-btn" @click="close">
+          <img src="@/assets/yz/04/关闭.png" alt="关闭" class="close-icon" />
+        </button>
+        
+        <!-- 内容区域 -->
         <div class="modal-content">
-          <!-- 城市名称标题 -->
-          <div class="city-header" v-if="cityData?.name" v-motion="headerMotion">
-            <h2 class="city-title">{{ cityData.name }}</h2>
-          </div>
+          <!-- 城市标题 -->
+          <h2 v-if="cityData?.name" class="city-title" v-motion="textMotion">
+            {{ cityData.name }}
+          </h2>
           
-          <!-- 内容展示区域 - 全宽显示 -->
-          <div class="content-area">
-            <div class="text-content" v-motion="textMotion">
-              <div class="text-section">
-                <p>{{ cityData?.description || '这里是城市的详细介绍内容...' }}</p>
-              </div>
-            </div>
+          <!-- 文字内容 -->
+          <div class="text-content" v-motion="textMotion">
+            <p>{{ cityData?.description || '这里是城市的详细介绍内容...' }}</p>
           </div>
         </div>
       </div>
@@ -66,11 +66,6 @@ const modalMotion = computed(() => ({
   leave: { opacity: 0, scale: 0.8, y: 30, transition: { duration: 300 } }
 }))
 
-const headerMotion = computed(() => ({
-  initial: { opacity: 0, y: -20 },
-  enter: { opacity: 1, y: 0, transition: { delay: 100, duration: 400 } }
-}))
-
 const textMotion = computed(() => ({
   initial: { opacity: 0 },
   enter: { opacity: 1, transition: { delay: 200, duration: 500 } }
@@ -88,22 +83,21 @@ const textMotion = computed(() => ({
   left: 0;
   right: 0;
   bottom: 0;
+  width:100%;
+  height:100%;
   background: linear-gradient(135deg, 
     rgba(139, 0, 0, 0.15), 
     rgba(0, 0, 0, 0.8)
   );
-  display: flex;
-  align-items: center;
-  justify-content: center;
   z-index: 1000;
   backdrop-filter: blur(8px) saturate(1.2);
 }
 
-/* 右上角角标 - 纪念抗日战争胜利80周年 */
+/* 右上角角标 - 移动端优化 */
 .corner-badge {
   position: fixed;
-  top: 3%;
-  left: 3%;
+  top: 20px;
+  left: 20px;
   z-index: 1001;
   animation: badgeEntrance 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
@@ -121,56 +115,69 @@ const textMotion = computed(() => ({
 
 .badge-img {
   width: auto;
-  height: 30px;
+  height: 25px;
   object-fit: contain;
   display: block;
-  filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.4))
+  filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.4))
           drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
   transition: all 0.3s ease;
 }
 
 
-/* 主模态框容器 - 最大屏占比 */
+/* 主模态框容器 - 移动端优化 */
 .city-modal {
-  position: relative;
-  width: 120vw;
-  max-width: 750px;
-  height: auto;
-  filter: drop-shadow(0 20px 40px rgba(139, 0, 0, 0.3));
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height:100%;
+  border-radius: 0;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-/* 背景容器 - CSS背景图片 */
-.modal-bg-container {
+/* 模态框内部居中容器 */
+.modal-inner {
   position: relative;
+  width: 80%;
+  height: 80%;
+  border-radius: 12px;
+  overflow: hidden;
+  filter: drop-shadow(0 15px 30px rgba(139, 0, 0, 0.3));
+}
+
+/* 背景图片 - img标签 */
+.modal-bg-image {
+  position: absolute;
   width: 100%;
-  height: 85vh;
-  max-height: 600px;
-  border-radius: 16px;
-  background-image: url('@/assets/yz/04/bg1.png');
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center center;
+  object-fit: contain;
+  object-position: center -10px;
   z-index: 1;
 }
 
 
-/* 关闭按钮 - 原始样式 */
+/* 关闭按钮 - 移动端优化 */
 .close-btn {
   position: absolute;
-  top: 70px;
-  right: 160px;
+  top: 15px;
+  right: 15px;
   background: transparent;
   border: none;
   border-radius: 50%;
-  width: 36px;
-  height: 36px;
+  width: 32px;
+  height: 32px;
   cursor: pointer;
   transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-  z-index: 9999;
+  z-index: 3;
   padding: 0;
   display: flex;
   align-items: center;
   justify-content: center;
+  touch-action: manipulation;
 }
 
 .close-btn:active {
@@ -178,47 +185,42 @@ const textMotion = computed(() => ({
 }
 
 .close-icon {
-  width: 36px;
-  height: 36px;
+  width: 32px;
+  height: 32px;
   object-fit: contain;
   display: block;
 }
 
-/* 内容容器 - 手机端优化 */
+/* 内容容器 - 移动端优化 */
 .modal-content {
   position: absolute;
-  top: 120px;
-  left: 40px;
-  right: 40px;
-  height: 420px;
+  top: 40px;
+  left: 20px;
+  right: 20px;
+  bottom: 20px;
   display: flex;
   flex-direction: column;
-  z-index: 10;
+  z-index: 2;
   box-sizing: border-box;
   overflow: hidden;
 }
 
-/* 城市标题头部 */
-.city-header {
-  text-align: center;
-  margin-bottom: 10px;
-  padding: 0 10px;
-  flex-shrink: 0;
-}
-
+/* 城市标题 */
 .city-title {
   color: #8B0000;
-  font-size: 1.5rem;
+  font-size: 1.3rem;
   font-weight: 700;
-  margin: 0;
+  margin: 0 0 15px 0;
+  text-align: center;
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
   font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif;
-  letter-spacing: 2px;
+  letter-spacing: 1px;
   background: linear-gradient(135deg, #8B0000, #DAA520);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
   position: relative;
+  flex-shrink: 0;
 }
 
 .city-title::after {
@@ -234,138 +236,50 @@ const textMotion = computed(() => ({
 }
 
 
-/* 内容区域 - 精确定位在背景框内 */
-.content-area {
-  overflow: hidden;
-  padding: 0 15px;
-  margin: 0;
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  height: 350px;
-  flex-shrink: 0;
-}
-
-
-/* 文字内容样式 - 充分填充 */
+/* 文字内容样式 - 简化版 */
 .text-content {
   flex: 1;
-  overflow: hidden;
-  padding-right: 10px;
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-}
-
-.text-section {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
   overflow-y: auto;
-  height: 100%;
+  padding: 0 10px;
+  min-height: 0;
 }
 
-.text-section p {
+.text-content p {
   color: #2c3e50;
   line-height: 1.6;
-  font-size: 0.95rem;
+  font-size: 0.9rem;
   margin: 0;
-  padding: 0 5px 10px 0;
+  padding: 0 5px 15px 25px;
   text-indent: 2em;
   font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif;
   white-space: pre-line;
   word-wrap: break-word;
   overflow-wrap: break-word;
-  flex-shrink: 0;
 }
 
 
 
 
-/* 自定义滚动条 - 党政主题 */
-.text-section::-webkit-scrollbar {
-  width: 8px;
+/* 自定义滚动条 - 移动端优化 */
+.text-content::-webkit-scrollbar {
+  width: 6px;
 }
 
-.text-section::-webkit-scrollbar-track {
+.text-content::-webkit-scrollbar-track {
   background: linear-gradient(to bottom, #f8f9fa, #e9ecef);
   border-radius: 4px;
 }
 
-.text-section::-webkit-scrollbar-thumb {
+.text-content::-webkit-scrollbar-thumb {
   background: linear-gradient(to bottom, #8B0000, #DAA520);
   border-radius: 4px;
   box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
-.text-section::-webkit-scrollbar-thumb:hover {
+.text-content::-webkit-scrollbar-thumb:hover {
   background: linear-gradient(to bottom, #660000, #B8860B);
 }
 
-/* 横屏适配 */
-@media screen and (orientation: landscape) and (max-height: 600px) {
-  .modal-bg-container {
-    height: 90vh;
-    max-height: 500px;
-  }
-  
-  .modal-content {
-    top: 80px;
-    left: 50px;
-    right: 50px;
-    height: 340px;
-  }
-  
-  .content-area {
-    height: 280px;
-  }
-  
-  .close-btn {
-    top: 50px;
-    right: 140px;
-  }
-  
-  .city-title {
-    font-size: 1.3rem;
-    margin-bottom: 5px;
-  }
-  
-  .city-header {
-    margin-bottom: 8px;
-  }
-  
-  .text-section p {
-    font-size: 0.9rem;
-    line-height: 1.5;
-  }
-}
-
-/* 极小屏幕横屏适配 */
-@media screen and (orientation: landscape) and (max-height: 450px) {
-  .modal-bg-container {
-    height: 95vh;
-    max-height: 400px;
-  }
-  
-  .modal-content {
-    top: 60px;
-    height: 280px;
-  }
-  
-  .content-area {
-    height: 220px;
-  }
-  
-  .city-title {
-    font-size: 1.2rem;
-  }
-  
-  .text-section p {
-    font-size: 0.85rem;
-    line-height: 1.4;
-  }
-}
 
 
 </style>
