@@ -681,23 +681,22 @@ const closeCityModal = () => {
 
 /* Vue Transition 出场动效 */
 .modal-leave-active {
-  transition: all 0.3s ease-in;
+  transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 .modal-leave-active .overlay-image {
-  transition: all 0.25s ease-in;
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.1s;
 }
 
 .modal-leave-to {
   opacity: 0;
   backdrop-filter: blur(0px);
   -webkit-backdrop-filter: blur(0px);
-  transform: scale(0.95);
 }
 
 .modal-leave-to .overlay-image {
   opacity: 0;
-  transform: scale(0.8) rotate(45deg);
+  transform: scale(0.5) rotate(-45deg);
 }
 
 
