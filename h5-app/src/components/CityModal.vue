@@ -1,8 +1,6 @@
 <template>
   <div v-if="visible" class="city-modal-overlay" @click="handleOverlayClick">
-    <div class="city-modal-content" @click.stop>
-      <slot></slot>
-    </div>
+
   </div>
 </template>
 

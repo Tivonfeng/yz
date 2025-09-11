@@ -85,13 +85,20 @@
     </div>
 
     <!-- 全屏透明模糊遮罩 -->
-    <div v-if="isModalVisible" class="city-modal-overlay" @click="closeCityModal">
-		<img 
-        src="@/assets/yz/03/角标.png" 
-        alt="角标装饰" 
-        class="overlay-image"
-      />
-	</div>
+    <Transition
+      enter-active-class="modal-enter-active"
+      leave-active-class="modal-leave-active"
+      enter-from-class="modal-enter-from"
+      leave-to-class="modal-leave-to"
+    >
+      <div v-if="isModalVisible" class="city-modal-overlay" @click="closeCityModal">
+        <img 
+          src="@/assets/yz/03/角标.png" 
+          alt="角标装饰" 
+          class="overlay-image"
+        />
+      </div>
+    </Transition>
   </div>
 </template>
 
@@ -277,6 +284,14 @@ const closeCityModal = () => {
   object-fit: contain;
 }
 
+.overlay-image{
+	position: absolute;
+  top: 3%;
+  left: 3%;
+	height: 40px;
+  width: auto;
+  object-fit: contain;
+}
 
 /* 位置线 */
 .position-line {
@@ -642,16 +657,48 @@ const closeCityModal = () => {
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
   z-index: 1000;
-  animation: fadeIn 0.3s ease-out;
 }
 
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
+/* Vue Transition 进场动效 */
+.modal-enter-active {
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
+
+.modal-enter-active .overlay-image {
+  transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) 0.2s;
+}
+
+.modal-enter-from {
+  opacity: 0;
+  backdrop-filter: blur(0px);
+  -webkit-backdrop-filter: blur(0px);
+}
+
+.modal-enter-from .overlay-image {
+  opacity: 0;
+  transform: scale(0.3) rotate(-90deg);
+}
+
+/* Vue Transition 出场动效 */
+.modal-leave-active {
+  transition: all 0.3s ease-in;
+}
+
+.modal-leave-active .overlay-image {
+  transition: all 0.25s ease-in;
+}
+
+.modal-leave-to {
+  opacity: 0;
+  backdrop-filter: blur(0px);
+  -webkit-backdrop-filter: blur(0px);
+  transform: scale(0.95);
+}
+
+.modal-leave-to .overlay-image {
+  opacity: 0;
+  transform: scale(0.8) rotate(45deg);
+}
+
 
 </style>
