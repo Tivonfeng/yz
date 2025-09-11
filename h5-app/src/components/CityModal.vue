@@ -249,7 +249,7 @@ const textMotion = computed(() => ({
   line-height: 1.6;
   font-size: 0.9rem;
   margin: 0;
-  padding: 0 5px 15px 25px;
+  padding: 15px;
   text-indent: 2em;
   font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif;
   white-space: pre-line;
