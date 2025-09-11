@@ -109,7 +109,7 @@
             </div>
 
             <!-- 主要视频显示区域 -->
-            <div class="flex-1 bg-gradient-to-br from-gray-900 to-gray-800 min-h-0">
+            <div class="flex-1 bg-gradient-to-br  min-h-0">
               <div class="h-full p-4 flex flex-col">
                 <div v-if="selectedHistory.src" class="flex-1 flex items-center justify-center bg-black/20 rounded-xl overflow-hidden min-h-0">
                   <video 
