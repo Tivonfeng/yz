@@ -167,15 +167,24 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref, computed, watch } from 'vue'
 
-const props = defineProps({
-  cityData: {
-    type: Object,
-    default: () => null
-  }
-})
+interface HistoryItem {
+  title: string
+  description: string
+  src: string
+}
+
+interface CityData {
+  name: string
+  historyItems: HistoryItem[]
+  description?: string
+}
+
+const props = defineProps<{
+  cityData: CityData
+}>()
 
 const emit = defineEmits(['close'])
 
@@ -189,7 +198,7 @@ const selectedHistory = computed(() => {
 })
 
 // 选择历史事件
-const selectHistory = (index) => {
+const selectHistory = (index: number) => {
   selectedHistoryIndex.value = index
 }
 
