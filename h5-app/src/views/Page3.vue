@@ -84,19 +84,20 @@
       </div>
     </div>
 
-    <!-- 城市详情弹窗 -->
-    <CityModal 
-      :isVisible="isModalVisible" 
-      :cityData="selectedCityData"
-      @close="closeCityModal"
-    />
+    <!-- 全屏透明模糊遮罩 -->
+    <div v-if="isModalVisible" class="city-modal-overlay" @click="closeCityModal">
+		<img 
+        src="@/assets/yz/03/角标.png" 
+        alt="角标装饰" 
+        class="overlay-image"
+      />
+	</div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { computed, ref } from 'vue'
 import CityModal from '@/components/CityModal.vue'
-
 // 角标动画
 const cornerMotion = computed(() => ({
   initial: { opacity: 0, scale: 0.5, rotate: -45 },
@@ -181,7 +182,33 @@ const selectedCityData = ref<typeof citiesData[keyof typeof citiesData] | null>(
 const citiesData = {
   yizheng: {
     name: '仪征',
-    description: '1939年11月，新四军苏皖支队抵达仪征，在陈集镇沙集村成立中共仪征县委。1940年4月，仪征县抗日民主政府在月塘曹集成立，建立5个区、1个办事处和50多个乡政权。在津浦路东省委领导下，广泛动员群众，组织农抗会、青年队、民兵等地方武装，扩大和巩固抗日根据地，成为抗战的坚强堡垒。\n\n1939年12月18日，日伪军800余人分三路合击月塘集。苏皖支队避其锋芒，主力转移至移居集隐蔽。傍晚利用地形和群众支援，反击压缩敌人至北大庙，激战三小时收复月塘。此战歼敌90余人，缴获枪械40余支，极大鼓舞军民斗志，成为新四军在仪征的里程碑之战。\n\n1941年春，日军推行"囚笼政策"，修筑公路工事，企图分割根据地。新四军二师多路出击，攻克谢集、刘集等据点，伏击援敌。4月16-17日，运用"梅花桩战术"在金牛山重创日伪军，歼敌500余人，缴获机枪、掷弹筒等武器，粉碎大规模扫荡，极大地增强了军民坚持敌后抗日斗争的信心。\n\n月塘位于淮南根据地中心，成为华中局与苏南、上海地下党交通枢纽，三条秘密线路贯通南北，以茶食商行等为掩护，护送近千名干部、进步青年和领导人安全往来，转运重要文件和军需物资，从未发生问题，成为抗战时期重要生命线。\n\n1939年，曹兰田、陆毅等组建曹集民兵，从农抗会发展为地方武装，配合主力作战，破坏交通桥梁，掩护群众转移。两年内参加战斗50余次，歼敌100余人，逮捕叛徒特务20多人。1942年，陆毅获淮南路东英模大会嘉奖，曹集民兵被誉为"名闻淮南路东的民兵英雄集体"，其爱国精神永载史册。'
+    historyItems: [
+      {
+        description: '1939年11月，新四军苏皖支队抵达仪征，在陈集镇沙集村成立中共仪征县委。1940年4月，仪征县抗日民主政府在月塘曹集成立，建立5个区、1个办事处和50多个乡政权。在津浦路东省委领导下，广泛动员群众，组织农抗会、青年队、民兵等地方武装，扩大和巩固抗日根据地，成为抗战的坚强堡垒。',
+        title: '月塘反击战',
+        src: '/videos/yizheng-battle.mp4',
+      },
+	  {
+        description: '1939年12月18日，日伪军800余人分三路合击月塘集。苏皖支队避其锋芒，主力转移至移居集隐蔽。傍晚利用地形和群众支援，反击压缩敌人至北大庙，激战三小时收复月塘。此战歼敌90余人，缴获枪械40余支，极大鼓舞军民斗志，成为新四军在仪征的里程碑之战。',
+        title: '月塘反击战',
+        src: '/videos/yizheng-battle.mp4',
+      },
+	  {
+        description: '1941年春，日军推行“囚笼政策”，修筑公路工事，企图分割根据地。新四军二师多路出击，攻克谢集、刘集等据点，伏击援敌。4月16-17日，运用“梅花桩战术”在金牛山重创日伪军，歼敌500余人，缴获机枪、掷弹筒等武器，粉碎大规模扫荡，极大地增强了军民坚持敌后抗日斗争的信心。',
+        title: '月塘反击战',
+        src: '/videos/yizheng-battle.mp4',
+      },
+	  {
+        description: '4、月塘位于淮南根据地中心，成为华中局与苏南、上海地下党交通枢纽，三条秘密线路贯通南北，以茶食商行等为掩护，护送近千名干部、进步青年和领导人安全往来，转运重要文件和军需物资，从未发生问题，成为抗战时期重要生命线。',
+        title: '月塘反击战',
+        src: '/videos/yizheng-battle.mp4',
+      },
+	  {
+        description: '5、1939年，曹兰田、陆毅等组建曹集民兵，从农抗会发展为地方武装，配合主力作战，破坏交通桥梁，掩护群众转移。两年内参加战斗50余次，歼敌100余人，逮捕叛徒特务20多人。1942年，陆毅获淮南路东英模大会嘉奖，曹集民兵被誉为“名闻淮南路东的民兵英雄集体”，其爱国精神永载史册。',
+        title: '月塘反击战',
+        src: '/videos/yizheng-battle.mp4',
+      },
+    ]
   },
   laian: {
     name: '来安',
@@ -604,8 +631,27 @@ const closeCityModal = () => {
   }
 }
 
+/* 全屏透明模糊遮罩样式 */
+.city-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: 1000;
+  animation: fadeIn 0.3s ease-out;
+}
 
-
-
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
 
 </style>

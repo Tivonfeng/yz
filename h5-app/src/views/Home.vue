@@ -50,6 +50,7 @@
       </div>
       <div class="swipe-text">向左滑动</div>
     </div>
+
   </div>
 </template>
 
@@ -259,8 +260,8 @@ onMounted(async () => {
 
 <style scoped>
 .home-page {
-  width: 100%;
-  height: 100%;
+	width: 100vh;
+	height: 100vw;
   position: relative;
   overflow: hidden;
   background-image: url('@/assets/yz/01/背景.png');

@@ -27,9 +27,18 @@ export class WeChatShare {
 
   // 配置微信JSSDK
   async configWx(config: WeChatConfig): Promise<void> {
+    // 开发环境跳过WeChat配置
+    const isDev = import.meta.env.DEV
+    
+    if (isDev) {
+      console.warn('开发环境跳过WeChat JSSDK配置')
+      this.isConfigured = true
+      return Promise.resolve()
+    }
+
     return new Promise((resolve, reject) => {
       wx.config({
-        debug: false, // 开启调试模式
+        debug: false, // 生产环境关闭调试模式
         appId: config.appId,
         timestamp: config.timestamp,
         nonceStr: config.nonceStr,

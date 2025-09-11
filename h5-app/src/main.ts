@@ -1,5 +1,3 @@
-import './assets/main.css'
-
 import { createApp } from 'vue'
 import { MotionPlugin } from '@vueuse/motion'
 import { Lazyload } from 'vant'

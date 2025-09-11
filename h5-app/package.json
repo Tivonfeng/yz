@@ -14,11 +14,15 @@
     "type-check": "vue-tsc --build"
   },
   "dependencies": {
+    "@tailwindcss/vite": "^4.1.13",
     "@vant/touch-emulator": "^1.4.0",
     "@vueuse/gesture": "^2.0.0",
     "@vueuse/motion": "^3.0.3",
+    "autoprefixer": "^10.4.21",
     "lottie-vue": "^1.0.3",
     "motion-v": "^1.5.0",
+    "postcss": "^8.5.6",
+    "tailwindcss": "^4.1.13",
     "vant": "^4.9.21",
     "vue": "^3.5.18",
     "vue-countup-v3": "^1.4.2",
