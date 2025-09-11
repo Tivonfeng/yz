@@ -18,7 +18,7 @@
     <!-- 城市展示区域 -->
     <div class="cities-container" v-motion="citiesMotion">
       <!-- 仪征 - 左上角 -->
-      <div class="city-item city-yizheng" v-motion="getCityMotion(0)">
+      <div class="city-item city-yizheng" v-motion="getCityMotion(0)" @click="openCityModal('yizheng')">
         <div class="city-landmark">
           <img src="@/assets/yz/03/仪征.png" alt="仪征" class="landmark-image" />
         </div>
@@ -29,7 +29,7 @@
       </div>
       
       <!-- 来安 - 上方中左 -->
-      <div class="city-item city-laian" v-motion="getCityMotion(1)">
+      <div class="city-item city-laian" v-motion="getCityMotion(1)" @click="openCityModal('laian')">
         <div class="city-landmark">
           <img src="@/assets/yz/03/来安.png" alt="来安" class="landmark-image" />
         </div>
@@ -40,7 +40,7 @@
       </div>
       
       <!-- 六合 - 上方中右 -->
-      <div class="city-item city-liuhe" v-motion="getCityMotion(2)">
+      <div class="city-item city-liuhe" v-motion="getCityMotion(2)" @click="openCityModal('liuhe')">
         <div class="city-landmark">
           <img src="@/assets/yz/03/六合.png" alt="六合" class="landmark-image" />
         </div>
@@ -51,7 +51,7 @@
       </div>
 
       <!-- 金湖 - 中下位置 -->
-      <div class="city-item city-jinhu" v-motion="getCityMotion(3)">
+      <div class="city-item city-jinhu" v-motion="getCityMotion(3)" @click="openCityModal('jinhu')">
         <div class="city-landmark">
           <img src="@/assets/yz/03/金湖.png" alt="金湖" class="landmark-image" />
         </div>
@@ -62,7 +62,7 @@
       </div>
       
       <!-- 定远 - 右上角 -->
-      <div class="city-item city-dingyuan" v-motion="getCityMotion(4)">
+      <div class="city-item city-dingyuan" v-motion="getCityMotion(4)" @click="openCityModal('dingyuan')">
         <div class="city-landmark">
           <img src="@/assets/yz/03/定远.png" alt="定远" class="landmark-image" />
         </div>
@@ -73,7 +73,7 @@
       </div>
       
       <!-- 盱眙 - 右下角 -->
-      <div class="city-item city-xuyi" v-motion="getCityMotion(5)">
+      <div class="city-item city-xuyi" v-motion="getCityMotion(5)" @click="openCityModal('xuyi')">
         <div class="city-landmark">
           <img src="@/assets/yz/03/盱眙.png" alt="盱眙" class="landmark-image" />
         </div>
@@ -84,13 +84,18 @@
       </div>
     </div>
 
-
-
+    <!-- 城市详情弹窗 -->
+    <CityModal 
+      :isVisible="isModalVisible" 
+      :cityData="selectedCityData"
+      @close="closeCityModal"
+    />
   </div>
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
+import CityModal from '@/components/CityModal.vue'
 
 // 角标动画
 const cornerMotion = computed(() => ({
@@ -163,6 +168,56 @@ const getCityMotion = (index: number) => ({
     }
   }
 })
+
+// 弹窗相关状态
+const isModalVisible = ref(false)
+const selectedCityData = ref<typeof citiesData[keyof typeof citiesData] | null>(null)
+
+// 城市数据
+const citiesData = {
+  yizheng: {
+    name: '仪征',
+    description: '仪征市位于江苏省中部，长江北岸，是一座历史悠久的文化名城。这里有着深厚的历史底蕴和丰富的文化资源，是江南水乡的典型代表。仪征有着悠久的历史文化传统，是古代文人墨客聚集之地，留下了众多珍贵的文化遗产。著名景点包括扬州瘦西湖、个园、何园、大明寺等。',
+    videoUrl: '/assets/videos/yizheng.mp4'
+  },
+  laian: {
+    name: '来安',
+    description: '来安县位于安徽省东部，地处江淮分水岭，是一座山清水秀的生态之城。来安历史悠久，文化底蕴深厚，是楚汉文化的重要发源地之一。这里有白鹭岛、池杉湖、舜山风景区等美丽的自然景观，展现着独特的生态魅力。',
+    videoUrl: '/assets/videos/laian.mp4'
+  },
+  liuhe: {
+    name: '六合',
+    description: '六合区位于南京市北部，是南京江北新区的重要组成部分，发展潜力巨大。六合有着丰富的民俗文化和农业文化传统，是江苏重要的农业基地。金牛湖、桂子山、竹镇民俗村等景点展现了六合的自然风光和文化底蕴。',
+    videoUrl: '/assets/videos/liuhe.mp4'
+  },
+  jinhu: {
+    name: '金湖',
+    description: '金湖县位于江苏省中部，以荷花闻名，素有"荷花之乡"的美誉。金湖有着深厚的水文化底蕴，荷花文化是其独特的文化名片。荷花荡、金湖湿地公园、水上森林等景点展现了金湖独特的水乡风情和生态之美。',
+    videoUrl: '/assets/videos/jinhu.mp4'
+  },
+  dingyuan: {
+    name: '定远',
+    description: '定远县位于安徽省东部，历史悠久，是著名的历史文化名城。定远有着深厚的历史文化底蕴，是楚汉文化的重要载体。虞姬墓、定远古城、花园湖等景点承载着深厚的历史文化内涵，展现着古韵今风的魅力。',
+    videoUrl: '/assets/videos/dingyuan.mp4'
+  },
+  xuyi: {
+    name: '盱眙',
+    description: '盱眙县位于江苏省西部，以盱眙龙虾闻名全国，是著名的美食之城。盱眙有着悠久的历史和独特的美食文化，龙虾文化已成为城市名片。明祖陵、第一山、龙虾节广场等景点展现了盱眙深厚的历史底蕴和独特的美食文化。',
+    videoUrl: '/assets/videos/xuyi.mp4'
+  }
+}
+
+// 打开城市详情弹窗
+const openCityModal = (cityKey: keyof typeof citiesData) => {
+  selectedCityData.value = citiesData[cityKey]
+  isModalVisible.value = true
+}
+
+// 关闭弹窗
+const closeCityModal = () => {
+  isModalVisible.value = false
+  selectedCityData.value = null
+}
 
 
 </script>
@@ -307,10 +362,6 @@ const getCityMotion = (index: number) => ({
   color: #8B0000;
   text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
   letter-spacing: 1px;
-  background: rgba(255, 255, 255, 0.7);
-  padding: 4px 8px;
-  border-radius: 12px;
-  border: 1px solid rgba(139, 0, 0, 0.2);
   white-space: nowrap;
   writing-mode: vertical-rl;
   text-orientation: upright;
@@ -348,10 +399,6 @@ const getCityMotion = (index: number) => ({
   color: #8B0000;
   text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
   letter-spacing: 1px;
-  background: rgba(255, 255, 255, 0.7);
-  padding: 4px 8px;
-  border-radius: 12px;
-  border: 1px solid rgba(139, 0, 0, 0.2);
   white-space: nowrap;
   writing-mode: vertical-rl;
   text-orientation: upright;
@@ -389,10 +436,6 @@ const getCityMotion = (index: number) => ({
   color: #8B0000;
   text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
   letter-spacing: 1px;
-  background: rgba(255, 255, 255, 0.7);
-  padding: 4px 8px;
-  border-radius: 12px;
-  border: 1px solid rgba(139, 0, 0, 0.2);
   white-space: nowrap;
   writing-mode: vertical-rl;
   text-orientation: upright;
@@ -430,10 +473,6 @@ const getCityMotion = (index: number) => ({
   color: #8B0000;
   text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
   letter-spacing: 1px;
-  background: rgba(255, 255, 255, 0.7);
-  padding: 4px 8px;
-  border-radius: 12px;
-  border: 1px solid rgba(139, 0, 0, 0.2);
   white-space: nowrap;
   writing-mode: vertical-rl;
   text-orientation: upright;
@@ -471,10 +510,6 @@ const getCityMotion = (index: number) => ({
   color: #8B0000;
   text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
   letter-spacing: 1px;
-  background: rgba(255, 255, 255, 0.7);
-  padding: 4px 8px;
-  border-radius: 12px;
-  border: 1px solid rgba(139, 0, 0, 0.2);
   white-space: nowrap;
   writing-mode: vertical-rl;
   text-orientation: upright;
@@ -512,10 +547,6 @@ const getCityMotion = (index: number) => ({
   color: #8B0000;
   text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
   letter-spacing: 1px;
-  background: rgba(255, 255, 255, 0.7);
-  padding: 4px 8px;
-  border-radius: 12px;
-  border: 1px solid rgba(139, 0, 0, 0.2);
   white-space: nowrap;
   writing-mode: vertical-rl;
   text-orientation: upright;
@@ -549,8 +580,6 @@ const getCityMotion = (index: number) => ({
 
 .city-item:hover .city-name {
   transform: translateX(-50%) translateY(-3px);
-  background: rgba(255, 255, 255, 0.9);
-  box-shadow: 0 2px 8px rgba(139, 0, 0, 0.2);
 }
 
 .city-item:hover .position-point {
