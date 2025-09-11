@@ -18,6 +18,7 @@
     "@vueuse/gesture": "^2.0.0",
     "@vueuse/motion": "^3.0.3",
     "lottie-vue": "^1.0.3",
+    "motion-v": "^1.5.0",
     "vant": "^4.9.21",
     "vue": "^3.5.18",
     "vue-countup-v3": "^1.4.2",

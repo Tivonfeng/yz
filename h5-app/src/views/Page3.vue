@@ -178,7 +178,7 @@ const citiesData = {
   yizheng: {
     name: '仪征',
     description: '仪征市位于江苏省中部，长江北岸，是一座历史悠久的文化名城。这里有着深厚的历史底蕴和丰富的文化资源，是江南水乡的典型代表。仪征有着悠久的历史文化传统，是古代文人墨客聚集之地，留下了众多珍贵的文化遗产。著名景点包括扬州瘦西湖、个园、何园、大明寺等。',
-    videoUrl: '/assets/videos/yizheng.mp4'
+    videoUrl: 'https://qiniuyun.lqcode.fun/video/%E5%A4%96%E8%A7%82%E7%B1%BB%E7%A7%AF%E6%9C%A8.mp4'
   },
   laian: {
     name: '来安',
