@@ -244,34 +244,29 @@ const initWeChatShare = async () => {
     console.log('[微信分享] 请求配置的URL:', currentUrl)
     const wxConfig = await getWxConfig({ url: currentUrl })
     
-    // 配置微信JSSDK
-    await wechatShare.configWx(wxConfig)
-    
     // 分享配置
     const shareConfig = {
       title: '纪念中国人民抗日战争暨世界反法西斯战争胜利80周年',
       desc: '苏皖6家县级融媒体中心联合报道，共同缅怀历史，珍爱和平',
       link: window.location.origin + window.location.pathname,
-      imgUrl: `${window.location.origin}/favicon.ico`, // 使用更可靠的图片路径
+      imgUrl: `${window.location.origin}/favicon.ico`,
       type: 'link'
     }
     
-    // 设置分享内容和回调
-    await wechatShare.setShareContent(shareConfig, {
-      onSuccess: (type) => {
+    const shareCallbacks = {
+      onSuccess: (type: 'timeline' | 'appmessage') => {
         console.log(`[微信分享] 分享${type === 'timeline' ? '朋友圈' : '朋友'}成功`)
-        // 这里可以添加分享成功的统计或其他逻辑
       },
-      onCancel: (type) => {
+      onCancel: (type: 'timeline' | 'appmessage') => {
         console.log(`[微信分享] 取消分享${type === 'timeline' ? '朋友圈' : '朋友'}`)
       },
-      onFail: (error, type) => {
+      onFail: (error: any, type: 'timeline' | 'appmessage') => {
         console.error(`[微信分享] 分享${type === 'timeline' ? '朋友圈' : '朋友'}失败:`, error)
       }
-    })
+    }
     
-    // 隐藏不需要的菜单项
-    await wechatShare.hideMenuItems()
+    // 配置微信JSSDK，并在wx.ready内设置分享和隐藏菜单 - iOS兼容性关键
+    await wechatShare.configWx(wxConfig, shareConfig, shareCallbacks)
     
     console.log('[微信分享] 初始化完成，当前配置:', wechatShare.getCurrentShareConfig())
     

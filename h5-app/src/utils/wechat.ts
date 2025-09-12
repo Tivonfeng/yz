@@ -60,8 +60,8 @@ export class WeChatShare {
     return { ...this.environment }
   }
 
-  // 配置微信JSSDK
-  async configWx(config: WeChatConfig): Promise<void> {
+  // 配置微信JSSDK，并在ready内设置分享
+  async configWx(config: WeChatConfig, shareConfig?: WeChatShareConfig, callbacks?: ShareCallbacks, customHideMenus?: string[]): Promise<void> {
     // 防止重复配置
     if (this.configPromise) {
       return this.configPromise
@@ -119,6 +119,15 @@ export class WeChatShare {
         clearTimeout(configTimeout)
         this.isConfigured = true
         console.log('[微信分享] JSSDK配置成功，环境信息:', this.environment)
+        
+        // 在wx.ready内设置分享内容 - iOS兼容性关键
+        if (shareConfig) {
+          this.setShareContentInReady(shareConfig, callbacks)
+        }
+        
+        // 在wx.ready内隐藏菜单项 - iOS兼容性关键
+        this.hideMenuItemsInReady(customHideMenus)
+        
         resolve()
       })
 
@@ -146,7 +155,52 @@ export class WeChatShare {
     return this.configPromise
   }
 
-  // 设置分享内容
+  // 在wx.ready内设置分享内容 - iOS兼容性关键
+  private setShareContentInReady(shareConfig: WeChatShareConfig, callbacks?: ShareCallbacks): void {
+    console.log('[微信分享] 在wx.ready内设置分享内容:', shareConfig.title)
+    
+    // 验证分享配置
+    this.validateShareConfig(shareConfig)
+    this.currentShareConfig = { ...shareConfig }
+
+    try {
+      // 分享给朋友
+      wx.updateAppMessageShareData({
+        title: shareConfig.title,
+        desc: shareConfig.desc,
+        link: shareConfig.link,
+        imgUrl: shareConfig.imgUrl,
+        success: () => {
+          console.log('[微信分享] 分享给朋友配置成功')
+          callbacks?.onSuccess?.('appmessage')
+        },
+        fail: (res: any) => {
+          console.error('[微信分享] 分享给朋友配置失败:', res)
+          callbacks?.onFail?.(res, 'appmessage')
+        }
+      })
+
+      // 分享到朋友圈
+      wx.updateTimelineShareData({
+        title: shareConfig.title,
+        link: shareConfig.link,
+        imgUrl: shareConfig.imgUrl,
+        success: () => {
+          console.log('[微信分享] 分享到朋友圈配置成功')
+          callbacks?.onSuccess?.('timeline')
+        },
+        fail: (res: any) => {
+          console.error('[微信分享] 分享到朋友圈配置失败:', res)
+          callbacks?.onFail?.(res, 'timeline')
+        }
+      })
+
+    } catch (error) {
+      console.error('[微信分享] 设置分享内容时发生错误:', error)
+    }
+  }
+
+  // 设置分享内容（保持向后兼容）
   async setShareContent(shareConfig: WeChatShareConfig, callbacks?: ShareCallbacks): Promise<void> {
     // 等待配置完成
     if (!this.isConfigured && this.configPromise) {
@@ -241,7 +295,35 @@ export class WeChatShare {
   }
 
 
-  // 隐藏不需要的菜单项
+  // 在wx.ready内隐藏菜单项 - iOS兼容性关键
+  private hideMenuItemsInReady(customMenuList: string[] = []): void {
+    const defaultHideMenus = [
+      'menuItem:copyUrl',           // 复制链接
+      'menuItem:openWithQQBrowser', // 在QQ浏览器中打开
+      'menuItem:openWithSafari',    // 在Safari中打开
+      'menuItem:share:email',       // 邮件
+      'menuItem:share:brand',       // 第三方分享
+      'menuItem:share:qq',          // QQ分享
+      'menuItem:share:weiboApp',    // 微博分享
+      'menuItem:favorite',          // 收藏
+      'menuItem:share:facebook',    // Facebook分享
+      'menuItem:share:QZone'        // QQ空间分享
+    ]
+
+    const menuList = [...defaultHideMenus, ...customMenuList]
+
+    wx.hideMenuItems({
+      menuList: menuList as any,
+      success: () => {
+        console.log('[微信分享] 隐藏菜单项成功:', menuList)
+      },
+      fail: (res: any) => {
+        console.error('[微信分享] 隐藏菜单项失败:', res)
+      }
+    })
+  }
+
+  // 隐藏不需要的菜单项（保持向后兼容）
   async hideMenuItems(customMenuList: string[] = []): Promise<void> {
     if (!this.isConfigured) {
       console.warn('[微信分享] JSSDK未配置，无法隐藏菜单项')
