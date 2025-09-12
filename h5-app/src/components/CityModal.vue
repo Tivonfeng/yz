@@ -98,9 +98,9 @@
           <div v-if="selectedHistory" class="flex flex-col w-full h-full">
             
             <!-- 压缩的文字描述区域 -->
-            <div class="h-[30%] bg-gradient-to-br from-gray-50 to-gray-100 border-b-2 border-red-200 flex-shrink-0">
-              <div class="h-full p-3 overflow-y-auto custom-scrollbar">
-                <div class="bg-white rounded-lg p-3 shadow-sm border border-gray-200">
+            <div class="h-[32%] bg-gradient-to-br flex-shrink-0 p-1">
+              <div class="h-full bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
+                <div class="h-full p-4 overflow-y-scroll" style="-webkit-overflow-scrolling: touch;">
                   <p class="text-xs leading-5 text-gray-800 whitespace-pre-line font-light">
                     {{ selectedHistory.description }}
                   </p>
@@ -110,12 +110,12 @@
 
             <!-- 主要视频显示区域 -->
             <div class="flex-1 bg-gradient-to-br  min-h-0">
-              <div class="h-full p-4 flex flex-col">
-                <div v-if="selectedHistory.src" class="flex-1 flex items-center justify-center bg-black/20 rounded-xl overflow-hidden min-h-0">
+              <div class="h-full p-2 flex flex-col">
+                <div v-if="selectedHistory.src" class="flex-1 flex items-center justify-center rounded-xl overflow-hidden min-h-0">
                   <video 
                     :src="selectedHistory.src" 
                     controls 
-                    class="w-full h-full object-contain rounded-lg shadow-2xl"
+                    class="h-full object-contain rounded-lg shadow-2xl"
                     playsinline
                     webkit-playsinline
                   >
