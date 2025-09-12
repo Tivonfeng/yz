@@ -237,7 +237,7 @@ const initWeChatShare = async () => {
     // 分享配置
     const shareConfig = {
       title: '铭记抗战历史 传承红色基因——烽火第二师',
-      desc: '仪征市融媒体中心携手苏皖两省5家县融，以“烽火第二师”，纪念抗战胜利80周年。',
+      desc: '仪征市融媒体中心携手苏皖两省5家县融以“烽火第二师”纪念抗战胜利80周年',
       link: window.location.origin + window.location.pathname,
       imgUrl: `${window.location.origin}/share.jpg`,
       type: 'link'
