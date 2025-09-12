@@ -196,27 +196,27 @@ const citiesData = {
       {
         description: '1939年11月，新四军苏皖支队抵达仪征，在陈集镇沙集村成立中共仪征县委。1940年4月，仪征县抗日民主政府在月塘曹集成立，建立5个区、1个办事处和50多个乡政权。在津浦路东省委领导下，广泛动员群众，组织农抗会、青年队、民兵等地方武装，扩大和巩固抗日根据地，成为抗战的坚强堡垒。',
         title: '仪征政权立​',
-        src: '/videos/yizheng-battle.mp4',
+        src: 'https://qiniuyun.lqcode.fun/yzdst/%E4%BB%AA%E5%BE%81/%E6%97%A0logo%20%E4%BB%AA%E5%BE%81%E7%AF%87%EF%BC%88%E4%B8%80%EF%BC%89%EF%BC%9A%E5%BB%BA%E7%AB%8B%E5%85%9A%E6%94%BF%E5%86%9B%E7%BB%84%E7%BB%87%20%E6%9E%84%E7%AD%91%E6%8A%97%E6%88%98%E5%9D%9A%201.mp4',
       },
 	  {
         description: '1939年12月18日，日伪军800余人分三路合击月塘集。苏皖支队避其锋芒，主力转移至移居集隐蔽。傍晚利用地形和群众支援，反击压缩敌人至北大庙，激战三小时收复月塘。此战歼敌90余人，缴获枪械40余支，极大鼓舞军民斗志，成为新四军在仪征的里程碑之战。',
         title: '月塘反击战',
-        src: '/videos/yizheng-battle.mp4',
+        src: 'https://qiniuyun.lqcode.fun/yzdst/%E4%BB%AA%E5%BE%81/%E6%97%A0logo%20%E4%BB%AA%E5%BE%81%E7%AF%87%EF%BC%88%E4%BA%8C%EF%BC%89%EF%BC%9A%E9%A6%96%E6%88%98%E9%9C%87%E5%AF%92%E5%A4%9C%20%E6%9C%88%E5%A1%98%E4%BF%9D%E5%8D%AB%E6%88%98%E7%82%B9%E7%87%83%201.mp4',
       },
 	  {
         description: '1941年春，日军推行“囚笼政策”，修筑公路工事，企图分割根据地。新四军二师多路出击，攻克谢集、刘集等据点，伏击援敌。4月16-17日，运用“梅花桩战术”在金牛山重创日伪军，歼敌500余人，缴获机枪、掷弹筒等武器，粉碎大规模扫荡，极大地增强了军民坚持敌后抗日斗争的信心。',
         title: '金牛山战斗​',
-        src: '/videos/yizheng-battle.mp4',
+        src: 'https://qiniuyun.lqcode.fun/yzdst/%E4%BB%AA%E5%BE%81/%E6%97%A0logo%20%E4%BB%AA%E5%BE%81%E7%AF%87%EF%BC%88%E4%B8%89%EF%BC%89%EF%BC%9A%E5%8F%8D%E7%82%B9%E7%BA%BF%E4%BD%9C%E6%88%98%20%E6%89%93%E7%A0%B4%E2%80%9C%E5%9B%9A%E7%AC%BC%E2%80%9D%E5%8C%85%201.mp4',
       },
 	  {
         description: '月塘位于淮南根据地中心，成为华中局与苏南、上海地下党交通枢纽，三条秘密线路贯通南北，以茶食商行等为掩护，护送近千名干部、进步青年和领导人安全往来，转运重要文件和军需物资，从未发生问题，成为抗战时期重要生命线。',
         title: '秘密交通线​',
-        src: '/videos/yizheng-battle.mp4',
+        src: 'https://qiniuyun.lqcode.fun/yzdst/%E4%BB%AA%E5%BE%81/%E6%97%A0logo%20%E4%BB%AA%E5%BE%81%E7%AF%87%EF%BC%88%E5%9B%9B%EF%BC%89%EF%BC%9A%20%E6%9A%97%E7%BA%BF%E8%BF%9E%E5%B1%B1%E6%B2%B3%20%E5%9C%B0%E4%B8%8B%E4%BA%A4%E9%80%9A%E7%BA%BF%E6%B2%9F%201.mp4',
       },
 	  {
         description: '1939年，曹兰田、陆毅等组建曹集民兵，从农抗会发展为地方武装，配合主力作战，破坏交通桥梁，掩护群众转移。两年内参加战斗50余次，歼敌100余人，逮捕叛徒特务20多人。1942年，陆毅获淮南路东英模大会嘉奖，曹集民兵被誉为“名闻淮南路东的民兵英雄集体”，其爱国精神永载史册。',
         title: '民兵英雄誉​',
-        src: '/videos/yizheng-battle.mp4',
+        src: 'https://qiniuyun.lqcode.fun/yzdst/%E4%BB%AA%E5%BE%81/%E6%97%A0logo%20%E4%BB%AA%E5%BE%81%E7%AF%87%EF%BC%88%E4%BA%94%EF%BC%89%EF%BC%9A%E7%A1%9D%E7%83%9F%E7%A0%BA%E7%AD%8B%E9%AA%A8%20%E6%9B%B9%E9%9B%86%E6%B0%91%E5%85%B5%E9%93%B8%E5%B0%B1%E4%B8%8D%201.mp4',
       },
     ]
   },
@@ -276,17 +276,17 @@ const citiesData = {
       {
         description: '80 多年前，面对国民党顽固派进攻，刘少奇、徐海东等指挥新四军打响定远自卫反击战。将士们协同作战 7 天获胜，建华中首个县级抗日民主政权，为抗战胜利筑牢屏障，精神永垂。',
         title: '定远自卫战​',
-        src: '/videos/yizheng-battle.mp4',
+        src: 'https://qiniuyun.lqcode.fun/yzdst/%E5%AE%9A%E8%BF%9C/%E7%83%BD%E7%81%AB%E7%AC%AC%E4%BA%8C%E5%B8%88%E5%AE%89%E5%BE%BD%E5%AE%9A%E8%BF%9C%E7%AF%87%EF%BC%88%E4%B8%80%EF%BC%89%E5%BE%90%E6%B5%B7%E4%B8%9C%EF%BC%9A%E5%AF%B9%E4%B8%AD%E5%9B%BD%E9%9D%A9%E5%91%BD%E6%9C%89%E5%A4%A7%E5%8A%9F%E7%9A%84%E4%BA%BA%201.mp4',
       },
 	  {
         description: '80 多年前，“虎将” 徐海东带病赴华中，任新四军江北指挥部副指挥，指挥周家岗反 “扫荡” 首胜日军。他 9 次负伤仍坚守，以忠诚勇猛书写传奇，激励后人传承革命精神。',
         title: '虎将徐海东​',
-        src: '/videos/yizheng-battle.mp4',
+        src: 'https://qiniuyun.lqcode.fun/yzdst/%E5%AE%9A%E8%BF%9C/%E7%83%BD%E7%81%AB%E7%AC%AC%E4%BA%8C%E5%B8%88%E5%AE%89%E5%BE%BD%E5%AE%9A%E8%BF%9C%E7%AF%87%EF%BC%88%E4%BA%8C%EF%BC%89%E7%AD%91%E7%89%A2%E5%8D%8E%E4%B8%AD%E6%8A%97%E6%97%A5%E6%A0%B9%E6%8D%AE%E5%9C%B0%E7%9A%84%E5%9D%9A%E5%AE%9E%E5%B1%8F%E9%9A%9C%E2%80%94%E2%80%94%E5%AE%9A%E8%BF%9C%E8%87%AA%E5%8D%AB%E5%8F%8D%E5%87%BB%E6%88%98%201.mp4',
       },
 	  {
         description: '80 多年前，定远作为抗日根据地核心，新四军二师浴血奋战。王小庙安葬 1200 余名无名烈士，如今 “寻亲队伍” 与学界为其寻名，英烈精神永被铭记。',
         title: '英烈永铭记​',
-        src: '/videos/yizheng-battle.mp4',
+        src: 'https://qiniuyun.lqcode.fun/yzdst/%E5%AE%9A%E8%BF%9C/%E7%83%BD%E7%81%AB%E7%AC%AC%E4%BA%8C%E5%B8%88%E5%AE%89%E5%BE%BD%E5%AE%9A%E8%BF%9C%E7%AF%87%EF%BC%88%E4%B8%89%EF%BC%89174%E5%BA%A7%E5%A2%93%E7%A2%91%E6%97%A0%E5%A3%B0%EF%BC%8C1200%E5%90%8D%E8%8B%B1%E9%AD%82%E9%95%BF%E7%9C%A0%E2%80%94%E2%80%94%E8%AE%BF%E7%8E%8B%E5%B0%8F%E5%BA%99%E6%97%A0%E5%90%8D%E7%83%88%E5%A3%AB%E9%99%B5%E5%9B%AD%201.mp4',
       },
     ]
   },
