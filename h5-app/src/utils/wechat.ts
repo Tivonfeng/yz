@@ -107,7 +107,7 @@ export class WeChatShare {
       })
 
       wx.config({
-        debug: false, // 生产环境关闭调试模式，开发时可设为true
+        debug: true, // 生产环境关闭调试模式，开发时可设为true
         appId: config.appId,
         timestamp: config.timestamp,
         nonceStr: config.nonceStr,

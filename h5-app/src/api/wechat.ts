@@ -29,31 +29,33 @@ export interface WeChatShareConfig {
 
 // 获取微信配置参数的API接口
 export async function getWxConfig(params: WxConfigParams): Promise<WxConfigResponse> {
-  const isDev = import.meta.env.DEV
+//   const isDev = import.meta.env.DEV
   
-  // 开发环境使用mock数据
-  if (isDev) {
-    console.warn('[微信分享] 开发环境使用mock数据')
-    await new Promise(resolve => setTimeout(resolve, 100)) // 模拟网络延迟
+//   // 开发环境使用mock数据
+//   if (isDev) {
+//     console.warn('[微信分享] 开发环境使用mock数据')
+//     await new Promise(resolve => setTimeout(resolve, 100)) // 模拟网络延迟
     
-    return {
-      appId: 'wx1234567890abcdef', // 替换为真实的appId
-      timestamp: Math.floor(Date.now() / 1000),
-      nonceStr: generateNonceStr(),
-      signature: 'mock-signature-' + generateNonceStr(),
-      jsApiList: [
-        'updateAppMessageShareData',
-        'updateTimelineShareData',
-        'hideMenuItems',
-        'showMenuItems'
-      ]
-    }
-  }
+//     return {
+//       appId: 'wx1234567890abcdef', // 替换为真实的appId
+//       timestamp: Math.floor(Date.now() / 1000),
+//       nonceStr: generateNonceStr(),
+//       signature: 'mock-signature-' + generateNonceStr(),
+//       jsApiList: [
+//         'updateAppMessageShareData',
+//         'updateTimelineShareData',
+//         'hideMenuItems',
+//         'showMenuItems'
+//       ]
+//     }
+//   }
   
-  // 生产环境调用真实API
+  // 调用真实API
   try {
     const controller = new AbortController()
     const timeoutId = setTimeout(() => controller.abort(), 10000) // 10秒超时
+    
+    console.log('[微信分享] 请求API:', params.url)
     
     const response = await fetch(`/api/wechat/share?url=${encodeURIComponent(params.url)}`, {
       method: 'GET',
@@ -67,12 +69,32 @@ export async function getWxConfig(params: WxConfigParams): Promise<WxConfigRespo
     clearTimeout(timeoutId)
     
     if (!response.ok) {
-      const errorData = await response.json().catch(() => ({ errMsg: '响应解析失败' }))
-      console.error('[微信分享] API错误:', response.status, errorData)
-      throw new Error(`获取微信配置失败: ${response.status} ${errorData.errMsg || 'Unknown Error'}`)
+      const errorText = await response.text()
+      console.error('[微信分享] API错误详情:', {
+        status: response.status,
+        statusText: response.statusText,
+        url: response.url,
+        body: errorText
+      })
+      
+      let errorData
+      try {
+        errorData = JSON.parse(errorText)
+      } catch {
+        errorData = { errMsg: errorText || '响应解析失败' }
+      }
+      
+      throw new Error(`获取微信配置失败: ${response.status} ${errorData.errMsg || errorData.message || errorText}`)
     }
     
-    const data = await response.json()
+    const result = await response.json()
+    
+    // 适配后端返回格式
+    if (!result.success || !result.data) {
+      throw new Error('API返回数据格式错误')
+    }
+
+    const data = result.data.jssdkConfig
     
     // 验证返回数据的完整性
     if (!data.appId || !data.signature || !data.timestamp || !data.nonceStr) {
@@ -86,7 +108,18 @@ export async function getWxConfig(params: WxConfigParams): Promise<WxConfigRespo
       hasSignature: !!data.signature
     })
     
-    return data
+    return {
+      appId: data.appId,
+      timestamp: data.timestamp,
+      nonceStr: data.nonceStr,
+      signature: data.signature,
+      jsApiList: [
+        'updateAppMessageShareData',
+        'updateTimelineShareData',
+        'hideMenuItems',
+        'showMenuItems'
+      ]
+    }
     
   } catch (error) {
     if (error instanceof Error) {
