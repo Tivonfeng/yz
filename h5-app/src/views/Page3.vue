@@ -99,7 +99,7 @@
         />
         <!-- 彩带装饰 -->
         <img src="@/assets/yz/04/彩带1.png" class="absolute bottom-[4%] left-[8%] w-30 h-30 opacity-80 pointer-events-none z-20 animate-ribbon">
-		<CityModal v-if="selectedCityData" :cityData="selectedCityData" @close="closeCityModal"></CityModal>
+		<CityModal v-if="selectedCityData && isModalVisible" :cityData="selectedCityData" @close="closeCityModal"></CityModal>
       </div>
     </Transition>
   </div>
