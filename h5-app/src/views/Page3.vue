@@ -1,5 +1,9 @@
 <template>
-  <div class="page3 landscape-forced">
+  <div 
+    class="page3 landscape-forced"
+    @touchstart="handleTouchStart"
+    @touchend="handleTouchEnd"
+  >
     <!-- 角标装饰 -->
     <div class="corner-decoration" v-motion="cornerMotion">
       <img 
@@ -114,7 +118,6 @@
           ref="closeBtn"
           class="absolute right-4 top-[56%] transform -translate-y-1/2 w-9 h-9 backdrop-blur-md bg-white/95 hover:bg-red-50/98 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 shadow-lg hover:shadow-2xl z-50 group border-2 border-white/70 hover:border-red-300/80 animate-pulse-gentle close-btn"
           @click="handleCloseClick" 
-          @touchstart="handleTouchStart"
           aria-label="关闭"
         >
           <svg ref="closeIcon" class="w-5 h-5 text-gray-700 group-hover:text-red-600 transition-all duration-500 group-hover:rotate-45 close-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
@@ -125,12 +128,35 @@
 		<CityModal v-if="selectedCityData && isModalVisible" :cityData="selectedCityData" @close="closeCityModal"></CityModal>
       </div>
     </Transition>
+
+    <!-- 手势滑动提示 - 仅在模态框关闭时显示 -->
+    <div v-show="!isModalVisible" class="swipe-hint" v-motion="swipeHintMotion">
+      <!-- 向左箭头动效 -->
+      <div class="arrow-container">
+        <span class="arrow" v-for="i in 5" :key="i" :style="{ animationDelay: (i - 1) * 0.2 + 's' }">‹</span>
+      </div>
+      <img 
+        src="@/assets/yz/01/hand.png" 
+        alt="滑动手势" 
+        class="hand-gesture"
+        :class="{ 'swiping': isAnimating }"
+      />
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { computed, ref } from 'vue'
+import { useRouter } from 'vue-router'
 import CityModal from '@/components/CityModal.vue'
+
+const router = useRouter()
+const isAnimating = ref(false)
+
+// 触摸事件相关
+let startX = 0
+let startY = 0
+let startTime = 0
 // 角标动画
 const cornerMotion = computed(() => ({
   initial: { opacity: 0, scale: 0.5, rotate: -45 },
@@ -417,15 +443,76 @@ const handleCloseClick = () => {
   }, 800) // 总动画时长
 }
 
-// 处理触摸事件（移动端优化）
-const handleTouchStart = () => {
-  if (closeBtn.value) {
-    closeBtn.value.classList.add('touch-active')
-    setTimeout(() => {
-      closeBtn.value?.classList.remove('touch-active')
-    }, 150)
+// 滑动提示动画
+const swipeHintMotion = computed(() => ({
+  initial: { opacity: 0, x: 100 },
+  enter: { 
+    opacity: 1, 
+    x: 0,
+    transition: { 
+      delay: 2500,
+      duration: 800,
+      ease: [0.25, 0.46, 0.45, 0.94]
+    }
+  }
+}))
+
+// 触摸开始
+const handleTouchStart = (e: TouchEvent) => {
+  // 如果模态框打开或正在动画中，阻止滑动
+  if (isAnimating.value || isModalVisible.value) return
+  
+  const touch = e.touches[0]
+  startX = touch.clientX
+  startY = touch.clientY
+  startTime = Date.now()
+}
+
+// 触摸结束，检测滑动手势
+const handleTouchEnd = (e: TouchEvent) => {
+  // 如果模态框打开或正在动画中，阻止滑动
+  if (isAnimating.value || isModalVisible.value) return
+  
+  const touch = e.changedTouches[0]
+  const endX = touch.clientX
+  const endY = touch.clientY
+  const endTime = Date.now()
+  
+  const deltaX = endX - startX
+  const deltaY = endY - startY
+  const deltaTime = endTime - startTime
+  
+  // 横屏模式下检测向左滑动手势（在设备坐标系中是向上滑动）
+  if (
+    deltaY < -80 && 
+    Math.abs(deltaX) < 150 && 
+    deltaTime < 500
+  ) {
+    triggerSwipeAnimation()
   }
 }
+
+// 触发滑动动画和跳转
+const triggerSwipeAnimation = () => {
+  if (isAnimating.value) return
+  
+  isAnimating.value = true
+  
+  // 跳转到结语页面
+  setTimeout(() => {
+    router.push('/page4')
+  }, 1000)
+}
+
+// 处理触摸事件（移动端优化）
+// const handleTouchStartButton = () => {
+//   if (closeBtn.value) {
+//     closeBtn.value.classList.add('touch-active')
+//     setTimeout(() => {
+//       closeBtn.value?.classList.remove('touch-active')
+//     }, 150)
+//   }
+// }
 
 
 </script>
@@ -1117,6 +1204,112 @@ const handleTouchStart = () => {
   50% {
     opacity: 1;
     transform: scale(1.1);
+  }
+}
+
+/* 手势滑动提示 */
+.swipe-hint {
+  position: absolute;
+  right: 10%;
+  bottom: 5%;
+  transform: translateY(-50%);
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  user-select: none;
+  pointer-events: none;
+}
+
+.hand-gesture {
+  width: 45px;
+  height: 45px;
+  filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.3));
+  transition: all 0.3s ease;
+  animation: float 2s ease-in-out infinite;
+}
+
+.hand-gesture:hover {
+  transform: scale(1.1);
+  filter: drop-shadow(0 6px 16px rgba(0, 0, 0, 0.4));
+}
+
+/* 滑动动画 */
+.hand-gesture.swiping {
+  animation: swipeLeft 2s ease-in-out forwards;
+}
+
+/* 箭头容器 */
+.arrow-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  margin: 3px 0;
+  height: 24px;
+}
+
+/* 箭头样式 */
+.arrow {
+  font-size: 30px;
+  font-weight: bold;
+  color: #8B0000;
+  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
+  animation: slideLeft 1.5s ease-in-out infinite;
+  opacity: 0;
+}
+
+
+/* 箭头滑动动画 */
+@keyframes slideLeft {
+  0% {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  50% {
+    opacity: 1;
+    transform: translateX(-10px);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+}
+
+/* 滑动动画 */
+@keyframes swipeLeft {
+  0% {
+    transform: translateX(0) scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: translateX(-100px) scale(0.8);
+    opacity: 0.8;
+  }
+  100% {
+    transform: translateX(-200px) scale(0.6);
+    opacity: 0;
+  }
+}
+
+/* 浮动动画 */
+@keyframes float {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(-8px);
+  }
+}
+
+/* 脉冲动画 */
+@keyframes pulse {
+  0%, 100% {
+    opacity: 0.7;
+  }
+  50% {
+    opacity: 1;
   }
 }
 

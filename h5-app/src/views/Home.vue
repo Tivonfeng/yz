@@ -38,17 +38,18 @@
 
     <!-- 手势滑动提示 -->
     <div class="swipe-hint" v-motion="swipeHintMotion">
+
+		      <!-- 向左箭头动效 -->
+	<div class="arrow-container">
+        <span class="arrow" v-for="i in 5" :key="i" :style="{ animationDelay: (i - 1) * 0.2 + 's' }">‹</span>
+      </div>
       <img 
         src="@/assets/yz/01/hand.png" 
         alt="滑动手势" 
         class="hand-gesture"
         :class="{ 'swiping': isAnimating }"
       />
-      <!-- 向左箭头动效 -->
-      <div class="arrow-container">
-        <span class="arrow" v-for="i in 5" :key="i" :style="{ animationDelay: (i - 1) * 0.2 + 's' }">‹</span>
-      </div>
-      <div class="swipe-text">向左滑动</div>
+
     </div>
 
   </div>
@@ -447,10 +448,10 @@ onMounted(async () => {
 
 /* 箭头样式 */
 .arrow {
-  font-size: 14px;
+	font-size: 30px;
   font-weight: bold;
-  color: rgba(255, 255, 255, 0.8);
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+  color: #8B0000;
+  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
   animation: slideLeft 1.5s ease-in-out infinite;
   opacity: 0;
 }

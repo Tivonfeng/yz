@@ -1,6 +1,6 @@
 <template>
   <div 
-    class="page2 landscape-forced" 
+    class="page4 landscape-forced" 
     @touchstart="handleTouchStart"
     @touchend="handleTouchEnd"
   >
@@ -14,35 +14,27 @@
     </div>
 
     <!-- 主要内容区域 -->
-    <div class="max-w-[85%] bg-white/95 backdrop-blur-md border border-red-200/50 rounded-2xl p-8 shadow-2xl z-[5]" v-motion="contentMotion">
+    <div class="max-w-[85%] bg-white/95 backdrop-blur-md border border-red-200/50 rounded-2xl p-5 shadow-2xl z-[5]" v-motion="contentMotion">
       <div class="relative pl-6">
         <!-- 左侧装饰线 -->
         <div class="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-red-600 via-red-500 to-red-600 rounded-full"></div>
         
         <h1 class="text-3xl font-bold text-red-800 text-center mb-6 tracking-[3px] drop-shadow-sm relative pb-4">
-          前言
+          结语
           <div class="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-15 h-0.5 bg-gradient-to-r from-transparent via-red-500 to-transparent"></div>
         </h1>
-        <p class="text-[15px] leading-relaxed text-gray-800 indent-8 tracking-wider font-normal">
-          今年是中国人民抗日战争暨世界反法西斯战争胜利80周年。抗日战争中，新四军第二师驰骋于安徽、江苏两省的淮南大地，为中华民族独立作出了重要贡献。
-值此纪念之际，当年淮南抗日根据地区域内的苏皖两省6个县级融媒体中心，开展了"铭记抗战历史·传承红色基因 —— 烽火第二师"苏皖融媒联合采访行动，弘扬伟大抗战精神，展望和平发展未来。
-        </p>
+        <div class="space-y-1">
+          <p class="text-[15px] leading-relaxed text-gray-800 indent-8 tracking-wider font-normal">
+            抗战期间，新四军第二师在淮南开创了拥有330万人口，3万平方公里的解放区，建立了17个县的抗日民主政权。主力部队从一开始的不到3100人，发展到抗战胜利后4个旅11个团共35000多人。地方部队15000余人，民兵多达20万人。
+          </p>
+          <p class="text-[15px] leading-relaxed text-gray-800 indent-8 tracking-wider font-normal">
+            让我们牢记新四军第二师的光荣历史,继承和发扬新四军第二师的优良传统,进一步弘扬"铁军"精神,为中华民族的繁荣富强而努力奋斗。
+          </p>
+        </div>
       </div>
     </div>
 
-    <!-- 手势滑动提示 -->
-    <div class="swipe-hint" v-motion="navHintMotion">
-      <!-- 向左箭头动效 -->
-      <div class="arrow-container">
-        <span class="arrow" v-for="i in 5" :key="i" :style="{ animationDelay: (i - 1) * 0.2 + 's' }">‹</span>
-      </div>
-      <img 
-        src="@/assets/yz/01/hand.png" 
-        alt="滑动手势" 
-        class="hand-gesture"
-        :class="{ 'swiping': isAnimating }"
-      />
-    </div>
+
   </div>
 </template>
 
@@ -87,7 +79,7 @@ const contentMotion = computed(() => ({
   }
 }))
 
-// 导航提示动画
+// 完成提示动画
 const navHintMotion = computed(() => ({
   initial: { opacity: 0, x: 100 },
   enter: { 
@@ -124,31 +116,31 @@ const handleTouchEnd = (e: TouchEvent) => {
   const deltaY = endY - startY
   const deltaTime = endTime - startTime
   
-  // 横屏模式下检测向左滑动手势（在设备坐标系中是向上滑动）
+  // 横屏模式下检测向右滑动手势（返回首页）
   if (
-    deltaY < -80 && 
+    deltaY > 80 && 
     Math.abs(deltaX) < 150 && 
     deltaTime < 500
   ) {
-    triggerSwipeAnimation()
+    triggerReturnAnimation()
   }
 }
 
-// 触发滑动动画和跳转
-const triggerSwipeAnimation = () => {
+// 触发返回动画和跳转
+const triggerReturnAnimation = () => {
   if (isAnimating.value) return
   
   isAnimating.value = true
   
-  // 跳转到下一页
+  // 返回首页
   setTimeout(() => {
-    router.push('/page3') // 这里可以替换为第三页的路径
+    router.push('/') 
   }, 1000)
 }
 </script>
 
 <style scoped>
-.page2 {
+.page4 {
   width: 100%;
   height: 100%;
   position: relative;
@@ -174,12 +166,10 @@ const triggerSwipeAnimation = () => {
   height: 40px;
   width: auto;
   object-fit: contain;
-  /* filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.3)); */
 }
 
-
-/* 手势滑动提示 */
-.swipe-hint {
+/* 完成提示 */
+.completion-hint {
   position: absolute;
   right: 10%;
   bottom: 5%;
@@ -193,86 +183,37 @@ const triggerSwipeAnimation = () => {
   pointer-events: none;
 }
 
-.hand-gesture {
-  width: 45px;
-  height: 45px;
-  filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.3));
-  transition: all 0.3s ease;
-  animation: float 2s ease-in-out infinite;
+.completion-text {
+  font-size: 12px;
+  color: #8B0000;
+  font-weight: 600;
+  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
+  letter-spacing: 1px;
+  background: rgba(255, 255, 255, 0.85);
+  padding: 6px 12px;
+  border-radius: 15px;
+  border: 1px solid rgba(139, 0, 0, 0.2);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  animation: pulse 2s ease-in-out infinite;
+  box-shadow: 0 2px 8px rgba(139, 0, 0, 0.2);
 }
 
-.hand-gesture:hover {
-  transform: scale(1.1);
-  filter: drop-shadow(0 6px 16px rgba(0, 0, 0, 0.4));
-}
-
-/* 滑动动画 */
-.hand-gesture.swiping {
-  animation: swipeLeft 2s ease-in-out forwards;
-}
-
-/* 箭头容器 */
-.arrow-container {
+/* 图标容器 */
+.icon-container {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 3px;
-  margin: 3px 0;
   height: 24px;
 }
 
-/* 箭头样式 */
-.arrow {
+/* 完成图标样式 */
+.completion-icon {
   font-size: 30px;
   font-weight: bold;
-  color: #8B0000;
+  color: #22c55e;
   text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
-  animation: slideLeft 1.5s ease-in-out infinite;
-  opacity: 0;
-}
-
-
-
-/* 箭头滑动动画 */
-@keyframes slideLeft {
-  0% {
-    opacity: 0;
-    transform: translateX(20px);
-  }
-  50% {
-    opacity: 1;
-    transform: translateX(-10px);
-  }
-  100% {
-    opacity: 0;
-    transform: translateX(-30px);
-  }
-}
-
-/* 滑动动画 */
-@keyframes swipeLeft {
-  0% {
-    transform: translateX(0) scale(1);
-    opacity: 1;
-  }
-  50% {
-    transform: translateX(-100px) scale(0.8);
-    opacity: 0.8;
-  }
-  100% {
-    transform: translateX(-200px) scale(0.6);
-    opacity: 0;
-  }
-}
-
-/* 浮动动画 */
-@keyframes float {
-  0%, 100% {
-    transform: translateX(0);
-  }
-  50% {
-    transform: translateX(-8px);
-  }
+  animation: checkPulse 2s ease-in-out infinite;
 }
 
 /* 脉冲动画 */
@@ -285,4 +226,15 @@ const triggerSwipeAnimation = () => {
   }
 }
 
+/* 完成图标脉冲动画 */
+@keyframes checkPulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.8;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 1;
+  }
+}
 </style>
