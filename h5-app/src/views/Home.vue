@@ -380,8 +380,8 @@ onMounted(async () => {
 /* 手势滑动提示 */
 .swipe-hint {
   position: absolute;
-  right: 12%;
-  top: 70%;
+  right: 7%;
+  top: 50%;
   transform: translateY(-50%);
   z-index: 20;
   display: flex;
