@@ -1,15 +1,5 @@
 <template>
   <div class="relative bg-white rounded-2xl w-[80%] h-[80%] overflow-hidden shadow-2xl animate-modal-enter flex mt-8" @click.stop>
-    <!-- 关闭按钮 -->
-    <button 
-      class="absolute top-0 right-1 w-10 h-10 bg-black/5 hover:bg-red-50 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 z-30 group border border-gray-200 hover:border-red-200"
-      @click="$emit('close')" 
-      aria-label="关闭"
-    >
-      <svg class="w-5 h-5 text-gray-500 group-hover:text-red-600 transition-colors" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 6l12 12M6 18L18 6"/>
-      </svg>
-    </button>
 
     <!-- 彩带装饰 -->
     <!-- <img src="@/assets/yz/04/彩带1.png" class="absolute -bottom-4 -left-4 w-30 h-30 opacity-80 pointer-events-none z-10 animate-ribbon"> -->
@@ -239,6 +229,7 @@ watch(() => props.cityData, () => {
   animation: detailFade 0.3s ease-out;
 }
 
+
 @keyframes modalEnter {
   from {
     opacity: 0;
@@ -260,6 +251,7 @@ watch(() => props.cityData, () => {
     transform: translateY(0);
   }
 }
+
 
 /* 文本截断 */
 .line-clamp-2 {

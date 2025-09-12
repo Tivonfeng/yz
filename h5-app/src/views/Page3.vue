@@ -96,7 +96,10 @@
       enter-from-class="modal-enter-from"
       leave-to-class="modal-leave-to"
     >
-      <div v-if="isModalVisible" class="city-modal-overlay" @click="closeCityModal">
+      <div 
+        v-if="isModalVisible" 
+        class="city-modal-overlay"
+      >
         <img 
           src="@/assets/yz/03/角标.png" 
           alt="角标装饰" 
@@ -104,6 +107,20 @@
         />
         <!-- 彩带装饰 -->
         <img src="@/assets/yz/04/彩带1.png" class="absolute bottom-[4%] left-[8%] w-30 h-30 opacity-80 pointer-events-none z-20 animate-ribbon">
+        
+        <!-- 关闭按钮 - 右边中间位置 -->
+        <button 
+          ref="closeBtn"
+          class="absolute right-4 top-[56%] transform -translate-y-1/2 w-9 h-9 backdrop-blur-md bg-white/95 hover:bg-red-50/98 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 shadow-lg hover:shadow-2xl z-50 group border-2 border-white/70 hover:border-red-300/80 animate-pulse-gentle close-btn"
+          @click="handleCloseClick" 
+          @touchstart="handleTouchStart"
+          aria-label="关闭"
+        >
+          <svg ref="closeIcon" class="w-5 h-5 text-gray-700 group-hover:text-red-600 transition-all duration-500 group-hover:rotate-45 close-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M6 6l12 12M6 18L18 6"/>
+          </svg>
+        </button>
+        
 		<CityModal v-if="selectedCityData && isModalVisible" :cityData="selectedCityData" @close="closeCityModal"></CityModal>
       </div>
     </Transition>
@@ -361,6 +378,52 @@ const openCityModal = (cityKey: keyof typeof citiesData) => {
 const closeCityModal = () => {
   isModalVisible.value = false
   selectedCityData.value = null
+}
+
+// 关闭按钮和图标的引用
+const closeBtn = ref<HTMLButtonElement | null>(null)
+const closeIcon = ref<SVGSVGElement | null>(null)
+
+// 处理关闭按钮点击，优化动画效果
+const handleCloseClick = () => {
+  // 防止重复点击
+  if (closeBtn.value?.classList.contains('clicked')) {
+    return
+  }
+  
+  // 添加点击动画类
+  if (closeBtn.value) {
+    closeBtn.value.classList.add('clicked', 'closing')
+  }
+  if (closeIcon.value) {
+    closeIcon.value.classList.add('rotating')
+  }
+  
+  // 分阶段关闭动画
+  setTimeout(() => {
+    // 开始模态框退出动画
+    closeCityModal()
+  }, 200) // 先让按钮动画播放一段时间
+  
+  // 清理动画类
+  setTimeout(() => {
+    if (closeBtn.value) {
+      closeBtn.value.classList.remove('clicked', 'closing')
+    }
+    if (closeIcon.value) {
+      closeIcon.value.classList.remove('rotating')
+    }
+  }, 800) // 总动画时长
+}
+
+// 处理触摸事件（移动端优化）
+const handleTouchStart = () => {
+  if (closeBtn.value) {
+    closeBtn.value.classList.add('touch-active')
+    setTimeout(() => {
+      closeBtn.value?.classList.remove('touch-active')
+    }, 150)
+  }
 }
 
 
@@ -777,44 +840,64 @@ const closeCityModal = () => {
   justify-content: center;
 }
 
-/* Vue Transition 进场动效 */
+/* Vue Transition 进场动效 - 优化版本 */
 .modal-enter-active {
-  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 .modal-enter-active .overlay-image {
-  transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) 0.2s;
+  transition: all 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) 0.15s;
+}
+
+.modal-enter-active .close-btn {
+  transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) 0.3s;
 }
 
 .modal-enter-from {
   opacity: 0;
   backdrop-filter: blur(0px);
   -webkit-backdrop-filter: blur(0px);
+  transform: scale(1.05);
 }
 
 .modal-enter-from .overlay-image {
   opacity: 0;
-  transform: scale(0.3) rotate(-90deg);
+  transform: scale(0.2) rotate(-120deg);
 }
 
-/* Vue Transition 出场动效 */
+.modal-enter-from .close-btn {
+  opacity: 0;
+  transform: translateY(-50%) scale(0.3) rotate(-90deg);
+}
+
+/* Vue Transition 出场动效 - 优化版本 */
 .modal-leave-active {
-  transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 .modal-leave-active .overlay-image {
-  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.1s;
+  transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55) 0.1s;
+}
+
+.modal-leave-active .close-btn {
+  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 .modal-leave-to {
   opacity: 0;
   backdrop-filter: blur(0px);
   -webkit-backdrop-filter: blur(0px);
+  transform: scale(0.98);
 }
 
 .modal-leave-to .overlay-image {
   opacity: 0;
-  transform: scale(0.5) rotate(-45deg);
+  transform: scale(0.3) rotate(-180deg);
+}
+
+.modal-leave-to .close-btn {
+  opacity: 0;
+  transform: translateY(-50%) scale(0.5) rotate(180deg);
 }
 
 /* 彩带动效 - 优化旗帜飘动效果 */
@@ -883,6 +966,141 @@ const closeCityModal = () => {
   50% {
     transform: translateX(-50%) translateY(-5px);
   }
+}
+
+/* 关闭按钮动画 - 优化版本 */
+.animate-pulse-gentle {
+  animation: pulseGentle 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes pulseGentle {
+  0%, 100% {
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12), 0 0 0 0 rgba(239, 68, 68, 0.3);
+    transform: translateY(-50%) scale(1);
+  }
+  50% {
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.18), 0 0 0 8px rgba(239, 68, 68, 0.08);
+    transform: translateY(-50%) scale(1.05);
+  }
+}
+
+/* 关闭按钮点击动效 - 多阶段动画 */
+.close-btn.clicked {
+  animation: buttonClickSequence 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+}
+
+@keyframes buttonClickSequence {
+  0% {
+    transform: translateY(-50%) scale(1);
+    background: rgba(255, 255, 255, 0.95);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+  }
+  30% {
+    transform: translateY(-50%) scale(0.85);
+    background: rgba(254, 226, 226, 0.98);
+    box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+  }
+  60% {
+    transform: translateY(-50%) scale(1.1);
+    background: rgba(252, 165, 165, 0.95);
+    box-shadow: 0 6px 16px rgba(239, 68, 68, 0.4);
+  }
+  100% {
+    transform: translateY(-50%) scale(1.05);
+    background: rgba(248, 113, 113, 0.9);
+    box-shadow: 0 8px 24px rgba(239, 68, 68, 0.5);
+  }
+}
+
+/* 关闭按钮关闭状态 */
+.close-btn.closing {
+  animation: buttonClosing 0.4s ease-out forwards;
+}
+
+@keyframes buttonClosing {
+  0% {
+    opacity: 1;
+    transform: translateY(-50%) scale(1.05);
+  }
+  100% {
+    opacity: 0.6;
+    transform: translateY(-50%) scale(0.8) rotate(90deg);
+  }
+}
+
+/* 图标旋转动效 - 更流畅 */
+.close-icon.rotating {
+  animation: iconRotateImproved 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+}
+
+@keyframes iconRotateImproved {
+  0% {
+    transform: rotate(0deg) scale(1);
+    color: #374151;
+  }
+  25% {
+    transform: rotate(90deg) scale(1.2);
+    color: #dc2626;
+  }
+  50% {
+    transform: rotate(180deg) scale(0.8);
+    color: #b91c1c;
+  }
+  75% {
+    transform: rotate(270deg) scale(1.1);
+    color: #991b1b;
+  }
+  100% {
+    transform: rotate(360deg) scale(1);
+    color: #7f1d1d;
+  }
+}
+
+/* 鼠标悬停时的增强效果 */
+.close-btn:hover {
+  background: rgba(254, 242, 242, 0.98) !important;
+  border-color: rgba(239, 68, 68, 0.6) !important;
+  box-shadow: 0 12px 32px rgba(239, 68, 68, 0.25) !important;
+}
+
+.close-btn:hover .close-icon {
+  transform: rotate(45deg) scale(1.1);
+  color: #dc2626;
+  filter: drop-shadow(0 2px 4px rgba(239, 68, 68, 0.3));
+}
+
+/* 触摸激活效果（移动端） */
+.close-btn.touch-active {
+  transform: translateY(-50%) scale(0.95);
+  background: rgba(248, 113, 113, 0.9);
+  box-shadow: 0 6px 20px rgba(239, 68, 68, 0.4);
+  transition: all 0.15s ease-out;
+}
+
+/* 模态框遮罩增强效果 */
+.city-modal-overlay {
+  cursor: pointer;
+  animation: overlayFadeIn 0.4s ease-out;
+}
+
+@keyframes overlayFadeIn {
+  0% {
+    background: rgba(0, 0, 0, 0);
+  }
+  100% {
+    background: rgba(0, 0, 0, 0.3);
+  }
+}
+
+/* 模态框内容区域不触发关闭 */
+.city-modal-overlay > div:not(.close-btn) {
+  cursor: default;
+}
+
+/* 按键聚焦状态优化 */
+.close-btn:focus {
+  outline: 2px solid rgba(239, 68, 68, 0.5);
+  outline-offset: 2px;
 }
 
 </style>
