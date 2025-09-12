@@ -245,17 +245,17 @@ const citiesData = {
       {
         description: '罗炳辉将军率新四军三打来安城，首创"梅花桩战术"等经典战法，以少胜多巩固皖东抗日根据地，彰显我军卓越军事智慧与抗战精神。',
         title: '三打来安城​',
-        src: '/videos/yizheng-battle.mp4',
+        src: 'https://qiniuyun.lqcode.fun/yzdst/%E6%9D%A5%E5%AE%89/%E6%9D%A5%E5%AE%89%EF%BC%9A%E7%BD%97%E7%82%B3%E8%BE%89%20%E5%96%84%E7%94%A8%E9%AA%91%E5%85%B5%E7%9A%84%E6%8A%97%E6%97%A5%E5%90%8D%E5%B0%86%EF%BC%88%E6%9C%89%E5%AD%97%E7%89%88%EF%BC%89%201.mp4',
       },
 	  {
         description: '半塔保卫战是新四军以少胜多、固守待援的经典战例。1940年春，新四军2000余官兵顽强抵抗国民党万余兵力进攻，最终配合东援主力取得胜利，为华中抗日根据地巩固发展奠定重要基础。',
         title: '半塔保卫战​',
-        src: '/videos/yizheng-battle.mp4',
+        src: 'https://qiniuyun.lqcode.fun/yzdst/%E6%9D%A5%E5%AE%89/%E6%9D%A5%E5%AE%89%EF%BC%9A%E6%96%B0%E5%9B%9B%E5%86%9B%E5%9B%BA%E5%AE%88%E5%BE%85%E6%8F%B4%E7%9A%84%E7%BB%8F%E5%85%B8%E8%8C%83%E4%BE%8B%20%E5%8D%8A%E5%A1%94%E4%BF%9D%E5%8D%AB%E6%88%98%EF%BC%88%E6%9C%89%E5%AD%97%E7%89%88%EF%BC%89%201.mp4',
       },
 	  {
         description: '皖东女英雄侯静波，19岁壮烈牺牲。她宣传抗日、发动群众，被叛徒出卖后坚贞不屈，英勇就义。其精神永存，家乡静波村以她命名。',
         title: '英雄侯静波​',
-        src: '/videos/yizheng-battle.mp4',
+        src: 'https://qiniuyun.lqcode.fun/yzdst/%E6%9D%A5%E5%AE%89/%E6%9D%A5%E5%AE%89%EF%BC%9A%E4%BE%AF%E9%9D%99%E6%B3%A2%20%E7%9A%96%E4%B8%9C%E5%A4%A7%E5%9C%B0%E7%9A%84%E2%80%9C%E5%88%98%E8%83%A1%E5%85%B0%E2%80%9D%EF%BC%88%E6%9C%89%E5%AD%97%E7%89%88%EF%BC%89%201.mp4',
       },
     ]
   },
