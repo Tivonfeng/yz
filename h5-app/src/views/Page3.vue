@@ -369,9 +369,9 @@ const closeCityModal = () => {
 
 .overlay-image{
 	position: absolute;
-  top: 3%;
-  left: 3%;
-	height: 40px;
+  top: 2%;
+  left: 1%;
+	height: 30px;
   width: auto;
   object-fit: contain;
 }
