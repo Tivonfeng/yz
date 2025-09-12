@@ -22,7 +22,6 @@
         <!-- 城市标题 -->
         <div class="text-center mb-2 pb-1.5">
           <h2 class="text-xl font-bold text-red-800 mb-0.5 drop-shadow-sm tracking-wide">{{ cityData.name }}</h2>
-          <div class="text-xs text-red-600 font-medium bg-red-50 px-1.5 py-0.5 rounded-full inline-block">历史名城</div>
         </div>
 
         <!-- 历史事件列表 -->
@@ -114,6 +113,7 @@
                 <div v-if="selectedHistory.src" class="flex-1 flex items-center justify-center rounded-xl overflow-hidden min-h-0">
                   <video 
                     :src="selectedHistory.src" 
+                    :poster="selectedHistory.poster"
                     controls 
                     class="h-full object-contain rounded-lg shadow-2xl"
                     playsinline
@@ -174,6 +174,7 @@ interface HistoryItem {
   title: string
   description: string
   src: string
+  poster?: string
 }
 
 interface CityData {

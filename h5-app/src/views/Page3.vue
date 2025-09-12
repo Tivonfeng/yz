@@ -15,6 +15,11 @@
       <img src="@/assets/yz/03/位置线.png" alt="位置线" class="line-image" />
     </div>
 
+    <!-- 提示文字 -->
+    <div class="tip-text" v-motion="tipMotion">
+      点击城市名片，开启探索之旅
+    </div>
+
     <!-- 城市展示区域 -->
     <div class="cities-container" v-motion="citiesMotion">
       <!-- 仪征 - 左上角 -->
@@ -138,6 +143,20 @@ const lineMotion = computed(() => ({
   }
 }))
 
+// 提示文字动画
+const tipMotion = computed(() => ({
+  initial: { opacity: 0, y: 20 },
+  enter: { 
+    opacity: 1,
+    y: 0,
+    transition: { 
+      delay: 900,
+      duration: 800,
+      ease: [0.34, 1.56, 0.64, 1]
+    }
+  }
+}))
+
 // 城市容器动画
 const citiesMotion = computed(() => ({
   initial: { opacity: 0 },
@@ -246,17 +265,17 @@ const citiesData = {
       {
         description: '六合竹镇抗日民主政府纪念馆见证烽火岁月：新四军英勇作战，统一战线凝聚民心，革命精神永续传承。',
         title: '竹镇纪念馆​',
-        src: '/videos/yizheng-battle.mp4',
+        src: 'https://qiniuyun.lqcode.fun/yzdst/%E5%85%AD%E5%90%88/%E4%B9%8B%E4%B8%80%E2%80%94%E2%80%94%E7%AB%B9%E9%95%87%E6%8A%97%E6%97%A5%E6%B0%91%E4%B8%BB%E6%94%BF%E5%BA%9C%201.mp4',
       },
 	  {
         description: '烽火硝烟中诞生的竹镇派出所，是新四军在淮南路东设立的首个公安机构。80多年来，“三不走”精神薪火相传，如今民警以新“三不走”守护百姓，续写红色基因的时代新篇。',
         title: '精神薪火传​',
-        src: '/videos/yizheng-battle.mp4',
+        src: 'https://qiniuyun.lqcode.fun/yzdst/%E5%85%AD%E5%90%88/%E4%B9%8B%E4%BA%8C%E2%80%94%E2%80%94%E7%AB%B9%E9%95%87%E6%96%B0%E5%9B%9B%E5%86%9B%E6%B4%BE%E5%87%BA%E6%89%80%201.mp4',
       },
 	  {
         description: '《归队》讲述抗战英烈张凤鸣迁葬桂子山陵园，与战友团聚。守陵人与家属共同守护英雄记忆，传承牺牲精神，见证硝烟散尽、忠魂永存。',
         title: '忠魂归队颂​',
-        src: '/videos/yizheng-battle.mp4',
+        src: 'https://qiniuyun.lqcode.fun/yzdst/%E5%85%AD%E5%90%88/%E4%B9%8B%E4%B8%89%E2%80%94%E2%80%94%E5%BD%92%E9%98%9F%201.mp4',
       },
     ]
   },
@@ -266,7 +285,7 @@ const citiesData = {
       {
         description: '80多年前，军工英雄吴运铎在金湖艰苦条件下，带领群众自制弹药，身负重伤仍坚持科研，成功研制枪榴弹助力抗战，被誉为中国“保尔·柯察金”。其精神至今激励后人。',
         title: '军工英雄颂',
-        src: '/videos/yizheng-battle.mp4',
+        src: 'https://qiniuyun.lqcode.fun/yzdst/%E9%87%91%E6%B9%96/%E9%87%91%E6%B9%96%201.mp4',
       },
     ]
   },
@@ -296,27 +315,37 @@ const citiesData = {
       {
         description: '1943年1月，新四军军部移驻黄花塘两年零八个月，作为华中抗战指挥中心，粉碎敌人进攻、壮大队伍、开辟根据地，为抗战胜利贡献卓著。',
         title: '华中指挥部',
-        src: '/videos/yizheng-battle.mp4',
+        src: 'https://qiniuyun.lqcode.fun/yzdst/%E7%9B%B1%E7%9C%99/%E6%9C%89%E7%89%87%E5%A4%B4%20%20%E6%96%B0%E5%9B%9B%E5%86%9B%E7%9A%84%E7%83%BD%E7%81%AB%E5%B2%81%E6%9C%88%201.mp4',
       },
 	  {
         description: '陈毅在黄花塘工作期间，恰逢房东家娶亲，因条件艰苦，以一块红布作为结婚贺礼相赠，该红布被房东家保存近30多年后，于2003年捐赠给纪念馆，成为新四军与老百姓鱼水深情的见证。',
         title: '​红布寄深情',
-        src: '/videos/yizheng-battle.mp4',
+        src: 'https://qiniuyun.lqcode.fun/yzdst/%E7%9B%B1%E7%9C%99/%E6%9C%89%E7%89%87%E5%A4%B4%20%20%E9%97%A8%E5%B8%98%E7%9A%84%E6%95%85%E4%BA%8B%201.mp4',
       },
 	  {
         description: '黄花塘原名黄昏塘，因景致引“战地黄花分外香”改名，军部迁此因抗战形势、有利地理及好群众基础，驻扎两年零八个月后迁淮阴再北上山东。',
         title: '黄花塘之名​',
-        src: '/videos/yizheng-battle.mp4',
+        src: 'https://qiniuyun.lqcode.fun/yzdst/%E7%9B%B1%E7%9C%99/%E6%9C%89%E7%89%87%E5%A4%B4%20%20%E9%BB%84%E8%8A%B1%E5%A1%98%E7%9A%84%E6%88%98%E7%95%A5%E5%9C%B0%E4%BD%8D%201.mp4',
       },
 	  {
         description: '抗战时期，盱眙群众积极拥护新四军，1943至1944年自然灾害严重，仍为新四军送大量粮食、烧草；新四军通过制定《拥政爱民公约》、开展“双拥”活动及遵守“五不走”原则，与盱眙人民建立起鱼水深情。',
         title: '鱼水情谊深',
-        src: '/videos/yizheng-battle.mp4',
+        src: 'https://qiniuyun.lqcode.fun/yzdst/%E7%9B%B1%E7%9C%99/%E6%9C%89%E7%89%87%E5%A4%B4%20%20%E6%96%B0%E5%9B%9B%E5%86%9B%E5%85%AC%E5%B8%83%E6%8B%A5%E6%94%BF%E7%88%B1%E6%B0%91%E5%85%AC%E7%BA%A6%201.mp4',
       },
 	  {
         description: '1943年春，新四军文艺战士刘鹏为《白菜谣》谱曲，歌曲传唱华中根据地，彰显军民鱼水情与抗敌决心；同年年底，他高烧40多度仍坚持军部慰问演出，后因牙疳缺医少药以身殉职，年仅16岁，《白菜谣》至今仍被传唱。',
         title: '​白菜谣永传​​',
-        src: '/videos/yizheng-battle.mp4',
+        src: 'https://qiniuyun.lqcode.fun/yzdst/%E7%9B%B1%E7%9C%99/%E6%9C%89%E7%89%87%E5%A4%B4%20%20%E5%BD%93%E5%85%B5%E8%A6%81%E5%BD%93%E6%96%B0%E5%9B%9B%E5%86%9B%201.mp4',
+      },
+      {
+        description: '抗战期间，新四军作战科科长之女因母亲无奶水，由黄花塘乳娘一家家喂养长大。建国后，其女谭晓雯多次返乡感恩，“百家奶难忘黄花塘”的故事至今流传。',
+        title: '​百家奶情念​​',
+        src: 'https://qiniuyun.lqcode.fun/yzdst/%E7%9B%B1%E7%9C%99/%E6%9C%89%E7%89%87%E5%A4%B4%20%20%E9%BB%84%E8%8A%B1%E5%A1%98%E4%B9%B3%E5%A8%98%201.mp4',
+      },
+      {
+        description: '华中局部反攻时，盱眙涌现参军热潮，有“一母送四子”的真实故事；1940至1945年，盱眙4000多名热血儿女参加新四军，全县近八成革命烈士为抗战时期牺牲的相关人员，这源于军民互当亲人的深厚情谊。',
+        title: '​一母送四子​​',
+        src: 'https://qiniuyun.lqcode.fun/yzdst/%E7%9B%B1%E7%9C%99/%E6%9C%89%E7%89%87%E5%A4%B4%20%20%E6%8B%A5%E5%86%9B%E8%BF%90%E5%8A%A8%201.mp4',
       },
     ]
   }
@@ -822,6 +851,37 @@ const closeCityModal = () => {
   }
   66% {
     transform: translateX(-3px) skewX(-1.5deg);
+  }
+}
+
+/* 提示文字样式 */
+.tip-text {
+  position: absolute;
+  bottom: 8%;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 15;
+  font-size: 16px;
+  font-weight: 600;
+  color: #8B0000;
+  text-shadow: 0 2px 4px rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.85);
+  padding: 8px 16px;
+  border-radius: 20px;
+  border: 2px solid rgba(139, 0, 0, 0.2);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  letter-spacing: 1px;
+  animation: tipFloat 3s ease-in-out infinite;
+  box-shadow: 0 4px 12px rgba(139, 0, 0, 0.2);
+}
+
+@keyframes tipFloat {
+  0%, 100% {
+    transform: translateX(-50%) translateY(0);
+  }
+  50% {
+    transform: translateX(-50%) translateY(-5px);
   }
 }
 
