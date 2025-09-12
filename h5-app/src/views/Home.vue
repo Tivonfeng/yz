@@ -236,10 +236,10 @@ const initWeChatShare = async () => {
     
     // 分享配置
     const shareConfig = {
-      title: '纪念中国人民抗日战争暨世界反法西斯战争胜利80周年',
-      desc: '苏皖6家县级融媒体中心联合报道，共同缅怀历史，珍爱和平',
+      title: '铭记抗战历史 传承红色基因——烽火第二师',
+      desc: '仪征融媒与苏皖两省5家县融，以“烽火第二师”，纪念抗战胜利80周年。',
       link: window.location.origin + window.location.pathname,
-      imgUrl: `${window.location.origin}/favicon.ico`,
+      imgUrl: `${window.location.origin}/share.jpg`,
       type: 'link'
     }
     
