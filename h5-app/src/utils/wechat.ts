@@ -107,7 +107,7 @@ export class WeChatShare {
       })
 
       wx.config({
-        debug: true, // 生产环境关闭调试模式，开发时可设为true
+        debug: false, // 关闭调试模式，避免微信弹窗
         appId: config.appId,
         timestamp: config.timestamp,
         nonceStr: config.nonceStr,

@@ -239,8 +239,10 @@ const initWeChatShare = async () => {
     
     console.log('[微信分享] 环境检测:', environment)
 
-    // 获取微信配置参数
-    const wxConfig = await getWxConfig({ url: window.location.href })
+    // 获取微信配置参数 - 手机端需要使用完整的规范化URL
+    const currentUrl = window.location.href.split('#')[0] // 移除hash部分
+    console.log('[微信分享] 请求配置的URL:', currentUrl)
+    const wxConfig = await getWxConfig({ url: currentUrl })
     
     // 配置微信JSSDK
     await wechatShare.configWx(wxConfig)
