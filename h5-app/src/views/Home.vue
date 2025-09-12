@@ -220,40 +220,79 @@ const triggerSwipeAnimation = () => {
 }
 
 
+// 初始化微信分享功能
+const initWeChatShare = async () => {
+  if (!WeChatShare.isWeChatBrowser()) {
+    console.log('[微信分享] 非微信环境，跳过分享配置')
+    return
+  }
+
+  try {
+    console.log('[微信分享] 开始初始化，环境信息:', {
+      isWeChat: true,
+      version: WeChatShare.getWeChatVersion(),
+      url: window.location.href
+    })
+
+    const wechatShare = WeChatShare.getInstance()
+    const environment = wechatShare.getEnvironment()
+    
+    console.log('[微信分享] 环境检测:', environment)
+
+    // 获取微信配置参数
+    const wxConfig = await getWxConfig({ url: window.location.href })
+    
+    // 配置微信JSSDK
+    await wechatShare.configWx(wxConfig)
+    
+    // 分享配置
+    const shareConfig = {
+      title: '纪念中国人民抗日战争暨世界反法西斯战争胜利80周年',
+      desc: '苏皖6家县级融媒体中心联合报道，共同缅怀历史，珍爱和平',
+      link: window.location.origin + window.location.pathname,
+      imgUrl: `${window.location.origin}/favicon.ico`, // 使用更可靠的图片路径
+      type: 'link'
+    }
+    
+    // 设置分享内容和回调
+    await wechatShare.setShareContent(shareConfig, {
+      onSuccess: (type) => {
+        console.log(`[微信分享] 分享${type === 'timeline' ? '朋友圈' : '朋友'}成功`)
+        // 这里可以添加分享成功的统计或其他逻辑
+      },
+      onCancel: (type) => {
+        console.log(`[微信分享] 取消分享${type === 'timeline' ? '朋友圈' : '朋友'}`)
+      },
+      onFail: (error, type) => {
+        console.error(`[微信分享] 分享${type === 'timeline' ? '朋友圈' : '朋友'}失败:`, error)
+      }
+    })
+    
+    // 隐藏不需要的菜单项
+    await wechatShare.hideMenuItems()
+    
+    console.log('[微信分享] 初始化完成，当前配置:', wechatShare.getCurrentShareConfig())
+    
+  } catch (error) {
+    console.error('[微信分享] 初始化失败:', error)
+    
+    // 根据错误类型提供更好的用户体验
+    if (error instanceof Error) {
+      if (error.message.includes('域名未配置')) {
+        console.warn('[微信分享] 请在微信公众平台配置JS接口安全域名')
+      } else if (error.message.includes('签名验证失败')) {
+        console.warn('[微信分享] 服务端签名配置可能有问题')
+      }
+    }
+  }
+}
+
 // 初始化微信分享和事件监听
 onMounted(async () => {
-  // 检查是否在微信浏览器中
-  if (WeChatShare.isWeChatBrowser()) {
-    try {
-      const wechatShare = WeChatShare.getInstance()
-      
-      // 获取微信配置参数
-      const wxConfig = await getWxConfig({ url: window.location.href })
-      
-      // 分享配置
-      const shareConfig = {
-        title: '纪念中国人民抗日战争暨世界反法西斯战争胜利80周年',
-        desc: '苏皖6家县级融媒体中心联合报道，共同缅怀历史，珍爱和平',
-        link: window.location.href,
-        imgUrl: `${window.location.origin}/src/assets/yz/01/标题.png`
-      }
-      
-      // 配置微信JSSDK
-      await wechatShare.configWx(wxConfig)
-      
-      // 设置分享内容
-      wechatShare.setShareContent(shareConfig)
-      
-      // 隐藏不需要的菜单项
-      wechatShare.hideMenuItems()
-      
-      console.log('微信分享功能初始化成功')
-    } catch (error) {
-      console.error('微信分享初始化失败:', error)
-    }
-  } else {
-    console.log('非微信环境，跳过微信分享配置')
-  }
+  // 异步初始化微信分享，不阻塞页面渲染
+  initWeChatShare().catch(error => {
+    console.error('[微信分享] 异步初始化失败:', error)
+  })
 })
 
 </script>
