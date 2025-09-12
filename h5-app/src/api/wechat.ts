@@ -58,11 +58,11 @@ export async function getWxConfig(params: WxConfigParams): Promise<WxConfigRespo
     console.log('[微信分享] 请求API:', params.url)
     
     // 根据环境选择不同的API路径
-    const apiPath = import.meta.env.DEV 
+    const apiUrl = import.meta.env.DEV 
       ? `/api/wechat/share` // 开发环境使用代理
-      : `/wechat/share`     // 生产环境直接调用后端路径
+      : `https://noj.lqcode.fun/wechat/share` // 生产环境直接调用API服务器
     
-    const response = await fetch(`${apiPath}?url=${encodeURIComponent(params.url)}`, {
+    const response = await fetch(`${apiUrl}?url=${encodeURIComponent(params.url)}`, {
       method: 'GET',
       signal: controller.signal,
       headers: {
