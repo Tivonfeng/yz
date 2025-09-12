@@ -98,7 +98,7 @@
           class="overlay-image"
         />
         <!-- 彩带装饰 -->
-        <img src="@/assets/yz/04/彩带1.png" class="absolute bottom-[5%] left-[8%] w-30 h-30 opacity-80 pointer-events-none z-20 animate-ribbon">
+        <img src="@/assets/yz/04/彩带1.png" class="absolute bottom-[4%] left-[8%] w-30 h-30 opacity-80 pointer-events-none z-20 animate-ribbon">
 		<CityModal v-if="selectedCityData" :cityData="selectedCityData" @close="closeCityModal"></CityModal>
       </div>
     </Transition>
@@ -195,7 +195,7 @@ const citiesData = {
     historyItems: [
       {
         description: '1939年11月，新四军苏皖支队抵达仪征，在陈集镇沙集村成立中共仪征县委。1940年4月，仪征县抗日民主政府在月塘曹集成立，建立5个区、1个办事处和50多个乡政权。在津浦路东省委领导下，广泛动员群众，组织农抗会、青年队、民兵等地方武装，扩大和巩固抗日根据地，成为抗战的坚强堡垒。',
-        title: '月塘反击战',
+        title: '仪征政权立​',
         src: '/videos/yizheng-battle.mp4',
       },
 	  {
@@ -205,17 +205,17 @@ const citiesData = {
       },
 	  {
         description: '1941年春，日军推行“囚笼政策”，修筑公路工事，企图分割根据地。新四军二师多路出击，攻克谢集、刘集等据点，伏击援敌。4月16-17日，运用“梅花桩战术”在金牛山重创日伪军，歼敌500余人，缴获机枪、掷弹筒等武器，粉碎大规模扫荡，极大地增强了军民坚持敌后抗日斗争的信心。',
-        title: '月塘反击战',
+        title: '金牛山战斗​',
         src: '/videos/yizheng-battle.mp4',
       },
 	  {
         description: '月塘位于淮南根据地中心，成为华中局与苏南、上海地下党交通枢纽，三条秘密线路贯通南北，以茶食商行等为掩护，护送近千名干部、进步青年和领导人安全往来，转运重要文件和军需物资，从未发生问题，成为抗战时期重要生命线。',
-        title: '月塘反击战',
+        title: '秘密交通线​',
         src: '/videos/yizheng-battle.mp4',
       },
 	  {
         description: '1939年，曹兰田、陆毅等组建曹集民兵，从农抗会发展为地方武装，配合主力作战，破坏交通桥梁，掩护群众转移。两年内参加战斗50余次，歼敌100余人，逮捕叛徒特务20多人。1942年，陆毅获淮南路东英模大会嘉奖，曹集民兵被誉为“名闻淮南路东的民兵英雄集体”，其爱国精神永载史册。',
-        title: '月塘反击战',
+        title: '民兵英雄誉​',
         src: '/videos/yizheng-battle.mp4',
       },
     ]
@@ -225,17 +225,17 @@ const citiesData = {
 	historyItems: [
       {
         description: '罗炳辉将军率新四军三打来安城，首创"梅花桩战术"等经典战法，以少胜多巩固皖东抗日根据地，彰显我军卓越军事智慧与抗战精神。',
-        title: '月塘反击战',
+        title: '三打来安城​',
         src: '/videos/yizheng-battle.mp4',
       },
 	  {
         description: '半塔保卫战是新四军以少胜多、固守待援的经典战例。1940年春，新四军2000余官兵顽强抵抗国民党万余兵力进攻，最终配合东援主力取得胜利，为华中抗日根据地巩固发展奠定重要基础。',
-        title: '月塘反击战',
+        title: '半塔保卫战​',
         src: '/videos/yizheng-battle.mp4',
       },
 	  {
         description: '皖东女英雄侯静波，19岁壮烈牺牲。她宣传抗日、发动群众，被叛徒出卖后坚贞不屈，英勇就义。其精神永存，家乡静波村以她命名。',
-        title: '月塘反击战',
+        title: '英雄侯静波​',
         src: '/videos/yizheng-battle.mp4',
       },
     ]
@@ -245,17 +245,17 @@ const citiesData = {
 	historyItems: [
       {
         description: '六合竹镇抗日民主政府纪念馆见证烽火岁月：新四军英勇作战，统一战线凝聚民心，革命精神永续传承。',
-        title: '月塘反击战',
+        title: '竹镇纪念馆​',
         src: '/videos/yizheng-battle.mp4',
       },
 	  {
         description: '烽火硝烟中诞生的竹镇派出所，是新四军在淮南路东设立的首个公安机构。80多年来，“三不走”精神薪火相传，如今民警以新“三不走”守护百姓，续写红色基因的时代新篇。',
-        title: '月塘反击战',
+        title: '精神薪火传​',
         src: '/videos/yizheng-battle.mp4',
       },
 	  {
         description: '《归队》讲述抗战英烈张凤鸣迁葬桂子山陵园，与战友团聚。守陵人与家属共同守护英雄记忆，传承牺牲精神，见证硝烟散尽、忠魂永存。',
-        title: '月塘反击战',
+        title: '忠魂归队颂​',
         src: '/videos/yizheng-battle.mp4',
       },
     ]
@@ -265,7 +265,7 @@ const citiesData = {
 	historyItems: [
       {
         description: '80多年前，军工英雄吴运铎在金湖艰苦条件下，带领群众自制弹药，身负重伤仍坚持科研，成功研制枪榴弹助力抗战，被誉为中国“保尔·柯察金”。其精神至今激励后人。',
-        title: '月塘反击战',
+        title: '军工英雄颂',
         src: '/videos/yizheng-battle.mp4',
       },
     ]
@@ -275,17 +275,17 @@ const citiesData = {
 	historyItems: [
       {
         description: '80 多年前，面对国民党顽固派进攻，刘少奇、徐海东等指挥新四军打响定远自卫反击战。将士们协同作战 7 天获胜，建华中首个县级抗日民主政权，为抗战胜利筑牢屏障，精神永垂。',
-        title: '月塘反击战',
+        title: '定远自卫战​',
         src: '/videos/yizheng-battle.mp4',
       },
 	  {
         description: '80 多年前，“虎将” 徐海东带病赴华中，任新四军江北指挥部副指挥，指挥周家岗反 “扫荡” 首胜日军。他 9 次负伤仍坚守，以忠诚勇猛书写传奇，激励后人传承革命精神。',
-        title: '月塘反击战',
+        title: '虎将徐海东​',
         src: '/videos/yizheng-battle.mp4',
       },
 	  {
         description: '80 多年前，定远作为抗日根据地核心，新四军二师浴血奋战。王小庙安葬 1200 余名无名烈士，如今 “寻亲队伍” 与学界为其寻名，英烈精神永被铭记。',
-        title: '月塘反击战',
+        title: '英烈永铭记​',
         src: '/videos/yizheng-battle.mp4',
       },
     ]
@@ -295,27 +295,27 @@ const citiesData = {
 	historyItems: [
       {
         description: '1943年1月，新四军军部移驻黄花塘两年零八个月，作为华中抗战指挥中心，粉碎敌人进攻、壮大队伍、开辟根据地，为抗战胜利贡献卓著。',
-        title: '月塘反击战',
+        title: '华中指挥部',
         src: '/videos/yizheng-battle.mp4',
       },
 	  {
         description: '陈毅在黄花塘工作期间，恰逢房东家娶亲，因条件艰苦，以一块红布作为结婚贺礼相赠，该红布被房东家保存近30多年后，于2003年捐赠给纪念馆，成为新四军与老百姓鱼水深情的见证。',
-        title: '月塘反击战',
+        title: '​红布寄深情',
         src: '/videos/yizheng-battle.mp4',
       },
 	  {
         description: '黄花塘原名黄昏塘，因景致引“战地黄花分外香”改名，军部迁此因抗战形势、有利地理及好群众基础，驻扎两年零八个月后迁淮阴再北上山东。',
-        title: '月塘反击战',
+        title: '黄花塘之名​',
         src: '/videos/yizheng-battle.mp4',
       },
 	  {
         description: '抗战时期，盱眙群众积极拥护新四军，1943至1944年自然灾害严重，仍为新四军送大量粮食、烧草；新四军通过制定《拥政爱民公约》、开展“双拥”活动及遵守“五不走”原则，与盱眙人民建立起鱼水深情。',
-        title: '月塘反击战',
+        title: '鱼水情谊深',
         src: '/videos/yizheng-battle.mp4',
       },
 	  {
         description: '1943年春，新四军文艺战士刘鹏为《白菜谣》谱曲，歌曲传唱华中根据地，彰显军民鱼水情与抗敌决心；同年年底，他高烧40多度仍坚持军部慰问演出，后因牙疳缺医少药以身殉职，年仅16岁，《白菜谣》至今仍被传唱。',
-        title: '月塘反击战',
+        title: '​白菜谣永传​​',
         src: '/videos/yizheng-battle.mp4',
       },
     ]
@@ -369,11 +369,12 @@ const closeCityModal = () => {
 
 .overlay-image{
 	position: absolute;
-  top: 2%;
-  left: 1%;
+  top: 3%;
+  left: 3%;
 	height: 30px;
   width: auto;
   object-fit: contain;
+  filter: brightness(1.1) contrast(1.1);
 }
 
 /* 位置线 */
@@ -787,19 +788,40 @@ const closeCityModal = () => {
   transform: scale(0.5) rotate(-45deg);
 }
 
-/* 彩带动效 */
+/* 彩带动效 - 优化旗帜飘动效果 */
 .animate-ribbon {
-  animation: ribbonFloat 3s ease-in-out infinite;
+  animation: ribbonWave 2.2s ease-in-out infinite, ribbonSway 3.5s ease-in-out infinite;
+  transform-origin: left center;
 }
 
-@keyframes ribbonFloat {
+@keyframes ribbonWave {
   0%, 100% {
-    transform: translateY(0px) rotate(0deg);
+    transform: translateY(0px) rotate(0deg) scaleX(1);
     opacity: 0.8;
   }
+  25% {
+    transform: translateY(-6px) rotate(-1.5deg) scaleX(1.03);
+    opacity: 0.85;
+  }
   50% {
-    transform: translateY(-6px) rotate(1deg);
+    transform: translateY(-12px) rotate(3deg) scaleX(0.96);
     opacity: 0.9;
+  }
+  75% {
+    transform: translateY(-5px) rotate(-1deg) scaleX(1.02);
+    opacity: 0.85;
+  }
+}
+
+@keyframes ribbonSway {
+  0%, 100% {
+    transform: translateX(0px) skewX(0deg);
+  }
+  33% {
+    transform: translateX(4px) skewX(2deg);
+  }
+  66% {
+    transform: translateX(-3px) skewX(-1.5deg);
   }
 }
 

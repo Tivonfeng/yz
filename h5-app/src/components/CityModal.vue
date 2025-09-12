@@ -1,5 +1,5 @@
 <template>
-  <div class="relative bg-white rounded-2xl w-[80%] h-[80%]  overflow-hidden shadow-2xl animate-modal-enter flex" @click.stop>
+  <div class="relative bg-white rounded-2xl w-[80%] h-[80%] overflow-hidden shadow-2xl animate-modal-enter flex mt-8" @click.stop>
     <!-- 关闭按钮 -->
     <button 
       class="absolute top-0 right-1 w-10 h-10 bg-black/5 hover:bg-red-50 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 z-30 group border border-gray-200 hover:border-red-200"
