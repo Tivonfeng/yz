@@ -107,7 +107,8 @@
         />
         <!-- 彩带装饰 -->
         <img src="@/assets/yz/04/彩带1.png" class="absolute bottom-[4%] left-[8%] w-30 h-30 opacity-80 pointer-events-none z-20 animate-ribbon">
-        
+        <img src="@/assets/yz/04/彩带2.png" class="absolute bottom-[1%] right-[9%] w-30 h-30 opacity-80 pointer-events-none z-20 animate-ribbon">
+		<img src="@/assets/yz/04/五角星.png" class="absolute top-[12%] right-[-1%] w-20 opacity-80 pointer-events-none z-20 animate-ribbon scale-x-[-1] animate-twinkle">
         <!-- 关闭按钮 - 右边中间位置 -->
         <button 
           ref="closeBtn"
@@ -1101,6 +1102,22 @@ const handleTouchStart = () => {
 .close-btn:focus {
   outline: 2px solid rgba(239, 68, 68, 0.5);
   outline-offset: 2px;
+}
+
+/* 五角星闪烁动画 */
+.animate-twinkle {
+  animation: twinkle 3s ease-in-out infinite;
+}
+
+@keyframes twinkle {
+  0%, 100% {
+    opacity: 0.8;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.1);
+  }
 }
 
 </style>

@@ -11,7 +11,7 @@
       <div class="flex-shrink-0 w-[22%] bg-gradient-to-br from-gray-50 to-gray-100 p-2 overflow-y-auto custom-scrollbar border-r border-gray-200">
         <!-- 城市标题 -->
         <div class="text-center mb-2 pb-1.5">
-          <h2 class="text-xl font-bold text-red-800 mb-0.5 drop-shadow-sm tracking-wide">{{ cityData.name }}</h2>
+          <h2 class="text-2xl font-bold text-red-800 mb-0.5 drop-shadow-sm tracking-wide">{{ cityData.name }}</h2>
         </div>
 
         <!-- 历史事件列表 -->
@@ -74,7 +74,7 @@
         <!-- 详情标题栏 - 紧凑样式 -->
         <div class="flex-shrink-0 bg-gradient-to-r from-red-800 via-red-700 to-red-600 text-white px-4 py-2.5 shadow-xl">
           <div class="flex items-center justify-between">
-            <h4 class="text-xs font-bold truncate tracking-wide">
+            <h4 class="text-base font-bold truncate tracking-wide">
               {{ selectedHistory?.title || (cityData.name + ' 城市介绍') }}
             </h4>
           </div>
@@ -87,19 +87,22 @@
           <div v-if="selectedHistory" class="flex flex-col w-full h-full">
             
             <!-- 压缩的文字描述区域 -->
-            <div class="h-[32%] bg-gradient-to-br flex-shrink-0 p-1">
+            <div class="h-[34%] bg-gradient-to-br flex-shrink-0 p-1">
               <div class="h-full bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
-                <div class="h-full p-4 overflow-y-scroll" style="-webkit-overflow-scrolling: touch;">
-                  <p class="text-xs leading-5 text-gray-800 whitespace-pre-line font-light">
+                <div class="h-full pt-1 pb-1 px-3 overflow-hidden relative" style="-webkit-overflow-scrolling: touch;">
+                  <div 
+                    class="text-base leading-6 text-gray-800 font-light scroll-text-content"
+                    :style="{ transform: `translateY(${scrollOffset}px)` }"
+                  >
                     {{ selectedHistory.description }}
-                  </p>
+                  </div>
                 </div>
               </div>
             </div>
 
             <!-- 主要视频显示区域 -->
             <div class="flex-1 bg-gradient-to-br  min-h-0">
-              <div class="h-full p-2 flex flex-col">
+              <div class="h-full p-1 flex flex-col">
                 <div v-if="selectedHistory.src" class="flex-1 flex items-center justify-center rounded-xl overflow-hidden min-h-0">
                   <video 
                     :src="selectedHistory.src" 
@@ -158,7 +161,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, watch } from 'vue'
+import { ref, computed, watch, onMounted } from 'vue'
 
 interface HistoryItem {
   title: string
@@ -182,22 +185,85 @@ const emit = defineEmits(['close'])
 // 选中的历史事件索引
 const selectedHistoryIndex = ref(0)
 
+// 滚动字幕相关状态
+const scrollOffset = ref(0)
+const scrollTimer = ref<number | null>(null)
+
 // 选中的历史事件
 const selectedHistory = computed(() => {
   if (!props.cityData?.historyItems?.length) return null
   return props.cityData.historyItems[selectedHistoryIndex.value] || null
 })
 
+
+// 开始滚动字幕效果
+const startScrollText = () => {
+  if (scrollTimer.value) {
+    clearInterval(scrollTimer.value)
+  }
+  
+  scrollOffset.value = 0
+  
+  // 延迟获取尺寸，确保DOM已渲染
+  setTimeout(() => {
+    const container = document.querySelector('.scroll-text-content')?.parentElement
+    const content = document.querySelector('.scroll-text-content')
+    
+    if (container && content) {
+      const containerHeight = container.clientHeight
+      const contentHeight = content.scrollHeight
+      
+      // 只有当内容高度大于容器高度时才开始滚动
+      if (contentHeight > containerHeight) {
+        const maxScroll = contentHeight - containerHeight
+        const scrollStep = 1 // 每次滚动1像素
+        
+        scrollTimer.value = window.setInterval(() => {
+          if (Math.abs(scrollOffset.value) < maxScroll) {
+            scrollOffset.value -= scrollStep
+          } else {
+            // 滚动完成，暂停一会儿再重新开始
+            setTimeout(() => {
+              scrollOffset.value = 0
+              startScrollText()
+            }, 2000)
+            clearInterval(scrollTimer.value!)
+            scrollTimer.value = null
+          }
+        }, 100) // 每100ms滚动一次
+      } else {
+        // 内容未超出容器，不需要滚动，确保内容在顶部显示
+        scrollOffset.value = 0
+      }
+    }
+  }, 100)
+}
+
 // 选择历史事件
 const selectHistory = (index: number) => {
   selectedHistoryIndex.value = index
+  // 选择新事件时重新开始滚动字幕效果
+  setTimeout(() => {
+    startScrollText()
+  }, 100)
 }
 
 
 // 监听城市数据变化，重置选中状态
 watch(() => props.cityData, () => {
   selectedHistoryIndex.value = 0
+  // 延迟启动滚动字幕效果，确保DOM更新完成
+  setTimeout(() => {
+    startScrollText()
+  }, 200)
 }, { immediate: true })
+
+// 组件卸载时清理定时器
+onMounted(() => {
+  setTimeout(() => {
+    startScrollText()
+  }, 300)
+})
 </script>
 
 <style scoped>
@@ -280,5 +346,14 @@ watch(() => props.cityData, () => {
   }
 }
 
+/* 滚动字幕效果样式 */
+.scroll-text-content {
+  position: relative;
+  padding: 8px 0;
+  white-space: pre-line;
+  transition: transform 0.1s linear;
+  word-break: break-word;
+  line-height: 1.6;
+}
 
 </style>
