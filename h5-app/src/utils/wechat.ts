@@ -68,14 +68,14 @@ export class WeChatShare {
     }
 
     // 开发环境跳过WeChat配置
-    const isDev = import.meta.env.DEV
+    // const isDev = import.meta.env.DEV
     
-    if (isDev) {
-      console.warn('[微信分享] 开发环境跳过WeChat JSSDK配置')
-      this.isConfigured = true
-      this.configPromise = Promise.resolve()
-      return this.configPromise
-    }
+    // if (isDev) {
+    //   console.warn('[微信分享] 开发环境跳过WeChat JSSDK配置')
+    //   this.isConfigured = true
+    //   this.configPromise = Promise.resolve()
+    //   return this.configPromise
+    // }
 
     // 检查是否在微信环境中
     if (!this.environment.isWeChat) {

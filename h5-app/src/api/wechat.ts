@@ -57,7 +57,12 @@ export async function getWxConfig(params: WxConfigParams): Promise<WxConfigRespo
     
     console.log('[微信分享] 请求API:', params.url)
     
-    const response = await fetch(`/api/wechat/share?url=${encodeURIComponent(params.url)}`, {
+    // 根据环境选择不同的API路径
+    const apiPath = import.meta.env.DEV 
+      ? `/api/wechat/share` // 开发环境使用代理
+      : `/wechat/share`     // 生产环境直接调用后端路径
+    
+    const response = await fetch(`${apiPath}?url=${encodeURIComponent(params.url)}`, {
       method: 'GET',
       signal: controller.signal,
       headers: {
@@ -136,11 +141,6 @@ export async function getWxConfig(params: WxConfigParams): Promise<WxConfigRespo
   }
 }
 
-// 生成随机字符串
-function generateNonceStr(): string {
-  return Math.random().toString(36).substring(2, 15) + 
-         Math.random().toString(36).substring(2, 15)
-}
 
 // 微信分享统计API（可选）
 export async function recordShareEvent(data: {
