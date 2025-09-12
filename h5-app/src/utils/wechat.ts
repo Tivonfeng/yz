@@ -98,13 +98,6 @@ export class WeChatShare {
         'showMenuItems'              // 显示菜单项
       ]
 
-      console.log('[微信分享] 开始配置JSSDK:', {
-        appId: config.appId,
-        timestamp: config.timestamp,
-        nonceStr: config.nonceStr,
-        jsApiList,
-        environment: this.environment
-      })
 
       wx.config({
         debug: false, // 关闭调试模式，避免微信弹窗
@@ -118,7 +111,6 @@ export class WeChatShare {
       wx.ready(() => {
         clearTimeout(configTimeout)
         this.isConfigured = true
-        console.log('[微信分享] JSSDK配置成功，环境信息:', this.environment)
         
         // 在wx.ready内设置分享内容 - iOS兼容性关键
         if (shareConfig) {
@@ -157,7 +149,6 @@ export class WeChatShare {
 
   // 在wx.ready内设置分享内容 - iOS兼容性关键
   private setShareContentInReady(shareConfig: WeChatShareConfig, callbacks?: ShareCallbacks): void {
-    console.log('[微信分享] 在wx.ready内设置分享内容:', shareConfig.title)
     
     // 验证分享配置
     this.validateShareConfig(shareConfig)
@@ -171,7 +162,6 @@ export class WeChatShare {
         link: shareConfig.link,
         imgUrl: shareConfig.imgUrl,
         success: () => {
-          console.log('[微信分享] 分享给朋友配置成功')
           callbacks?.onSuccess?.('appmessage')
         },
         fail: (res: any) => {
@@ -186,7 +176,6 @@ export class WeChatShare {
         link: shareConfig.link,
         imgUrl: shareConfig.imgUrl,
         success: () => {
-          console.log('[微信分享] 分享到朋友圈配置成功')
           callbacks?.onSuccess?.('timeline')
         },
         fail: (res: any) => {
@@ -314,9 +303,7 @@ export class WeChatShare {
 
     wx.hideMenuItems({
       menuList: menuList as any,
-      success: () => {
-        console.log('[微信分享] 隐藏菜单项成功:', menuList)
-      },
+      success: () => {},
       fail: (res: any) => {
         console.error('[微信分享] 隐藏菜单项失败:', res)
       }

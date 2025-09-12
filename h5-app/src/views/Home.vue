@@ -228,20 +228,10 @@ const initWeChatShare = async () => {
   }
 
   try {
-    console.log('[微信分享] 开始初始化，环境信息:', {
-      isWeChat: true,
-      version: WeChatShare.getWeChatVersion(),
-      url: window.location.href
-    })
-
     const wechatShare = WeChatShare.getInstance()
-    const environment = wechatShare.getEnvironment()
-    
-    console.log('[微信分享] 环境检测:', environment)
 
     // 获取微信配置参数 - 手机端需要使用完整的规范化URL
     const currentUrl = window.location.href.split('#')[0] // 移除hash部分
-    console.log('[微信分享] 请求配置的URL:', currentUrl)
     const wxConfig = await getWxConfig({ url: currentUrl })
     
     // 分享配置
@@ -254,12 +244,8 @@ const initWeChatShare = async () => {
     }
     
     const shareCallbacks = {
-      onSuccess: (type: 'timeline' | 'appmessage') => {
-        console.log(`[微信分享] 分享${type === 'timeline' ? '朋友圈' : '朋友'}成功`)
-      },
-      onCancel: (type: 'timeline' | 'appmessage') => {
-        console.log(`[微信分享] 取消分享${type === 'timeline' ? '朋友圈' : '朋友'}`)
-      },
+      onSuccess: (type: 'timeline' | 'appmessage') => {},
+      onCancel: (type: 'timeline' | 'appmessage') => {},
       onFail: (error: any, type: 'timeline' | 'appmessage') => {
         console.error(`[微信分享] 分享${type === 'timeline' ? '朋友圈' : '朋友'}失败:`, error)
       }
@@ -268,7 +254,6 @@ const initWeChatShare = async () => {
     // 配置微信JSSDK，并在wx.ready内设置分享和隐藏菜单 - iOS兼容性关键
     await wechatShare.configWx(wxConfig, shareConfig, shareCallbacks)
     
-    console.log('[微信分享] 初始化完成，当前配置:', wechatShare.getCurrentShareConfig())
     
   } catch (error) {
     console.error('[微信分享] 初始化失败:', error)

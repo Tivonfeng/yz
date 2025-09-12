@@ -55,7 +55,6 @@ export async function getWxConfig(params: WxConfigParams): Promise<WxConfigRespo
     const controller = new AbortController()
     const timeoutId = setTimeout(() => controller.abort(), 10000) // 10秒超时
     
-    console.log('[微信分享] 请求API:', params.url)
     
     // 根据环境选择不同的API路径
     const apiUrl = import.meta.env.DEV 
@@ -106,12 +105,6 @@ export async function getWxConfig(params: WxConfigParams): Promise<WxConfigRespo
       throw new Error('API返回数据不完整，缺少必要的配置参数')
     }
     
-    console.log('[微信分享] 配置获取成功:', {
-      appId: data.appId,
-      timestamp: data.timestamp,
-      nonceStr: data.nonceStr,
-      hasSignature: !!data.signature
-    })
     
     return {
       appId: data.appId,
@@ -149,15 +142,7 @@ export async function recordShareEvent(data: {
   url: string
 }): Promise<void> {
   try {
-    // await fetch('/api/wechat/share-record', {
-    //   method: 'POST',
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //   },
-    //   body: JSON.stringify(data)
-    // })
-    
-    console.log('分享事件记录:', data)
+    // 可以在此处添加分享统计逻辑
   } catch (error) {
     console.error('记录分享事件失败:', error)
   }
