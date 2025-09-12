@@ -14,12 +14,18 @@
     </div>
 
     <!-- 主要内容区域 -->
-    <div class="content-area" v-motion="contentMotion">
-      <div class="content-text">
-        <h1 class="page-title">前言</h1>
-        <p class="page-description">
+    <div class="max-w-[85%] bg-black/40 backdrop-blur-md border border-white/20 rounded-2xl p-8 shadow-2xl z-[5]" v-motion="contentMotion">
+      <div class="relative pl-6">
+        <!-- 左侧装饰线 -->
+        <div class="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-red-500 via-orange-400 to-red-500 rounded-full"></div>
+        
+        <h1 class="text-3xl font-bold text-white text-center mb-6 tracking-[3px] drop-shadow-lg relative pb-4">
+          前言
+          <div class="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-15 h-0.5 bg-gradient-to-r from-transparent via-orange-400 to-transparent"></div>
+        </h1>
+        <p class="text-[15px] leading-relaxed text-white/95 indent-8 tracking-wider font-normal drop-shadow-sm">
           今年是中国人民抗日战争暨世界反法西斯战争胜利80周年。抗日战争中，新四军第二师驰骋于安徽、江苏两省的淮南大地，为中华民族独立作出了重要贡献。
-值此纪念之际，当年淮南抗日根据地区域内的苏皖两省6个县级融媒体中心，开展了“铭记抗战历史·传承红色基因 —— 烽火第二师”苏皖融媒联合采访行动，弘扬伟大抗战精神，展望和平发展未来。
+值此纪念之际，当年淮南抗日根据地区域内的苏皖两省6个县级融媒体中心，开展了"铭记抗战历史·传承红色基因 —— 烽火第二师"苏皖融媒联合采访行动，弘扬伟大抗战精神，展望和平发展未来。
         </p>
       </div>
     </div>
@@ -165,74 +171,6 @@ const triggerSwipeAnimation = () => {
   /* filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.3)); */
 }
 
-/* 内容区域 */
-.content-area {
-  text-align: left;
-  color: white;
-  z-index: 5;
-  max-width: 85%;
-  background: rgba(0, 0, 0, 0.4);
-  backdrop-filter: blur(8px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 16px;
-  padding: 32px 40px;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-}
-
-.content-text {
-  position: relative;
-}
-
-.content-text::before {
-  content: '';
-  position: absolute;
-  left: -16px;
-  top: 0;
-  bottom: 0;
-  width: 4px;
-  background: linear-gradient(180deg, 
-    #ff0000 0%, 
-    #ffaa00 50%, 
-    #ff0000 100%);
-  border-radius: 2px;
-}
-
-.page-title {
-  font-size: 2rem;
-  font-weight: 700;
-  margin: 0 0 24px 0;
-  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
-  letter-spacing: 3px;
-  color: #ffffff;
-  text-align: center;
-  position: relative;
-  padding-bottom: 16px;
-}
-
-.page-title::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 60px;
-  height: 2px;
-  background: linear-gradient(90deg, 
-    transparent 0%, 
-    #ffaa00 50%, 
-    transparent 100%);
-}
-
-.page-description {
-  font-size: 15px;
-  line-height: 1.9;
-  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
-  margin: 0;
-  letter-spacing: 0.5px;
-  text-indent: 2em;
-  color: rgba(255, 255, 255, 0.95);
-  font-weight: 400;
-}
 
 /* 导航提示 */
 .nav-hint {
