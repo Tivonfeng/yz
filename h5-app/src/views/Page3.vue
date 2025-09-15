@@ -110,7 +110,7 @@
           class="overlay-image"
         />
         <!-- 彩带装饰 -->
-		<img src="@/assets/yz/04/彩带2.png" class="absolute bottom-[1%] left-[20%] w-30 h-30 opacity-80 pointer-events-none z-20 animate-ribbon scale-x-[-1]">
+		<img src="@/assets/yz/04/彩带2.png" class="absolute bottom-[1%] right-[60%] w-30 h-30 opacity-80 pointer-events-none z-20 animate-ribbon scale-x-[-1]">
         <img src="@/assets/yz/04/彩带1.png" class="absolute bottom-[7%] right-[-15%] w-30 h-30 opacity-80 pointer-events-none z-20 animate-ribbon scale-x-[-1]">
 
 		<img src="@/assets/yz/04/五角星.png" class="absolute top-[12%] right-[-1%] w-20 opacity-80 pointer-events-none z-20 animate-ribbon scale-x-[-1] animate-twinkle">
@@ -333,31 +333,31 @@ const citiesData = {
     name: '仪征',
     historyItems: [
       {
-        description: '1939年11月，新四军苏皖支队抵达仪征，在陈集镇沙集村成立中共仪征县委。1940年4月，仪征县抗日民主政府在月塘曹集成立，建立5个区、1个办事处和50多个乡政权。在津浦路东省委领导下，广泛动员群众，组织农抗会、青年队、民兵等地方武装，扩大和巩固抗日根据地，成为抗战的坚强堡垒。',
+        description: '	1939年11月，新四军苏皖支队抵达仪征，在陈集镇沙集村成立中共仪征县委。1940年4月，仪征县抗日民主政府在月塘曹集成立，建立5个区、1个办事处和50多个乡政权。在津浦路东省委领导下，广泛动员群众，组织农抗会、青年队、民兵等地方武装，扩大和巩固抗日根据地，成为抗战的坚强堡垒。',
         title: '建立党政军组织​',
         src: 'https://qiniuyun.lqcode.fun/yzdst/%E4%BB%AA%E5%BE%81/%E6%97%A0logo%20%E4%BB%AA%E5%BE%81%E7%AF%87%EF%BC%88%E4%B8%80%EF%BC%89%EF%BC%9A%E5%BB%BA%E7%AB%8B%E5%85%9A%E6%94%BF%E5%86%9B%E7%BB%84%E7%BB%87%20%E6%9E%84%E7%AD%91%E6%8A%97%E6%88%98%E5%9D%9A%201.mp4',
 		poster: posterImages['yizheng-1']
       },
 	  {
-        description: '1939年12月18日，日伪军800余人分三路合击月塘集。苏皖支队避其锋芒，主力转移至移居集隐蔽。傍晚利用地形和群众支援，反击压缩敌人至北大庙，激战三小时收复月塘。此战歼敌90余人，缴获枪械40余支，极大鼓舞军民斗志，成为新四军在仪征的里程碑之战。',
+        description: '	1939年12月18日，日伪军800余人分三路合击月塘集。苏皖支队避其锋芒，主力转移至移居集隐蔽。傍晚利用地形和群众支援，反击压缩敌人至北大庙，激战三小时收复月塘。此战歼敌90余人，缴获枪械40余支，极大鼓舞军民斗志，成为新四军在仪征的里程碑之战。',
         title: '月塘反击战',
         src: 'https://qiniuyun.lqcode.fun/yzdst/%E4%BB%AA%E5%BE%81/%E6%97%A0logo%20%E4%BB%AA%E5%BE%81%E7%AF%87%EF%BC%88%E4%BA%8C%EF%BC%89%EF%BC%9A%E9%A6%96%E6%88%98%E9%9C%87%E5%AF%92%E5%A4%9C%20%E6%9C%88%E5%A1%98%E4%BF%9D%E5%8D%AB%E6%88%98%E7%82%B9%E7%87%83%201.mp4',
 		poster: posterImages['yizheng-2']
 	},
 	  {
-        description: '1941年春，日军推行“囚笼政策”，修筑公路工事，企图分割根据地。新四军二师多路出击，攻克谢集、刘集等据点，伏击援敌。4月16-17日，运用“梅花桩战术”在金牛山重创日伪军，歼敌500余人，缴获机枪、掷弹筒等武器，粉碎大规模扫荡，极大地增强了军民坚持敌后抗日斗争的信心。',
+        description: '	1941年春，日军推行“囚笼政策”，修筑公路工事，企图分割根据地。新四军二师多路出击，攻克谢集、刘集等据点，伏击援敌。4月16-17日，运用“梅花桩战术”在金牛山重创日伪军，歼敌500余人，缴获机枪、掷弹筒等武器，粉碎大规模扫荡，极大地增强了军民坚持敌后抗日斗争的信心。',
         title: '打破“囚笼”包围圈​',
         src: 'https://qiniuyun.lqcode.fun/yzdst/%E4%BB%AA%E5%BE%81/%E6%97%A0logo%20%E4%BB%AA%E5%BE%81%E7%AF%87%EF%BC%88%E4%B8%89%EF%BC%89%EF%BC%9A%E5%8F%8D%E7%82%B9%E7%BA%BF%E4%BD%9C%E6%88%98%20%E6%89%93%E7%A0%B4%E2%80%9C%E5%9B%9A%E7%AC%BC%E2%80%9D%E5%8C%85%201.mp4',
 		poster: posterImages['yizheng-3']
 	},
 	  {
-        description: '月塘位于淮南根据地中心，成为华中局与苏南、上海地下党交通枢纽，三条秘密线路贯通南北，以茶食商行等为掩护，护送近千名干部、进步青年和领导人安全往来，转运重要文件和军需物资，从未发生问题，成为抗战时期重要生命线。',
+        description: '	月塘位于淮南根据地中心，成为华中局与苏南、上海地下党交通枢纽，三条秘密线路贯通南北，以茶食商行等为掩护，护送近千名干部、进步青年和领导人安全往来，转运重要文件和军需物资，从未发生问题，成为抗战时期重要生命线。',
         title: '秘密交通线​',
         src: 'https://qiniuyun.lqcode.fun/yzdst/%E4%BB%AA%E5%BE%81/%E6%97%A0logo%20%E4%BB%AA%E5%BE%81%E7%AF%87%EF%BC%88%E5%9B%9B%EF%BC%89%EF%BC%9A%20%E6%9A%97%E7%BA%BF%E8%BF%9E%E5%B1%B1%E6%B2%B3%20%E5%9C%B0%E4%B8%8B%E4%BA%A4%E9%80%9A%E7%BA%BF%E6%B2%9F%201.mp4',
 		poster: posterImages['yizheng-4']
 	},
 	  {
-        description: '1939年，曹兰田、陆毅等组建曹集民兵，从农抗会发展为地方武装，配合主力作战，破坏交通桥梁，掩护群众转移。两年内参加战斗50余次，歼敌100余人，逮捕叛徒特务20多人。1942年，陆毅获淮南路东英模大会嘉奖，曹集民兵被誉为“名闻淮南路东的民兵英雄集体”，其爱国精神永载史册。',
+        description: '	1939年，曹兰田、陆毅等组建曹集民兵，从农抗会发展为地方武装，配合主力作战，破坏交通桥梁，掩护群众转移。两年内参加战斗50余次，歼敌100余人，逮捕叛徒特务20多人。1942年，陆毅获淮南路东英模大会嘉奖，曹集民兵被誉为“名闻淮南路东的民兵英雄集体”，其爱国精神永载史册。',
         title: '民兵英雄誉​',
         src: 'https://qiniuyun.lqcode.fun/yzdst/%E4%BB%AA%E5%BE%81/%E6%97%A0logo%20%E4%BB%AA%E5%BE%81%E7%AF%87%EF%BC%88%E4%BA%94%EF%BC%89%EF%BC%9A%E7%A1%9D%E7%83%9F%E7%A0%BA%E7%AD%8B%E9%AA%A8%20%E6%9B%B9%E9%9B%86%E6%B0%91%E5%85%B5%E9%93%B8%E5%B0%B1%E4%B8%8D%201.mp4',
 		poster: posterImages['yizheng-5']
@@ -377,19 +377,19 @@ const citiesData = {
     name: '来安',
 	historyItems: [
       {
-        description: '罗炳辉将军率新四军三打来安城，首创"梅花桩战术"等经典战法，以少胜多巩固皖东抗日根据地，彰显我军卓越军事智慧与抗战精神。',
+        description: '	罗炳辉将军率新四军三打来安城，首创"梅花桩战术"等经典战法，以少胜多巩固皖东抗日根据地，彰显我军卓越军事智慧与抗战精神。',
         title: '三打来安城​',
         src: 'https://qiniuyun.lqcode.fun/yzdst/%E6%9D%A5%E5%AE%89/%E6%9D%A5%E5%AE%89%EF%BC%9A%E7%BD%97%E7%82%B3%E8%BE%89%20%E5%96%84%E7%94%A8%E9%AA%91%E5%85%B5%E7%9A%84%E6%8A%97%E6%97%A5%E5%90%8D%E5%B0%86%EF%BC%88%E6%9C%89%E5%AD%97%E7%89%88%EF%BC%89%201.mp4',
 		poster: posterImages['laian-1']
 	},
 	  {
-        description: '半塔保卫战是新四军以少胜多、固守待援的经典战例。1940年春，新四军2000余官兵顽强抵抗国民党万余兵力进攻，最终配合东援主力取得胜利，为华中抗日根据地巩固发展奠定重要基础。',
+        description: '	半塔保卫战是新四军以少胜多、固守待援的经典战例。1940年春，新四军2000余官兵顽强抵抗国民党万余兵力进攻，最终配合东援主力取得胜利，为华中抗日根据地巩固发展奠定重要基础。',
         title: '半塔保卫战​',
         src: 'https://qiniuyun.lqcode.fun/yzdst/%E6%9D%A5%E5%AE%89/%E6%9D%A5%E5%AE%89%EF%BC%9A%E6%96%B0%E5%9B%9B%E5%86%9B%E5%9B%BA%E5%AE%88%E5%BE%85%E6%8F%B4%E7%9A%84%E7%BB%8F%E5%85%B8%E8%8C%83%E4%BE%8B%20%E5%8D%8A%E5%A1%94%E4%BF%9D%E5%8D%AB%E6%88%98%EF%BC%88%E6%9C%89%E5%AD%97%E7%89%88%EF%BC%89%201.mp4',
 		poster: posterImages['laian-2']  
 	},
 	  {
-        description: '皖东女英雄侯静波，19岁壮烈牺牲。她宣传抗日、发动群众，被叛徒出卖后坚贞不屈，英勇就义。其精神永存，家乡静波村以她命名。',
+        description: '	皖东女英雄侯静波，19岁壮烈牺牲。她宣传抗日、发动群众，被叛徒出卖后坚贞不屈，英勇就义。其精神永存，家乡静波村以她命名。',
         title: '英雄侯静波​',
         src: 'https://qiniuyun.lqcode.fun/yzdst/%E6%9D%A5%E5%AE%89/%E6%9D%A5%E5%AE%89%EF%BC%9A%E4%BE%AF%E9%9D%99%E6%B3%A2%20%E7%9A%96%E4%B8%9C%E5%A4%A7%E5%9C%B0%E7%9A%84%E2%80%9C%E5%88%98%E8%83%A1%E5%85%B0%E2%80%9D%EF%BC%88%E6%9C%89%E5%AD%97%E7%89%88%EF%BC%89%201.mp4',
 		poster: posterImages['laian-3']
@@ -409,19 +409,19 @@ const citiesData = {
     name: '六合',
 	historyItems: [
       {
-        description: '六合竹镇抗日民主政府纪念馆见证烽火岁月：新四军英勇作战，统一战线凝聚民心，革命精神永续传承。',
+        description: '	六合竹镇抗日民主政府纪念馆见证烽火岁月：新四军英勇作战，统一战线凝聚民心，革命精神永续传承。',
         title: '竹镇纪念馆​',
         src: 'https://qiniuyun.lqcode.fun/yzdst/%E5%85%AD%E5%90%88/%E4%B9%8B%E4%B8%80%E2%80%94%E2%80%94%E7%AB%B9%E9%95%87%E6%8A%97%E6%97%A5%E6%B0%91%E4%B8%BB%E6%94%BF%E5%BA%9C%201.mp4',
 		poster: posterImages['liuhe-1']
 	},
 	  {
-        description: '烽火硝烟中诞生的竹镇派出所，是新四军在淮南路东设立的首个公安机构。80多年来，“三不走”精神薪火相传，如今民警以新“三不走”守护百姓，续写红色基因的时代新篇。',
+        description: '	烽火硝烟中诞生的竹镇派出所，是新四军在淮南路东设立的首个公安机构。80多年来，“三不走”精神薪火相传，如今民警以新“三不走”守护百姓，续写红色基因的时代新篇。',
         title: '精神薪火传​',
         src: 'https://qiniuyun.lqcode.fun/yzdst/%E5%85%AD%E5%90%88/%E4%B9%8B%E4%BA%8C%E2%80%94%E2%80%94%E7%AB%B9%E9%95%87%E6%96%B0%E5%9B%9B%E5%86%9B%E6%B4%BE%E5%87%BA%E6%89%80%201.mp4',
 		poster: posterImages['liuhe-2']  
 	},
 	  {
-        description: '《归队》讲述抗战英烈张凤鸣迁葬桂子山陵园，与战友团聚。守陵人与家属共同守护英雄记忆，传承牺牲精神，见证硝烟散尽、忠魂永存。',
+        description: '	《归队》讲述抗战英烈张凤鸣迁葬桂子山陵园，与战友团聚。守陵人与家属共同守护英雄记忆，传承牺牲精神，见证硝烟散尽、忠魂永存。',
         title: '忠魂归队颂​',
         src: 'https://qiniuyun.lqcode.fun/yzdst/%E5%85%AD%E5%90%88/%E4%B9%8B%E4%B8%89%E2%80%94%E2%80%94%E5%BD%92%E9%98%9F%201.mp4',
 		poster: posterImages['liuhe-3']
@@ -441,7 +441,7 @@ const citiesData = {
     name: '金湖',
 	historyItems: [
       {
-        description: '80多年前，军工英雄吴运铎在金湖艰苦条件下，带领群众自制弹药，身负重伤仍坚持科研，成功研制枪榴弹助力抗战，被誉为中国“保尔·柯察金”。其精神至今激励后人。',
+        description: '	80多年前，军工英雄吴运铎在金湖艰苦条件下，带领群众自制弹药，身负重伤仍坚持科研，成功研制枪榴弹助力抗战，被誉为中国“保尔·柯察金”。其精神至今激励后人。',
         title: '军工英雄颂',
         src: 'https://qiniuyun.lqcode.fun/yzdst/%E9%87%91%E6%B9%96/%E9%87%91%E6%B9%96%201.mp4',
 		poster: posterImages['jinhu-1']
@@ -461,19 +461,19 @@ const citiesData = {
     name: '定远',
 	historyItems: [
       {
-        description: '80 多年前，面对国民党顽固派进攻，刘少奇、徐海东等指挥新四军打响定远自卫反击战。将士们协同作战 7 天获胜，建华中首个县级抗日民主政权，为抗战胜利筑牢屏障，精神永垂。',
+        description: '	80多年前，面对国民党顽固派进攻，刘少奇、徐海东等指挥新四军打响定远自卫反击战。将士们协同作战 7 天获胜，建华中首个县级抗日民主政权，为抗战胜利筑牢屏障，精神永垂。',
         title: '定远自卫战​',
         src: 'https://qiniuyun.lqcode.fun/yzdst/%E5%AE%9A%E8%BF%9C/%E7%83%BD%E7%81%AB%E7%AC%AC%E4%BA%8C%E5%B8%88%E5%AE%89%E5%BE%BD%E5%AE%9A%E8%BF%9C%E7%AF%87%EF%BC%88%E4%B8%80%EF%BC%89%E5%BE%90%E6%B5%B7%E4%B8%9C%EF%BC%9A%E5%AF%B9%E4%B8%AD%E5%9B%BD%E9%9D%A9%E5%91%BD%E6%9C%89%E5%A4%A7%E5%8A%9F%E7%9A%84%E4%BA%BA%201.mp4',
 		poster: posterImages['dingyuan-1']
 	},
 	  {
-        description: '80 多年前，“虎将” 徐海东带病赴华中，任新四军江北指挥部副指挥，指挥周家岗反 “扫荡” 首胜日军。他 9 次负伤仍坚守，以忠诚勇猛书写传奇，激励后人传承革命精神。',
+        description: '80多年前，“虎将” 徐海东带病赴华中，任新四军江北指挥部副指挥，指挥周家岗反 “扫荡” 首胜日军。他 9 次负伤仍坚守，以忠诚勇猛书写传奇，激励后人传承革命精神。',
         title: '虎将徐海东​',
         src: 'https://qiniuyun.lqcode.fun/yzdst/%E5%AE%9A%E8%BF%9C/%E7%83%BD%E7%81%AB%E7%AC%AC%E4%BA%8C%E5%B8%88%E5%AE%89%E5%BE%BD%E5%AE%9A%E8%BF%9C%E7%AF%87%EF%BC%88%E4%BA%8C%EF%BC%89%E7%AD%91%E7%89%A2%E5%8D%8E%E4%B8%AD%E6%8A%97%E6%97%A5%E6%A0%B9%E6%8D%AE%E5%9C%B0%E7%9A%84%E5%9D%9A%E5%AE%9E%E5%B1%8F%E9%9A%9C%E2%80%94%E2%80%94%E5%AE%9A%E8%BF%9C%E8%87%AA%E5%8D%AB%E5%8F%8D%E5%87%BB%E6%88%98%201.mp4',
 		poster: posterImages['dingyuan-2']
 	},
 	  {
-        description: '80 多年前，定远作为抗日根据地核心，新四军二师浴血奋战。王小庙安葬 1200 余名无名烈士，如今 “寻亲队伍” 与学界为其寻名，英烈精神永被铭记。',
+        description: '	80多年前，定远作为抗日根据地核心，新四军二师浴血奋战。王小庙安葬 1200 余名无名烈士，如今 “寻亲队伍” 与学界为其寻名，英烈精神永被铭记。',
         title: '英烈永铭记​',
         src: 'https://qiniuyun.lqcode.fun/yzdst/%E5%AE%9A%E8%BF%9C/%E7%83%BD%E7%81%AB%E7%AC%AC%E4%BA%8C%E5%B8%88%E5%AE%89%E5%BE%BD%E5%AE%9A%E8%BF%9C%E7%AF%87%EF%BC%88%E4%B8%89%EF%BC%89174%E5%BA%A7%E5%A2%93%E7%A2%91%E6%97%A0%E5%A3%B0%EF%BC%8C1200%E5%90%8D%E8%8B%B1%E9%AD%82%E9%95%BF%E7%9C%A0%E2%80%94%E2%80%94%E8%AE%BF%E7%8E%8B%E5%B0%8F%E5%BA%99%E6%97%A0%E5%90%8D%E7%83%88%E5%A3%AB%E9%99%B5%E5%9B%AD%201.mp4',
 		poster: posterImages['dingyuan-3']
@@ -493,43 +493,43 @@ const citiesData = {
     name: '盱眙',
 	historyItems: [
       {
-        description: '1943年1月，新四军军部移驻黄花塘两年零八个月，作为华中抗战指挥中心，粉碎敌人进攻、壮大队伍、开辟根据地，为抗战胜利贡献卓著。',
+        description: '	1943年1月，新四军军部移驻黄花塘两年零八个月，作为华中抗战指挥中心，粉碎敌人进攻、壮大队伍、开辟根据地，为抗战胜利贡献卓著。',
         title: '华中指挥部',
         src: 'https://qiniuyun.lqcode.fun/yzdst/%E7%9B%B1%E7%9C%99/%E6%9C%89%E7%89%87%E5%A4%B4%20%20%E6%96%B0%E5%9B%9B%E5%86%9B%E7%9A%84%E7%83%BD%E7%81%AB%E5%B2%81%E6%9C%88%201.mp4',
       	poster: posterImages['xuyi-1']
 		},
 	  {
-        description: '陈毅在黄花塘工作期间，恰逢房东家娶亲，因条件艰苦，以一块红布作为结婚贺礼相赠，该红布被房东家保存近30多年后，于2003年捐赠给纪念馆，成为新四军与老百姓鱼水深情的见证。',
+        description: '	陈毅在黄花塘工作期间，恰逢房东家娶亲，因条件艰苦，以一块红布作为结婚贺礼相赠，该红布被房东家保存近30多年后，于2003年捐赠给纪念馆，成为新四军与老百姓鱼水深情的见证。',
         title: '​红布寄深情',
         src: 'https://qiniuyun.lqcode.fun/yzdst/%E7%9B%B1%E7%9C%99/%E6%9C%89%E7%89%87%E5%A4%B4%20%20%E9%97%A8%E5%B8%98%E7%9A%84%E6%95%85%E4%BA%8B%201.mp4',
 		poster: posterImages['xuyi-2']
 	},
 	  {
-        description: '黄花塘原名黄昏塘，因景致引“战地黄花分外香”改名，军部迁此因抗战形势、有利地理及好群众基础，驻扎两年零八个月后迁淮阴再北上山东。',
+        description: '	黄花塘原名黄昏塘，因景致引“战地黄花分外香”改名，军部迁此因抗战形势、有利地理及好群众基础，驻扎两年零八个月后迁淮阴再北上山东。',
         title: '黄花塘之名​',
         src: 'https://qiniuyun.lqcode.fun/yzdst/%E7%9B%B1%E7%9C%99/%E6%9C%89%E7%89%87%E5%A4%B4%20%20%E9%BB%84%E8%8A%B1%E5%A1%98%E7%9A%84%E6%88%98%E7%95%A5%E5%9C%B0%E4%BD%8D%201.mp4',
 		poster: posterImages['xuyi-3']
 	},
 	  {
-        description: '抗战时期，盱眙群众积极拥护新四军，1943至1944年自然灾害严重，仍为新四军送大量粮食、烧草；新四军通过制定《拥政爱民公约》、开展“双拥”活动及遵守“五不走”原则，与盱眙人民建立起鱼水深情。',
+        description: '	抗战时期，盱眙群众积极拥护新四军，1943至1944年自然灾害严重，仍为新四军送大量粮食、烧草；新四军通过制定《拥政爱民公约》、开展“双拥”活动及遵守“五不走”原则，与盱眙人民建立起鱼水深情。',
         title: '鱼水情谊深',
         src: 'https://qiniuyun.lqcode.fun/yzdst/%E7%9B%B1%E7%9C%99/%E6%9C%89%E7%89%87%E5%A4%B4%20%20%E6%96%B0%E5%9B%9B%E5%86%9B%E5%85%AC%E5%B8%83%E6%8B%A5%E6%94%BF%E7%88%B1%E6%B0%91%E5%85%AC%E7%BA%A6%201.mp4',
 		poster: posterImages['xuyi-4']
 	},
 	  {
-        description: '1943年春，新四军文艺战士刘鹏为《白菜谣》谱曲，歌曲传唱华中根据地，彰显军民鱼水情与抗敌决心；同年年底，他高烧40多度仍坚持军部慰问演出，后因牙疳缺医少药以身殉职，年仅16岁，《白菜谣》至今仍被传唱。',
+        description: '	1943年春，新四军文艺战士刘鹏为《白菜谣》谱曲，歌曲传唱华中根据地，彰显军民鱼水情与抗敌决心；同年年底，他高烧40多度仍坚持军部慰问演出，后因牙疳缺医少药以身殉职，年仅16岁，《白菜谣》至今仍被传唱。',
         title: '​白菜谣永传​​',
         src: 'https://qiniuyun.lqcode.fun/yzdst/%E7%9B%B1%E7%9C%99/%E6%9C%89%E7%89%87%E5%A4%B4%20%20%E5%BD%93%E5%85%B5%E8%A6%81%E5%BD%93%E6%96%B0%E5%9B%9B%E5%86%9B%201.mp4',
 		poster: posterImages['xuyi-5']
 	},
       {
-        description: '抗战期间，新四军作战科科长之女因母亲无奶水，由黄花塘乳娘一家家喂养长大。建国后，其女谭晓雯多次返乡感恩，“百家奶难忘黄花塘”的故事至今流传。',
+        description: '	抗战期间，新四军作战科科长之女因母亲无奶水，由黄花塘乳娘一家家喂养长大。建国后，其女谭晓雯多次返乡感恩，“百家奶难忘黄花塘”的故事至今流传。',
         title: '​百家奶情念​​',
         src: 'https://qiniuyun.lqcode.fun/yzdst/%E7%9B%B1%E7%9C%99/%E6%9C%89%E7%89%87%E5%A4%B4%20%20%E9%BB%84%E8%8A%B1%E5%A1%98%E4%B9%B3%E5%A8%98%201.mp4',
 		poster: posterImages['xuyi-6']
 	},
       {
-        description: '华中局部反攻时，盱眙涌现参军热潮，有“一母送四子”的真实故事；1940至1945年，盱眙4000多名热血儿女参加新四军，全县近八成革命烈士为抗战时期牺牲的相关人员，这源于军民互当亲人的深厚情谊。',
+        description: '	华中局部反攻时，盱眙涌现参军热潮，有“一母送四子”的真实故事；1940至1945年，盱眙4000多名热血儿女参加新四军，全县近八成革命烈士为抗战时期牺牲的相关人员，这源于军民互当亲人的深厚情谊。',
         title: '​一母送四子​​',
         src: 'https://qiniuyun.lqcode.fun/yzdst/%E7%9B%B1%E7%9C%99/%E6%9C%89%E7%89%87%E5%A4%B4%20%20%E6%8B%A5%E5%86%9B%E8%BF%90%E5%8A%A8%201.mp4',
 		poster: posterImages['xuyi-7']
