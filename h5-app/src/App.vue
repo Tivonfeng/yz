@@ -6,11 +6,32 @@ const audioElement = ref<HTMLAudioElement | null>(null)
 const isWechat = ref(false)
 const isLoading = ref(true)
 const loadingProgress = ref(0)
+const isMobile = ref(true)
 
 // 检测是否是微信浏览器
 const checkWechat = () => {
   const ua = navigator.userAgent.toLowerCase()
   return ua.includes('micromessenger')
+}
+
+// 检测是否是移动端设备
+const checkMobile = () => {
+  const ua = navigator.userAgent.toLowerCase()
+  const mobileKeywords = [
+    'mobile', 'android', 'iphone', 'ipad', 'ipod', 'blackberry', 
+    'windows phone', 'opera mini', 'iemobile', 'wpdesktop'
+  ]
+  
+  // 检查 User Agent 是否包含移动设备关键词
+  const isMobileUA = mobileKeywords.some(keyword => ua.includes(keyword))
+  
+  // 检查屏幕尺寸（移动端通常宽度小于768px）
+  const isMobileScreen = window.innerWidth <= 768
+  
+  // 检查触摸支持
+  const hasTouchSupport = 'ontouchstart' in window || navigator.maxTouchPoints > 0
+  
+  return isMobileUA || (isMobileScreen && hasTouchSupport)
 }
 
 const initWechatAudio = () => {
@@ -118,6 +139,16 @@ const preloadResources = async () => {
 }
 
 onMounted(async () => {
+  // 检测移动端设备
+  isMobile.value = checkMobile()
+  
+  // 如果不是移动端，添加桌面模式class并停止初始化
+  if (!isMobile.value) {
+    document.getElementById('app')?.classList.add('desktop-mode')
+    isLoading.value = false
+    return
+  }
+  
   isWechat.value = checkWechat()
   
   // 开始加载资源
@@ -171,8 +202,15 @@ onMounted(async () => {
 
 <template>
   <div class="app-container">
+    <!-- 非移动端提示页面 -->
+    <div v-if="!isMobile" class="mobile-only-container">
+      <div class="mobile-only-content">
+        <img src="@/assets/yz/mustphine.png" alt="请使用手机浏览" class="mobile-hint-image" />
+      </div>
+    </div>
+
     <!-- 加载页面 -->
-    <div v-if="isLoading" class="loading-container">
+    <div v-if="isLoading && isMobile" class="loading-container">
       <div class="loading-content">
         <div class="loading-logo">
           <div class="loading-icon">♪</div>
@@ -188,7 +226,7 @@ onMounted(async () => {
     </div>
 
     <!-- 主要内容 -->
-    <div v-show="!isLoading" class="main-content">
+    <div v-show="!isLoading && isMobile" class="main-content">
       <RouterView />
       
       <!-- 音乐播放器 -->
@@ -231,10 +269,22 @@ onMounted(async () => {
   transform: translate(-50%, -50%) rotate(90deg);
 }
 
+/* 非移动端时不进行横屏变换 */
+#app.desktop-mode {
+  width: 100vw;
+  height: 100vh;
+  transform: translate(-50%, -50%);
+}
+
 .app-container {
 	width: 100vh;
 	height: 100vw;
   position: relative;
+}
+
+#app.desktop-mode .app-container {
+	width: 100vw;
+	height: 100vh;
 }
 
 .main-content {
@@ -371,5 +421,51 @@ onMounted(async () => {
   width: 100%;
   height: 100%;
   position: relative;
+}
+
+/* 非移动端提示页面样式 */
+.mobile-only-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: linear-gradient(135deg, #fff8dc 0%, #ffeaa7 50%, #fdcb6e 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+  transform: none;
+}
+
+.mobile-only-content {
+  text-align: center;
+  max-width: 90%;
+  max-height: 90%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mobile-hint-image {
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+  animation: fadeInScale 1s ease-out;
+}
+
+@keyframes fadeInScale {
+  0% {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 </style>
