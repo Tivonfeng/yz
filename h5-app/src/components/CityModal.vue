@@ -124,11 +124,11 @@
                     :style="{ transform: `translateY(${scrollOffset}px)` }"
                   >
                     <!-- 第一份内容 -->
-                    <div class="text-base leading-6 text-gray-800 font-light scroll-text-content">
+                    <div class="text-base leading-6 text-gray-800 font-light scroll-text-content text-indent-2">
                       {{ selectedHistory.description }}
                     </div>
                     <!-- 第二份内容，仅在需要滚动时显示 -->
-                    <div v-if="needsScrolling" class="text-base leading-6 text-gray-800 font-light scroll-text-content">
+                    <div v-if="needsScrolling" class="text-base leading-6 text-gray-800 font-light scroll-text-content text-indent-2">
                       {{ selectedHistory.description }}
                     </div>
                   </div>
@@ -554,6 +554,11 @@ onUnmounted(() => {
   white-space: pre-line;
   word-break: break-word;
   line-height: 1.6;
+}
+
+/* 首行缩进 */
+.text-indent-2 {
+  text-indent: 2em;
 }
 
 </style>
