@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, provide } from 'vue'
 
 const isPlaying = ref(false)
 const audioElement = ref<HTMLAudioElement | null>(null)
@@ -7,6 +7,17 @@ const isWechat = ref(false)
 const isLoading = ref(true)
 const loadingProgress = ref(0)
 const isMobile = ref(true)
+
+// 城市模态框可见性状态
+const isModalVisible = ref(false)
+
+// 提供模态框状态给子组件
+provide('modalState', {
+  isModalVisible,
+  setModalVisible: (visible: boolean) => {
+    isModalVisible.value = visible
+  }
+})
 
 // 检测是否是微信浏览器
 const checkWechat = () => {
@@ -230,7 +241,7 @@ onMounted(async () => {
       <RouterView />
       
       <!-- 音乐播放器 -->
-      <div class="music-player" @click="toggleMusic">
+      <div v-show="!isModalVisible" class="music-player" @click="toggleMusic">
         <div class="music-icon" :class="{ rotating: isPlaying }">
           ♪
         </div>

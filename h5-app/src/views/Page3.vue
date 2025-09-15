@@ -146,7 +146,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from 'vue'
+import { computed, ref, inject } from 'vue'
 import { useRouter } from 'vue-router'
 import CityModal from '@/components/CityModal.vue'
 
@@ -243,8 +243,19 @@ const getCityMotion = (index: number) => ({
   }
 })
 
+// 注入模态框状态
+const modalState = inject<{
+  isModalVisible: { value: boolean }
+  setModalVisible: (visible: boolean) => void
+}>('modalState')
+
+if (!modalState) {
+  throw new Error('Modal state not provided')
+}
+
+const { isModalVisible, setModalVisible } = modalState
+
 // 弹窗相关状态
-const isModalVisible = ref(false)
 const selectedCityData = ref<typeof citiesData[keyof typeof citiesData] | null>(null)
 
 
@@ -500,12 +511,12 @@ const citiesData = {
 // 打开城市详情弹窗
 const openCityModal = (cityKey: keyof typeof citiesData) => {
   selectedCityData.value = citiesData[cityKey]
-  isModalVisible.value = true
+  setModalVisible(true)
 }
 
 // 关闭弹窗
 const closeCityModal = () => {
-  isModalVisible.value = false
+  setModalVisible(false)
   selectedCityData.value = null
 }
 
