@@ -167,21 +167,30 @@ const initAudio = async () => {
   try {
     const audioModule = await import('@/assets/open-close.mp3')
     openCloseAudio.value = new Audio(audioModule.default)
-    openCloseAudio.value.preload = 'auto'
-    openCloseAudio.value.volume = 0.6
+    openCloseAudio.value.preload = 'metadata'
+    openCloseAudio.value.volume = 0.8
+    // 预加载音频以减少延迟
+    await openCloseAudio.value.load()
   } catch (error) {
     console.warn('音效文件加载失败:', error)
   }
 }
 
 // 播放音效
-const playSound = () => {
+const playSound = async () => {
   try {
     if (openCloseAudio.value) {
+      // 停止当前播放并重置
+      openCloseAudio.value.pause()
       openCloseAudio.value.currentTime = 0
-      openCloseAudio.value.play().catch(error => {
-        console.warn('音效播放失败:', error)
-      })
+      
+      // 立即播放，不等待
+      const playPromise = openCloseAudio.value.play()
+      if (playPromise !== undefined) {
+        playPromise.catch(error => {
+          console.warn('音效播放失败:', error)
+        })
+      }
     }
   } catch (error) {
     console.warn('音效播放出错:', error)
@@ -540,14 +549,14 @@ const citiesData = {
 
 // 打开城市详情弹窗
 const openCityModal = (cityKey: keyof typeof citiesData) => {
+  // 立即播放音效，不等待
+  playSound() 
   selectedCityData.value = citiesData[cityKey]
-  playSound() // 播放打开音效
   setModalVisible(true)
 }
 
-// 关闭弹窗
+// 关闭弹窗（内部调用，不播放音效）
 const closeCityModal = () => {
-  playSound() // 播放关闭音效
   setModalVisible(false)
   selectedCityData.value = null
 }
@@ -563,6 +572,9 @@ const handleCloseClick = () => {
     return
   }
   
+  // 立即播放关闭音效
+  playSound()
+  
   // 添加点击动画类
   if (closeBtn.value) {
     closeBtn.value.classList.add('clicked', 'closing')
@@ -573,8 +585,9 @@ const handleCloseClick = () => {
   
   // 分阶段关闭动画
   setTimeout(() => {
-    // 开始模态框退出动画
-    closeCityModal()
+    // 开始模态框退出动画（不再播放音效）
+    setModalVisible(false)
+    selectedCityData.value = null
   }, 200) // 先让按钮动画播放一段时间
   
   // 清理动画类
