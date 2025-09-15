@@ -672,9 +672,17 @@ const triggerSwipeAnimation = () => {
 //   }
 // }
 
-// 组件挂载时初始化音效
+// 键盘事件处理
+const handleKeydown = (e: KeyboardEvent) => {
+  if (e.key === 'Escape' && isModalVisible.value) {
+    handleCloseClick()
+  }
+}
+
+// 组件挂载时初始化音效和键盘事件
 onMounted(() => {
   initAudio()
+  window.addEventListener('keydown', handleKeydown)
 })
 
 // 组件卸载时清理
@@ -682,6 +690,7 @@ onUnmounted(() => {
   if (openCloseAudio.value) {
     openCloseAudio.value = null
   }
+  window.removeEventListener('keydown', handleKeydown)
 })
 
 
