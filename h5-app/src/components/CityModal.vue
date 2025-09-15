@@ -19,7 +19,7 @@
           <!-- 历史事件列表 -->
           <div v-if="cityData.historyItems && cityData.historyItems.length > 0">
             <div class="flex items-center justify-between mb-1.5">
-              <h3 class="text-xs font-bold text-gray-800 pl-1 border-l-2 border-red-600">事件</h3>
+              <h3 class="text-xs font-bold text-gray-800 pl-1 border-l-2 border-red-600">历史事件</h3>
               <span class="text-xs text-gray-500 bg-gray-200 px-1 py-0.5 rounded-full">{{ cityData.historyItems.length }}</span>
             </div>
             
