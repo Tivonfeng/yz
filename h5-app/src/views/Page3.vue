@@ -161,39 +161,110 @@ let startTime = 0
 
 // 音效相关
 const openCloseAudio = ref<HTMLAudioElement | null>(null)
+const audioReady = ref(false)
+const isPlayingSound = ref(false)
 
-// 初始化音效
+// 初始化音效 - 优化版
 const initAudio = async () => {
   try {
+    console.log('🔊 初始化模态框音效...')
+    
+    // 避免重复初始化
+    if (openCloseAudio.value && audioReady.value) {
+      console.log('✅ 音效已经初始化，跳过')
+      return
+    }
+
     const audioModule = await import('@/assets/open-close.mp3')
-    openCloseAudio.value = new Audio(audioModule.default)
-    openCloseAudio.value.preload = 'metadata'
-    openCloseAudio.value.volume = 0.8
-    // 预加载音频以减少延迟
-    await openCloseAudio.value.load()
+    
+    // 创建新的音频实例
+    const audio = new Audio(audioModule.default)
+    audio.preload = 'auto' // 改为 auto 确保完全加载
+    audio.volume = 0.8
+    
+    // 等待音频可以播放
+    await new Promise<void>((resolve, reject) => {
+      const timeout = setTimeout(() => {
+        reject(new Error('音频加载超时'))
+      }, 5000) // 5秒超时
+
+      audio.oncanplaythrough = () => {
+        clearTimeout(timeout)
+        console.log('✅ 模态框音效预加载完成')
+        audioReady.value = true
+        resolve()
+      }
+      
+      audio.onerror = (error) => {
+        clearTimeout(timeout)
+        console.warn('❌ 音效加载失败:', error)
+        reject(error)
+      }
+
+      // 开始加载
+      audio.load()
+    })
+
+    openCloseAudio.value = audio
+    
   } catch (error) {
-    console.warn('音效文件加载失败:', error)
+    console.warn('❌ 音效初始化失败:', error)
+    audioReady.value = false
   }
 }
 
-// 播放音效
+// 播放音效 - 防抖优化版
 const playSound = async () => {
   try {
-    if (openCloseAudio.value) {
-      // 停止当前播放并重置
-      openCloseAudio.value.pause()
-      openCloseAudio.value.currentTime = 0
-      
-      // 立即播放，不等待
-      const playPromise = openCloseAudio.value.play()
-      if (playPromise !== undefined) {
-        playPromise.catch(error => {
-          console.warn('音效播放失败:', error)
-        })
+    // 防止重复播放
+    if (isPlayingSound.value) {
+      console.log('🔊 音效正在播放，跳过')
+      return
+    }
+
+    if (!openCloseAudio.value || !audioReady.value) {
+      console.warn('⚠️ 音效未就绪，尝试重新初始化')
+      await initAudio()
+      if (!openCloseAudio.value || !audioReady.value) {
+        console.warn('❌ 音效初始化失败，无法播放')
+        return
       }
     }
+
+    isPlayingSound.value = true
+
+    // 重置音频到开始位置
+    openCloseAudio.value.currentTime = 0
+    
+    // 播放音效
+    const playPromise = openCloseAudio.value.play()
+    
+    if (playPromise !== undefined) {
+      await playPromise
+      console.log('🔊 模态框音效播放成功')
+    }
+
+    // 监听播放结束
+    openCloseAudio.value.onended = () => {
+      isPlayingSound.value = false
+    }
+
+    // 保险起见，300ms后重置播放状态
+    setTimeout(() => {
+      isPlayingSound.value = false
+    }, 300)
+
   } catch (error) {
-    console.warn('音效播放出错:', error)
+    console.warn('❌ 音效播放失败:', error)
+    isPlayingSound.value = false
+    
+    // 播放失败时尝试重新初始化音频
+    audioReady.value = false
+    setTimeout(() => {
+      initAudio().catch(err => {
+        console.warn('重新初始化音效失败:', err)
+      })
+    }, 500)
   }
 }
 // 角标动画
@@ -549,8 +620,13 @@ const citiesData = {
 
 // 打开城市详情弹窗
 const openCityModal = (cityKey: keyof typeof citiesData) => {
-  // 立即播放音效，不等待
-  playSound() 
+  console.log(`🏛️ 打开城市模态框: ${citiesData[cityKey].name}`)
+  
+  // 异步播放音效，不阻塞UI
+  playSound().catch(error => {
+    console.warn('模态框打开音效播放失败:', error)
+  })
+  
   selectedCityData.value = citiesData[cityKey]
   setModalVisible(true)
 }
@@ -569,11 +645,16 @@ const closeIcon = ref<SVGSVGElement | null>(null)
 const handleCloseClick = () => {
   // 防止重复点击
   if (closeBtn.value?.classList.contains('clicked')) {
+    console.log('⏭️ 重复点击关闭按钮，忽略')
     return
   }
   
-  // 立即播放关闭音效
-  playSound()
+  console.log('❌ 关闭城市模态框')
+  
+  // 异步播放关闭音效，不阻塞动画
+  playSound().catch(error => {
+    console.warn('模态框关闭音效播放失败:', error)
+  })
   
   // 添加点击动画类
   if (closeBtn.value) {
@@ -680,16 +761,36 @@ const handleKeydown = (e: KeyboardEvent) => {
 }
 
 // 组件挂载时初始化音效和键盘事件
-onMounted(() => {
-  initAudio()
+onMounted(async () => {
+  // 延迟初始化音频，确保页面资源加载完成
+  setTimeout(async () => {
+    try {
+      await initAudio()
+      console.log('🎯 Page3 音效初始化完成')
+    } catch (error) {
+      console.warn('🚨 Page3 音效初始化异常:', error)
+    }
+  }, 1000) // 延迟1秒，确保预加载系统完成
+
   window.addEventListener('keydown', handleKeydown)
 })
 
 // 组件卸载时清理
 onUnmounted(() => {
+  console.log('🧹 清理 Page3 音效资源')
+  
+  // 停止播放并清理音频
   if (openCloseAudio.value) {
+    openCloseAudio.value.pause()
+    openCloseAudio.value.src = ''
+    openCloseAudio.value.load() // 释放内存
     openCloseAudio.value = null
   }
+  
+  // 重置状态
+  audioReady.value = false
+  isPlayingSound.value = false
+  
   window.removeEventListener('keydown', handleKeydown)
 })
 
