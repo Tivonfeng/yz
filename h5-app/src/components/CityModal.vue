@@ -433,7 +433,14 @@ const startScrollText = async () => {
 const selectHistory = (index: number) => {
   selectedHistoryIndex.value = index
   viewMode.value = 'history'
+  
+  // 重置当前播放的视频
   nextTick(() => {
+    const video = document.querySelector('video') as HTMLVideoElement
+    if (video) {
+      video.pause()
+      video.currentTime = 0
+    }
     startScrollText()
   })
 }
