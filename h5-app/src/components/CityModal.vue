@@ -239,7 +239,7 @@
                     <div v-if="cityData.creativeTeam?.director?.length">
                       <div class="flex items-center mb-1">
                         <div class="w-2 h-2 bg-red-600 mr-1"></div>
-                        <h5 class="font-bold text-red-800 text-xs">导演</h5>
+                        <h5 class="font-bold text-red-800 text-xs">编导</h5>
                       </div>
                       <div class="space-y-1">
                         <div v-for="(person, index) in cityData.creativeTeam.director" :key="index" 
