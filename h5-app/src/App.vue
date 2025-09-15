@@ -111,40 +111,34 @@ const toggleMusic = () => {
   }
 }
 
-// 完整的资源预加载系统
+// 分批预加载系统 - 优化加载速度
 const preloadResources = async () => {
-  console.log('🚀 开始预加载资源...')
+  console.log('🚀 开始分批预加载资源...')
   
-  // 1. 获取所有图片资源（包含更多格式）
+  // 获取所有图片资源
   const imageModules = import.meta.glob('/src/assets/**/*.{png,jpg,jpeg,gif,svg}', { eager: true })
   const imagePaths = Object.keys(imageModules).map(path => {
     const module = imageModules[path] as { default: string }
     return module.default
   })
   
-  // 2. 视频海报资源（Page3.vue中使用的）
+  // 视频海报资源
   const posterPaths = [
-    // 仪征海报
     new URL('@/assets/yz/04/video/仪征/1.png', import.meta.url).href,
     new URL('@/assets/yz/04/video/仪征/2.png', import.meta.url).href,
     new URL('@/assets/yz/04/video/仪征/3.png', import.meta.url).href,
     new URL('@/assets/yz/04/video/仪征/4.png', import.meta.url).href,
     new URL('@/assets/yz/04/video/仪征/5.png', import.meta.url).href,
-    // 来安海报
     new URL('@/assets/yz/04/video/来安/1.png', import.meta.url).href,
     new URL('@/assets/yz/04/video/来安/2.png', import.meta.url).href,
     new URL('@/assets/yz/04/video/来安/3.png', import.meta.url).href,
-    // 六合海报
     new URL('@/assets/yz/04/video/六合/1.png', import.meta.url).href,
     new URL('@/assets/yz/04/video/六合/2.png', import.meta.url).href,
     new URL('@/assets/yz/04/video/六合/3.png', import.meta.url).href,
-    // 金湖海报
     new URL('@/assets/yz/04/video/金湖/1.png', import.meta.url).href,
-    // 定远海报
     new URL('@/assets/yz/04/video/定远/1.png', import.meta.url).href,
     new URL('@/assets/yz/04/video/定远/2.png', import.meta.url).href,
     new URL('@/assets/yz/04/video/定远/3.png', import.meta.url).href,
-    // 盱眙海报
     new URL('@/assets/yz/04/video/盱眙/1.png', import.meta.url).href,
     new URL('@/assets/yz/04/video/盱眙/2.png', import.meta.url).href,
     new URL('@/assets/yz/04/video/盱眙/3.png', import.meta.url).href,
@@ -154,98 +148,122 @@ const preloadResources = async () => {
     new URL('@/assets/yz/04/video/盱眙/7.png', import.meta.url).href,
   ]
 
-  // 3. 合并所有图片资源
-  const allImagePaths = [...new Set([...imagePaths, ...posterPaths])] // 去重
-  
-  const totalResources = allImagePaths.length + 2 // +2 为音频文件
-  let loadedResources = 0
-
-  // 更新进度的辅助函数
-  const updateProgress = () => {
-    loadedResources++
-    loadingProgress.value = Math.round((loadedResources / totalResources) * 100)
+  // 按优先级分组资源
+  const priorityGroups = {
+    // 第一批：首页必需资源 (立即显示)
+    critical: imagePaths.filter(path => 
+      path.includes('yz/01/') || // 首页相关
+      path.includes('mustphine.png') || // 桌面提示
+      path.includes('background-music.mp3') // 背景音乐
+    ),
+    
+    // 第二批：导航和公共资源 (快速显示)
+    important: imagePaths.filter(path => 
+      path.includes('yz/02/') || // Page2相关
+      path.includes('yz/03/') // Page3主要元素
+    ),
+    
+    // 第三批：城市详情页装饰 (延迟加载)
+    secondary: imagePaths.filter(path => 
+      path.includes('yz/04/') && !path.includes('video') // Page4装饰元素
+    ),
+    
+    // 第四批：视频海报 (按需加载)
+    lazy: posterPaths
   }
 
-  // 4. 预加载图片资源
-  console.log(`📸 预加载 ${allImagePaths.length} 个图片资源...`)
-  const imagePromises = allImagePaths.map(path => {
-    return new Promise((resolve) => {
-      const img = new Image()
-      img.onload = () => {
-        updateProgress()
-        console.log(`✅ 图片加载成功: ${path.split('/').pop()}`)
-        resolve(path)
-      }
-      img.onerror = () => {
-        updateProgress()
-        console.warn(`❌ 图片加载失败: ${path}`)
-        resolve(path) // 即使失败也继续
-      }
-      img.src = path
-    })
+  let totalLoaded = 0
+  const totalResources = Object.values(priorityGroups).flat().length + 2 // +2音频
+
+  // 更新进度辅助函数
+  const updateProgress = () => {
+    totalLoaded++
+    loadingProgress.value = Math.round((totalLoaded / totalResources) * 100)
+  }
+
+  // 通用图片加载函数
+  const loadImage = (src: string) => new Promise<void>((resolve) => {
+    const img = new Image()
+    img.onload = () => {
+      updateProgress()
+      resolve()
+    }
+    img.onerror = () => {
+      updateProgress()
+      console.warn(`⚠️ 图片加载失败: ${src.split('/').pop()}`)
+      resolve()
+    }
+    img.src = src
   })
 
-  // 5. 预加载音频资源
-  console.log('🎵 预加载音频资源...')
-  const audioPromises = [
-    // 背景音乐预加载
-    new Promise(async (resolve) => {
+  // 通用音频预加载函数
+  const preloadAudio = (audioPath: string) => 
+    new Promise<void>(async (resolve) => {
       try {
-        // 创建音频对象进行预加载
-        const bgMusicAudio = new Audio()
-        bgMusicAudio.preload = 'metadata'
-        bgMusicAudio.oncanplay = () => {
+        const audio = new Audio()
+        audio.preload = 'metadata'
+        audio.oncanplay = () => {
           updateProgress()
-          console.log('✅ 背景音乐预加载完成')
-          resolve('background-music')
+          resolve()
         }
-        bgMusicAudio.onerror = () => {
+        audio.onerror = () => {
           updateProgress()
-          console.warn('❌ 背景音乐预加载失败')
-          resolve('background-music')
+          resolve()
         }
-        // 动态导入音频文件
-        const musicModule = await import('@/assets/background-music.mp3')
-        bgMusicAudio.src = musicModule.default
+        const module = await import(audioPath)
+        audio.src = module.default
       } catch (error) {
         updateProgress()
-        console.warn('❌ 背景音乐模块加载失败:', error)
-        resolve('background-music')
-      }
-    }),
-    
-    // 交互音效预加载
-    new Promise(async (resolve) => {
-      try {
-        const clickAudio = new Audio()
-        clickAudio.preload = 'metadata'
-        clickAudio.oncanplay = () => {
-          updateProgress()
-          console.log('✅ 交互音效预加载完成')
-          resolve('click-sound')
-        }
-        clickAudio.onerror = () => {
-          updateProgress()
-          console.warn('❌ 交互音效预加载失败')
-          resolve('click-sound')
-        }
-        const soundModule = await import('@/assets/open-close.mp3')
-        clickAudio.src = soundModule.default
-      } catch (error) {
-        updateProgress()
-        console.warn('❌ 交互音效模块加载失败:', error)
-        resolve('click-sound')
+        resolve()
       }
     })
-  ]
 
   try {
-    // 6. 并行加载所有资源
-    await Promise.all([...imagePromises, ...audioPromises])
-    console.log('🎉 所有资源预加载完成！')
-    console.log(`📊 加载统计: ${allImagePaths.length} 图片 + 2 音频 = ${totalResources} 个资源`)
+    // 🎯 第一批：关键资源 - 必须完成才能显示应用
+    console.log(`🔥 第一批: 加载 ${priorityGroups.critical.length} 个关键资源...`)
+    await Promise.all([
+      ...priorityGroups.critical.map(loadImage),
+      preloadAudio('@/assets/background-music.mp3'),
+      preloadAudio('@/assets/open-close.mp3')
+    ])
+    console.log('✅ 第一批资源加载完成 - 应用可以显示')
+
+    // 设置最低进度，确保用户看到完整的加载体验
+    if (loadingProgress.value < 30) {
+      loadingProgress.value = 30
+    }
+
+    // 🚀 第二批：重要资源 - 后台加载，不阻塞显示
+    setTimeout(async () => {
+      console.log(`⚡ 第二批: 后台加载 ${priorityGroups.important.length} 个重要资源...`)
+      await Promise.all(priorityGroups.important.map(loadImage))
+      console.log('✅ 第二批资源加载完成')
+    }, 100) // 稍微延迟，确保第一批完全完成
+
+    // 🌟 第三批：次要资源 - 延迟加载
+    setTimeout(async () => {
+      console.log(`📦 第三批: 延迟加载 ${priorityGroups.secondary.length} 个装饰资源...`)
+      await Promise.all(priorityGroups.secondary.map(loadImage))
+      console.log('✅ 第三批资源加载完成')
+    }, 500)
+
+    // 🖼️ 第四批：懒加载资源 - 用户可能不会访问
+    setTimeout(async () => {
+      console.log(`🖼️ 第四批: 懒加载 ${priorityGroups.lazy.length} 个视频海报...`)
+      // 分小批次加载，避免网络拥塞
+      const batchSize = 5
+      for (let i = 0; i < priorityGroups.lazy.length; i += batchSize) {
+        const batch = priorityGroups.lazy.slice(i, i + batchSize)
+        await Promise.all(batch.map(loadImage))
+        // 小批次之间的间隔
+        await new Promise(resolve => setTimeout(resolve, 100))
+      }
+      console.log('✅ 第四批资源加载完成')
+      console.log(`🎉 所有资源预加载完成！总计: ${totalResources} 个资源`)
+    }, 1000)
+
   } catch (error) {
-    console.error('❌ 资源预加载出错:', error)
+    console.error('❌ 关键资源加载失败:', error)
   }
 }
 
