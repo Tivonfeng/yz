@@ -111,41 +111,141 @@ const toggleMusic = () => {
   }
 }
 
-// 预加载资源
+// 完整的资源预加载系统
 const preloadResources = async () => {
-  // 使用动态import预加载图片资源
-  const imageModules = import.meta.glob('/src/assets/yz/**/*.png', { eager: true })
+  console.log('🚀 开始预加载资源...')
+  
+  // 1. 获取所有图片资源（包含更多格式）
+  const imageModules = import.meta.glob('/src/assets/**/*.{png,jpg,jpeg,gif,svg}', { eager: true })
   const imagePaths = Object.keys(imageModules).map(path => {
     const module = imageModules[path] as { default: string }
     return module.default
   })
+  
+  // 2. 视频海报资源（Page3.vue中使用的）
+  const posterPaths = [
+    // 仪征海报
+    new URL('@/assets/yz/04/video/仪征/1.png', import.meta.url).href,
+    new URL('@/assets/yz/04/video/仪征/2.png', import.meta.url).href,
+    new URL('@/assets/yz/04/video/仪征/3.png', import.meta.url).href,
+    new URL('@/assets/yz/04/video/仪征/4.png', import.meta.url).href,
+    new URL('@/assets/yz/04/video/仪征/5.png', import.meta.url).href,
+    // 来安海报
+    new URL('@/assets/yz/04/video/来安/1.png', import.meta.url).href,
+    new URL('@/assets/yz/04/video/来安/2.png', import.meta.url).href,
+    new URL('@/assets/yz/04/video/来安/3.png', import.meta.url).href,
+    // 六合海报
+    new URL('@/assets/yz/04/video/六合/1.png', import.meta.url).href,
+    new URL('@/assets/yz/04/video/六合/2.png', import.meta.url).href,
+    new URL('@/assets/yz/04/video/六合/3.png', import.meta.url).href,
+    // 金湖海报
+    new URL('@/assets/yz/04/video/金湖/1.png', import.meta.url).href,
+    // 定远海报
+    new URL('@/assets/yz/04/video/定远/1.png', import.meta.url).href,
+    new URL('@/assets/yz/04/video/定远/2.png', import.meta.url).href,
+    new URL('@/assets/yz/04/video/定远/3.png', import.meta.url).href,
+    // 盱眙海报
+    new URL('@/assets/yz/04/video/盱眙/1.png', import.meta.url).href,
+    new URL('@/assets/yz/04/video/盱眙/2.png', import.meta.url).href,
+    new URL('@/assets/yz/04/video/盱眙/3.png', import.meta.url).href,
+    new URL('@/assets/yz/04/video/盱眙/4.png', import.meta.url).href,
+    new URL('@/assets/yz/04/video/盱眙/5.png', import.meta.url).href,
+    new URL('@/assets/yz/04/video/盱眙/6.png', import.meta.url).href,
+    new URL('@/assets/yz/04/video/盱眙/7.png', import.meta.url).href,
+  ]
 
-  const totalImages = imagePaths.length
-  let loadedImages = 0
+  // 3. 合并所有图片资源
+  const allImagePaths = [...new Set([...imagePaths, ...posterPaths])] // 去重
+  
+  const totalResources = allImagePaths.length + 2 // +2 为音频文件
+  let loadedResources = 0
 
-  const loadPromises = imagePaths.map(path => {
+  // 更新进度的辅助函数
+  const updateProgress = () => {
+    loadedResources++
+    loadingProgress.value = Math.round((loadedResources / totalResources) * 100)
+  }
+
+  // 4. 预加载图片资源
+  console.log(`📸 预加载 ${allImagePaths.length} 个图片资源...`)
+  const imagePromises = allImagePaths.map(path => {
     return new Promise((resolve) => {
       const img = new Image()
       img.onload = () => {
-        loadedImages++
-        loadingProgress.value = Math.round((loadedImages / totalImages) * 100)
+        updateProgress()
+        console.log(`✅ 图片加载成功: ${path.split('/').pop()}`)
         resolve(path)
       }
       img.onerror = () => {
-        loadedImages++
-        loadingProgress.value = Math.round((loadedImages / totalImages) * 100)
-        console.warn(`图片加载失败: ${path}`)
+        updateProgress()
+        console.warn(`❌ 图片加载失败: ${path}`)
         resolve(path) // 即使失败也继续
       }
       img.src = path
     })
   })
 
+  // 5. 预加载音频资源
+  console.log('🎵 预加载音频资源...')
+  const audioPromises = [
+    // 背景音乐预加载
+    new Promise(async (resolve) => {
+      try {
+        // 创建音频对象进行预加载
+        const bgMusicAudio = new Audio()
+        bgMusicAudio.preload = 'metadata'
+        bgMusicAudio.oncanplay = () => {
+          updateProgress()
+          console.log('✅ 背景音乐预加载完成')
+          resolve('background-music')
+        }
+        bgMusicAudio.onerror = () => {
+          updateProgress()
+          console.warn('❌ 背景音乐预加载失败')
+          resolve('background-music')
+        }
+        // 动态导入音频文件
+        const musicModule = await import('@/assets/background-music.mp3')
+        bgMusicAudio.src = musicModule.default
+      } catch (error) {
+        updateProgress()
+        console.warn('❌ 背景音乐模块加载失败:', error)
+        resolve('background-music')
+      }
+    }),
+    
+    // 交互音效预加载
+    new Promise(async (resolve) => {
+      try {
+        const clickAudio = new Audio()
+        clickAudio.preload = 'metadata'
+        clickAudio.oncanplay = () => {
+          updateProgress()
+          console.log('✅ 交互音效预加载完成')
+          resolve('click-sound')
+        }
+        clickAudio.onerror = () => {
+          updateProgress()
+          console.warn('❌ 交互音效预加载失败')
+          resolve('click-sound')
+        }
+        const soundModule = await import('@/assets/open-close.mp3')
+        clickAudio.src = soundModule.default
+      } catch (error) {
+        updateProgress()
+        console.warn('❌ 交互音效模块加载失败:', error)
+        resolve('click-sound')
+      }
+    })
+  ]
+
   try {
-    await Promise.all(loadPromises)
-    console.log('所有资源加载完成')
+    // 6. 并行加载所有资源
+    await Promise.all([...imagePromises, ...audioPromises])
+    console.log('🎉 所有资源预加载完成！')
+    console.log(`📊 加载统计: ${allImagePaths.length} 图片 + 2 音频 = ${totalResources} 个资源`)
   } catch (error) {
-    console.error('资源加载出错:', error)
+    console.error('❌ 资源预加载出错:', error)
   }
 }
 
