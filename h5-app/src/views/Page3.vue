@@ -163,9 +163,10 @@ let startTime = 0
 const openCloseAudio = ref<HTMLAudioElement | null>(null)
 
 // 初始化音效
-const initAudio = () => {
+const initAudio = async () => {
   try {
-    openCloseAudio.value = new Audio('/src/assets/open-close.wav')
+    const audioModule = await import('@/assets/open-close.wav')
+    openCloseAudio.value = new Audio(audioModule.default)
     openCloseAudio.value.preload = 'auto'
     openCloseAudio.value.volume = 0.6
   } catch (error) {
