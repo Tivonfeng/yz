@@ -111,7 +111,7 @@
         />
         <!-- 彩带装饰 -->
 		<img src="@/assets/yz/04/彩带2.png" class="absolute bottom-[1%] left-[20%] w-30 h-30 opacity-80 pointer-events-none z-20 animate-ribbon scale-x-[-1]">
-        <img src="@/assets/yz/04/彩带1.png" class="absolute bottom-[7%] right-[-10%] w-30 h-30 opacity-80 pointer-events-none z-20 animate-ribbon scale-x-[-1]">
+        <img src="@/assets/yz/04/彩带1.png" class="absolute bottom-[7%] right-[-15%] w-30 h-30 opacity-80 pointer-events-none z-20 animate-ribbon scale-x-[-1]">
 
 		<img src="@/assets/yz/04/五角星.png" class="absolute top-[12%] right-[-1%] w-20 opacity-80 pointer-events-none z-20 animate-ribbon scale-x-[-1] animate-twinkle">
         <!-- 关闭按钮 - 右边中间位置 -->

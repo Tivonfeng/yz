@@ -73,7 +73,7 @@
             <!-- 标题 -->
             <div class="flex items-center justify-between mb-2">
               <h3 class="text-xs font-bold text-gray-800 pl-1 border-l-2 border-red-600">主创人员</h3>
-              <span class="text-xs text-red-700 bg-red-100 px-1 py-0.5 rounded-full border border-red-200">{{ getCreativeTeamCount() }}</span>
+              <span class="text-xs text-gray-500 bg-gray-200 px-1 py-0.5 rounded-full">{{ getCreativeTeamCount() }}</span>
             </div>
             
             <!-- 主创按钮 -->
