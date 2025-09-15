@@ -147,7 +147,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref, inject } from 'vue'
+import { computed, ref, inject, onMounted, onUnmounted } from 'vue'
 import { useRouter } from 'vue-router'
 import CityModal from '@/components/CityModal.vue'
 
@@ -158,6 +158,34 @@ const isAnimating = ref(false)
 let startX = 0
 let startY = 0
 let startTime = 0
+
+// 音效相关
+const openCloseAudio = ref<HTMLAudioElement | null>(null)
+
+// 初始化音效
+const initAudio = () => {
+  try {
+    openCloseAudio.value = new Audio('/src/assets/open-close.wav')
+    openCloseAudio.value.preload = 'auto'
+    openCloseAudio.value.volume = 0.6
+  } catch (error) {
+    console.warn('音效文件加载失败:', error)
+  }
+}
+
+// 播放音效
+const playSound = () => {
+  try {
+    if (openCloseAudio.value) {
+      openCloseAudio.value.currentTime = 0
+      openCloseAudio.value.play().catch(error => {
+        console.warn('音效播放失败:', error)
+      })
+    }
+  } catch (error) {
+    console.warn('音效播放出错:', error)
+  }
+}
 // 角标动画
 const cornerMotion = computed(() => ({
   initial: { opacity: 0, scale: 0.5, rotate: -45 },
@@ -512,11 +540,13 @@ const citiesData = {
 // 打开城市详情弹窗
 const openCityModal = (cityKey: keyof typeof citiesData) => {
   selectedCityData.value = citiesData[cityKey]
+  playSound() // 播放打开音效
   setModalVisible(true)
 }
 
 // 关闭弹窗
 const closeCityModal = () => {
+  playSound() // 播放关闭音效
   setModalVisible(false)
   selectedCityData.value = null
 }
@@ -627,6 +657,18 @@ const triggerSwipeAnimation = () => {
 //     }, 150)
 //   }
 // }
+
+// 组件挂载时初始化音效
+onMounted(() => {
+  initAudio()
+})
+
+// 组件卸载时清理
+onUnmounted(() => {
+  if (openCloseAudio.value) {
+    openCloseAudio.value = null
+  }
+})
 
 
 </script>

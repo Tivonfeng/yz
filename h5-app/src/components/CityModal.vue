@@ -423,6 +423,7 @@ const selectHistory = (index: number) => {
 }
 
 
+
 // 监听城市数据变化，重置选中状态
 watch(() => props.cityData, () => {
   selectedHistoryIndex.value = 0
@@ -433,7 +434,7 @@ watch(() => props.cityData, () => {
   }, 200)
 }, { immediate: true })
 
-// 组件卸载时清理定时器
+// 组件挂载时初始化
 onMounted(() => {
   setTimeout(() => {
     startScrollText()
