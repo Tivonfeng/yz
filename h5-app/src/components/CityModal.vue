@@ -559,6 +559,10 @@ onUnmounted(() => {
 /* 首行缩进 */
 .text-indent-2 {
   text-indent: 2em;
+  text-align: justify;
+  text-justify: inter-ideograph;
+  word-spacing: 0;
+  letter-spacing: 0;
 }
 
 </style>
