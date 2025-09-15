@@ -141,6 +141,7 @@
               <div class="h-full p-1 flex flex-col">
                 <div v-if="selectedHistory.src" class="flex-1 flex items-center justify-center rounded-xl overflow-hidden min-h-0">
                   <video 
+                    :key="selectedHistoryIndex"
                     :src="selectedHistory.src" 
                     :poster="selectedHistory.poster"
                     controls 
