@@ -23,9 +23,9 @@
           前言
           <div class="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-15 h-0.5 bg-gradient-to-r from-transparent via-red-500 to-transparent"></div>
         </h1>
-        <p class="text-[15px] leading-relaxed text-gray-800 indent-8 tracking-wider font-normal">
+        <p class="text-[15px] leading-relaxed text-gray-800 indent-8 tracking-wider font-normal text-justify">
           今年是中国人民抗日战争暨世界反法西斯战争胜利80周年。抗日战争中，新四军第二师驰骋于安徽、江苏两省的淮南大地，为中华民族独立作出了重要贡献。
-值此纪念之际，当年淮南抗日根据地区域内的苏皖两省6个县级融媒体中心，开展了"铭记抗战历史·传承红色基因 —— 烽火第二师"苏皖融媒联合采访行动，弘扬伟大抗战精神，展望和平发展未来。
+值此纪念之际，当年淮南抗日根据地区域内的苏皖两省6个县级融媒体中心，开展了“铭记抗战历史·传承红色基因 —— 烽火第二师”苏皖融媒联合采访行动，弘扬伟大抗战精神，展望和平发展未来。
         </p>
       </div>
     </div>

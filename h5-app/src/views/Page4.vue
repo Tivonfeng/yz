@@ -24,11 +24,11 @@
           <div class="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-15 h-0.5 bg-gradient-to-r from-transparent via-red-500 to-transparent"></div>
         </h1>
         <div class="space-y-1">
-          <p class="text-[15px] leading-relaxed text-gray-800 indent-8 tracking-wider font-normal">
+          <p class="text-[15px] leading-relaxed text-gray-800 indent-8 tracking-wider font-normal text-justify">
             抗战期间，新四军第二师在淮南开创了拥有330万人口，3万平方公里的解放区，建立了17个县的抗日民主政权。主力部队从一开始的不到3100人，发展到抗战胜利后4个旅11个团共35000多人。地方部队15000余人，民兵多达20万人。
           </p>
-          <p class="text-[15px] leading-relaxed text-gray-800 indent-8 tracking-wider font-normal">
-            让我们牢记新四军第二师的光荣历史,继承和发扬新四军第二师的优良传统,进一步弘扬"铁军"精神,为中华民族的繁荣富强而努力奋斗。
+          <p class="text-[15px] leading-relaxed text-gray-800 indent-8 tracking-wider font-normal text-justify">
+            让我们牢记新四军第二师的光荣历史，继承和发扬新四军第二师的优良传统，进一步弘扬“铁军”精神，为中华民族的繁荣富强而努力奋斗。
           </p>
         </div>
       </div>
