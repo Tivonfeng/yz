@@ -118,11 +118,19 @@
             <div class="h-[34%] bg-gradient-to-br flex-shrink-0 p-1">
               <div class="h-full bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
                 <div class="h-full pt-1 pb-1 px-3 overflow-hidden relative" style="-webkit-overflow-scrolling: touch;">
+                  <!-- 滚动内容容器 -->
                   <div 
-                    class="text-base leading-6 text-gray-800 font-light scroll-text-content"
+                    class="scroll-marquee-container"
                     :style="{ transform: `translateY(${scrollOffset}px)` }"
                   >
-                    {{ selectedHistory.description }}
+                    <!-- 第一份内容 -->
+                    <div class="text-base leading-6 text-gray-800 font-light scroll-text-content">
+                      {{ selectedHistory.description }}
+                    </div>
+                    <!-- 第二份内容，仅在需要滚动时显示 -->
+                    <div v-if="needsScrolling" class="text-base leading-6 text-gray-800 font-light scroll-text-content">
+                      {{ selectedHistory.description }}
+                    </div>
                   </div>
                 </div>
               </div>
@@ -295,7 +303,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, watch, onMounted } from 'vue'
+import { ref, computed, watch, onMounted, onUnmounted, nextTick } from 'vue'
 
 interface HistoryItem {
   title: string
@@ -336,6 +344,7 @@ const selectedHistoryIndex = ref(0)
 // 滚动字幕相关状态
 const scrollOffset = ref(0)
 const scrollTimer = ref<number | null>(null)
+const needsScrolling = ref(false)
 
 // 选中的历史事件
 const selectedHistory = computed(() => {
@@ -369,57 +378,64 @@ const getCreativeTeamCount = () => {
 }
 
 
-// 开始滚动字幕效果
-const startScrollText = () => {
+// 清理定时器
+const clearScrollTimer = () => {
   if (scrollTimer.value) {
     clearInterval(scrollTimer.value)
+    scrollTimer.value = null
+  }
+}
+
+// 开始滚动字幕效果 - 智能滚动
+const startScrollText = async () => {
+  clearScrollTimer()
+  scrollOffset.value = 0
+  needsScrolling.value = false
+  
+  await nextTick()
+  
+  const container = document.querySelector('.scroll-marquee-container')?.parentElement
+  const content = document.querySelector('.scroll-text-content')
+  
+  if (!container || !content) return
+  
+  const containerHeight = container.clientHeight
+  const contentHeight = content.scrollHeight
+  
+  // 检查是否需要滚动
+  if (contentHeight <= containerHeight) {
+    scrollOffset.value = 0
+    needsScrolling.value = false
+    return
   }
   
-  scrollOffset.value = 0
+  // 需要滚动时才显示第二份内容
+  needsScrolling.value = true
+  await nextTick() // 等待第二份内容渲染
   
-  // 延迟获取尺寸，确保DOM已渲染
-  setTimeout(() => {
-    const container = document.querySelector('.scroll-text-content')?.parentElement
-    const content = document.querySelector('.scroll-text-content')
+  const scrollStep = 0.3 // 滚动速度
+  
+  const scroll = () => {
+    if (!scrollTimer.value) return
     
-    if (container && content) {
-      const containerHeight = container.clientHeight
-      const contentHeight = content.scrollHeight
-      
-      // 只有当内容高度大于容器高度时才开始滚动
-      if (contentHeight > containerHeight) {
-        const maxScroll = contentHeight - containerHeight
-        const scrollStep = 1 // 每次滚动1像素
-        
-        scrollTimer.value = window.setInterval(() => {
-          if (Math.abs(scrollOffset.value) < maxScroll) {
-            scrollOffset.value -= scrollStep
-          } else {
-            // 滚动完成，暂停一会儿再重新开始
-            setTimeout(() => {
-              scrollOffset.value = 0
-              startScrollText()
-            }, 2000)
-            clearInterval(scrollTimer.value!)
-            scrollTimer.value = null
-          }
-        }, 100) // 每100ms滚动一次
-      } else {
-        // 内容未超出容器，不需要滚动，确保内容在顶部显示
-        scrollOffset.value = 0
-      }
+    scrollOffset.value -= scrollStep
+    
+    // 当第一份内容完全滚出视图时，无缝重置
+    if (Math.abs(scrollOffset.value) >= contentHeight) {
+      scrollOffset.value = 0
     }
-  }, 100)
+  }
+  
+  scrollTimer.value = window.setInterval(scroll, 50)
 }
 
 // 选择历史事件
 const selectHistory = (index: number) => {
   selectedHistoryIndex.value = index
-  viewMode.value = 'history'  // 切换到历史模式
-  // 选择新事件时重新开始滚动字幕效果
-  setTimeout(() => {
+  viewMode.value = 'history'
+  nextTick(() => {
     startScrollText()
-  }, 100)
+  })
 }
 
 
@@ -427,18 +443,21 @@ const selectHistory = (index: number) => {
 // 监听城市数据变化，重置选中状态
 watch(() => props.cityData, () => {
   selectedHistoryIndex.value = 0
-  viewMode.value = 'history'  // 重置为历史模式
-  // 延迟启动滚动字幕效果，确保DOM更新完成
-  setTimeout(() => {
+  viewMode.value = 'history'
+  nextTick(() => {
     startScrollText()
-  }, 200)
+  })
 }, { immediate: true })
 
-// 组件挂载时初始化
+// 组件生命周期管理
 onMounted(() => {
-  setTimeout(() => {
+  nextTick(() => {
     startScrollText()
-  }, 300)
+  })
+})
+
+onUnmounted(() => {
+  clearScrollTimer()
 })
 </script>
 
@@ -524,11 +543,15 @@ onMounted(() => {
 }
 
 /* 滚动字幕效果样式 */
+.scroll-marquee-container {
+  /* 移除transition，避免重置时的动画 */
+  will-change: transform;
+}
+
 .scroll-text-content {
   position: relative;
   padding: 8px 0;
   white-space: pre-line;
-  transition: transform 0.1s linear;
   word-break: break-word;
   line-height: 1.6;
 }
