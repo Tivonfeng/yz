@@ -168,7 +168,7 @@
               <!-- 项目信息头部 -->
               <div class="bg-white rounded-lg border border-red-200 mb-3 p-3 flex-shrink-0">
                 <div class="text-center border-b border-red-100 pb-2 mb-2">
-                  <h3 class="text-base font-bold text-red-800">《烽火》第二师 {{ cityData.name }}篇</h3>
+                  <h3 class="text-base font-bold text-red-800">烽火第二师 {{ cityData.name }}篇</h3>
                 </div>
                 
                 <!-- 主要职位紧凑布局 -->
