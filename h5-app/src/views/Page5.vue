@@ -59,7 +59,7 @@
   align-items: center;
   justify-content: center;
   gap: 40px;
-  margin-bottom: 60px;
+  margin-bottom: 80px;
   z-index: 10;
 }
 
@@ -191,7 +191,7 @@
 @media (max-width: 1200px) {
   .main-logos {
     gap: 30px;
-    margin-bottom: 50px;
+    margin-bottom: 70px;
   }
   
   .bottom-logos {
@@ -231,7 +231,7 @@
   
   .main-logos {
     gap: 25px;
-    margin-bottom: 40px;
+    margin-bottom: 60px;
   }
   
   .bottom-logos {
@@ -260,7 +260,7 @@
   .main-logos {
     flex-direction: row;
     gap: 20px;
-    margin-bottom: 30px;
+    margin-bottom: 50px;
   }
   
   .main-logo-2 {
@@ -303,7 +303,7 @@
   .main-logos {
     flex-direction: row;
     gap: 15px;
-    margin-bottom: 25px;
+    margin-bottom: 40px;
   }
   
   .main-logo-2 {
