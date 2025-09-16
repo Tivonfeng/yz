@@ -2,17 +2,17 @@
   <div class="page5 w-full h-full relative overflow-hidden flex flex-col items-center justify-center px-8 py-12">
     
     <!-- 主要logo区域 -->
-    <div class="flex items-center justify-between mb-5 z-10" style="width: 32%">
+    <div class="flex items-center justify-between mb-5 z-10 gap-5" >
       <div class="flex items-center justify-center">
-        <img src="@/assets/yz/01/logos/1.png" alt="主logo1" class="h-16 w-auto object-contain drop-shadow-lg" />
+        <img src="@/assets/yz/05/仪征.png" alt="主logo1" class="h-22 w-auto object-contain drop-shadow-lg" />
       </div>
       <div class="flex items-center justify-center">
-        <img src="@/assets/yz/05/仪征.png" alt="仪征市" class="h-20 w-auto object-contain drop-shadow-lg" />
+        <img src="@/assets/yz/05/仪征.png" alt="仪征市" class="h-22 w-auto object-contain drop-shadow-lg" />
       </div>
     </div>
 
     <!-- 下方logo区域 -->
-    <div class="flex items-end justify-between z-10 w-4/5 max-w-6xl gap-5">
+    <div class="flex items-end justify-between z-10  gap-5">
       <div class="flex items-center justify-center transition-all duration-300 hover:scale-105 hover:drop-shadow-xl cursor-pointer">
         <img src="@/assets/yz/05/来安.png" alt="来安县" class="h-16 w-auto object-contain drop-shadow-md" />
       </div>
