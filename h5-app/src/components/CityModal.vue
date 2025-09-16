@@ -73,7 +73,7 @@
             <!-- 标题 -->
             <div class="flex items-center justify-between mb-2">
               <h3 class="text-xs font-bold text-gray-800 pl-1 border-l-2 border-red-600">主创人员</h3>
-              <span class="text-xs text-gray-500 bg-gray-200 px-1 py-0.5 rounded-full">{{ getCreativeTeamCount() }}</span>
+              <!-- <span class="text-xs text-gray-500 bg-gray-200 px-1 py-0.5 rounded-full">{{ getCreativeTeamCount() }}</span> -->
             </div>
             
             <!-- 主创按钮 -->
@@ -168,30 +168,32 @@
               <!-- 项目信息头部 -->
               <div class="bg-white rounded-lg border border-red-200 mb-3 p-3 flex-shrink-0">
                 <div class="text-center border-b border-red-100 pb-2 mb-2">
-                  <h3 class="text-base font-bold text-red-800">《烽火》第二季 {{ cityData.name }}篇</h3>
+                  <h3 class="text-base font-bold text-red-800">《烽火》第二师 {{ cityData.name }}篇</h3>
                 </div>
                 
                 <!-- 主要职位紧凑布局 -->
                 <div class="grid grid-cols-3 gap-2 text-center">
                   <!-- 总导演 -->
                   <div v-if="cityData.creativeTeam?.totalDirector" class="bg-red-50 rounded p-2 border border-red-200">
-                    <div class="text-xs font-bold text-red-800">总导演</div>
+                    <div class="text-xs font-bold text-red-800">总监制</div>
                     <div class="text-sm font-bold text-red-900">{{ cityData.creativeTeam.totalDirector }}</div>
                   </div>
 
-                  <!-- 总制片人 -->
-                  <div v-if="cityData.creativeTeam?.totalProducer" class="bg-red-50 rounded p-2 border border-red-200">
-                    <div class="text-xs font-bold text-red-800">总制片人</div>
-                    <div class="text-sm font-bold text-red-900">{{ cityData.creativeTeam.totalProducer }}</div>
-                  </div>
-
-                  <!-- 总策划 -->
+                                    <!-- 总策划 -->
                   <div v-if="cityData.creativeTeam?.totalPlanner?.length" class="bg-red-50 rounded p-2 border border-red-200">
                     <div class="text-xs font-bold text-red-800">总策划</div>
                     <div class="text-sm font-bold text-red-900">
                       {{ cityData.creativeTeam.totalPlanner.join('、') }}
                     </div>
                   </div>
+
+                  <!-- 总制片人 -->
+                  <div v-if="cityData.creativeTeam?.totalProducer" class="bg-red-50 rounded p-2 border border-red-200">
+                    <div class="text-xs font-bold text-red-800">总制片</div>
+                    <div class="text-sm font-bold text-red-900">{{ cityData.creativeTeam.totalProducer }}</div>
+                  </div>
+
+
                 </div>
               </div>
 
