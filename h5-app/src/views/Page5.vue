@@ -6,50 +6,26 @@
         <img src="@/assets/yz/01/logos/1.png" alt="主logo1" class="logo-image main" />
       </div>
       <div class="logo-item main-logo-2">
-        <img src="@/assets/yz/01/logos/2.png" alt="主logo2" class="logo-image main" />
-        <div class="logo-text main-text">
-          <div class="city-name main-city">仪征市</div>
-          <div class="media-center main-media">融媒体中心</div>
-        </div>
+        <img src="@/assets/yz/05/仪征.png" alt="仪征市" class="logo-image yizheng-logo" />
       </div>
     </div>
 
     <!-- 下方logo区域 -->
     <div class="bottom-logos">
       <div class="logo-item bottom-logo">
-        <img src="@/assets/yz/01/logos/3.png" alt="来安县" class="logo-image" />
-        <div class="logo-text bottom-text">
-          <div class="city-name">来安县</div>
-          <div class="media-center">融媒体中心</div>
-        </div>
+        <img src="@/assets/yz/05/来安.png" alt="来安县" class="logo-image" />
       </div>
       <div class="logo-item bottom-logo">
-        <img src="@/assets/yz/01/logos/4.png" alt="六合区" class="logo-image" />
-        <div class="logo-text bottom-text">
-          <div class="city-name">六合区</div>
-          <div class="media-center">融媒体中心</div>
-        </div>
+        <img src="@/assets/yz/05/六合.png" alt="六合区" class="logo-image" />
       </div>
       <div class="logo-item bottom-logo">
-        <img src="@/assets/yz/01/logos/5.png" alt="金湖县" class="logo-image" />
-        <div class="logo-text bottom-text">
-          <div class="city-name">金湖县</div>
-          <div class="media-center">融媒体中心</div>
-        </div>
+        <img src="@/assets/yz/05/金湖.png" alt="金湖县" class="logo-image" />
       </div>
       <div class="logo-item bottom-logo">
-        <img src="@/assets/yz/01/logos/6.png" alt="定远县" class="logo-image" />
-        <div class="logo-text bottom-text">
-          <div class="city-name">定远县</div>
-          <div class="media-center">融媒体中心</div>
-        </div>
+        <img src="@/assets/yz/05/定远.png" alt="定远县" class="logo-image" />
       </div>
       <div class="logo-item bottom-logo">
-        <img src="@/assets/yz/01/logos/7.png" alt="盱眙县" class="logo-image" />
-        <div class="logo-text bottom-text">
-          <div class="city-name">盱眙县</div>
-          <div class="media-center">融媒体中心</div>
-        </div>
+        <img src="@/assets/yz/05/盱眙.png" alt="盱眙县" class="logo-image" />
       </div>
     </div>
 
@@ -96,7 +72,7 @@
 .main-logo-2 {
   display: flex;
   align-items: center;
-  gap: 15px;
+  justify-content: center;
 }
 
 /* 下方logo区域 */
@@ -112,10 +88,8 @@
 
 .bottom-logo {
   display: flex;
-  flex-direction: row;
   align-items: center;
-  gap: 8px;
-  min-width: 100px;
+  justify-content: center;
 }
 
 /* logo样式 */
@@ -140,6 +114,7 @@
 .logo-image.main {
   height: 65px;
 }
+
 
 /* logo文字 */
 .logo-text {
@@ -231,6 +206,7 @@
     height: 60px;
   }
   
+  
   .main-city {
     font-size: 15px;
   }
@@ -269,6 +245,7 @@
   .logo-image.main {
     height: 55px;
   }
+  
   
   .main-city {
     font-size: 14px;
@@ -309,6 +286,10 @@
     height: 50px;
   }
   
+  .yizheng-logo {
+    height: 55px !important;
+  }
+  
   .city-name {
     font-size: 11px;
   }
@@ -332,6 +313,10 @@
   
   .logo-image.main {
     height: 45px;
+  }
+  
+  .yizheng-logo {
+    height: 60px !important;
   }
   
   .main-city {
