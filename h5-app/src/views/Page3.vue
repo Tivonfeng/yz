@@ -429,7 +429,7 @@ const citiesData = {
 	},
 	  {
         description: '1939年，曹兰田、陆毅等组建曹集民兵，从农抗会发展为地方武装，配合主力作战，破坏交通桥梁，掩护群众转移。两年内参加战斗50余次，歼敌 100余人，逮捕叛徒特务20多人。1942年，陆毅获淮南路东英模大会嘉奖，曹集民兵被誉为“名闻淮南路东的民兵英雄集体”，其爱国精神永载史册。',
-        title: '民兵英雄誉​',
+        title: '民兵英雄营​',
         src: 'https://qiniuyun.lqcode.fun/yzdst/%E4%BB%AA%E5%BE%81/%E6%97%A0logo%20%E4%BB%AA%E5%BE%81%E7%AF%87%EF%BC%88%E4%BA%94%EF%BC%89%EF%BC%9A%E7%A1%9D%E7%83%9F%E7%A0%BA%E7%AD%8B%E9%AA%A8%20%E6%9B%B9%E9%9B%86%E6%B0%91%E5%85%B5%E9%93%B8%E5%B0%B1%E4%B8%8D%201.mp4',
 		poster: posterImages['yizheng-5']
 	},

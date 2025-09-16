@@ -15,7 +15,7 @@
         </div>
 
         <!-- 上部区域：历史事件列表 (80%) -->
-        <div class="flex-1 p-2 overflow-y-auto custom-scrollbar" style="flex: 0.8;">
+        <div class="flex-1 p-2 overflow-y-auto custom-scrollbar" style="flex: 0.90;">
           <!-- 历史事件列表 -->
           <div v-if="cityData.historyItems && cityData.historyItems.length > 0">
             <div class="flex items-center justify-between mb-1.5">
@@ -68,13 +68,10 @@
         </div>
 
         <!-- 下部区域：主创人员按钮 (20%) -->
-        <div v-if="cityData.creativeTeam" class="p-2 border-t border-gray-200" style="flex: 0.2;">
+        <div v-if="cityData.creativeTeam" class="p-2 border-t border-gray-200" style="flex: 0.1;">
           <div class="h-full flex flex-col">
             <!-- 标题 -->
-            <div class="flex items-center justify-between mb-2">
-              <h3 class="text-xs font-bold text-gray-800 pl-1 border-l-2 border-red-600">主创人员</h3>
-              <!-- <span class="text-xs text-gray-500 bg-gray-200 px-1 py-0.5 rounded-full">{{ getCreativeTeamCount() }}</span> -->
-            </div>
+
             
             <!-- 主创按钮 -->
             <button 
@@ -176,13 +173,13 @@
                   <!-- 总导演 -->
                   <div v-if="cityData.creativeTeam?.totalDirector" class="bg-red-50 rounded p-2 border border-red-200">
                     <div class="text-xs font-bold text-red-800">总监制</div>
-                    <div class="text-sm font-bold text-red-900">{{ cityData.creativeTeam.totalDirector }}</div>
+                    <div class="text-sm font-bold text-black-100">{{ cityData.creativeTeam.totalDirector }}</div>
                   </div>
 
                                     <!-- 总策划 -->
                   <div v-if="cityData.creativeTeam?.totalPlanner?.length" class="bg-red-50 rounded p-2 border border-red-200">
                     <div class="text-xs font-bold text-red-800">总策划</div>
-                    <div class="text-sm font-bold text-red-900">
+                    <div class="text-sm font-bold text-black-100">
                       {{ cityData.creativeTeam.totalPlanner.join('、') }}
                     </div>
                   </div>
@@ -190,7 +187,7 @@
                   <!-- 总制片人 -->
                   <div v-if="cityData.creativeTeam?.totalProducer" class="bg-red-50 rounded p-2 border border-red-200">
                     <div class="text-xs font-bold text-red-800">总制片</div>
-                    <div class="text-sm font-bold text-red-900">{{ cityData.creativeTeam.totalProducer }}</div>
+                    <div class="text-sm font-bold text-black-100">{{ cityData.creativeTeam.totalProducer }}</div>
                   </div>
 
 
