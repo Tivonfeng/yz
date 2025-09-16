@@ -104,7 +104,7 @@
 }
 
 .logo-image {
-  height: 50px;
+  height: 70px;
   width: auto;
   object-fit: contain;
   filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.1));
@@ -112,7 +112,7 @@
 }
 
 .logo-image.main {
-  height: 65px;
+  height: 85px;
 }
 
 
@@ -199,11 +199,11 @@
   }
   
   .logo-image {
-    height: 45px;
+    height: 60px;
   }
   
   .logo-image.main {
-    height: 60px;
+    height: 80px;
   }
   
   
@@ -239,11 +239,11 @@
   }
   
   .logo-image {
-    height: 40px;
+    height: 55px;
   }
   
   .logo-image.main {
-    height: 55px;
+    height: 75px;
   }
   
   
@@ -279,15 +279,15 @@
   }
   
   .logo-image {
-    height: 35px;
-  }
-  
-  .logo-image.main {
     height: 50px;
   }
   
+  .logo-image.main {
+    height: 70px;
+  }
+  
   .yizheng-logo {
-    height: 55px !important;
+    height: 70px !important;
   }
   
   .city-name {
@@ -332,7 +332,11 @@
   }
   
   .logo-image {
-    height: 30px;
+    height: 45px;
+  }
+  
+  .yizheng-logo {
+    height: 75px !important;
   }
   
   .city-name {
