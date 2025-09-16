@@ -7,7 +7,10 @@
       </div>
       <div class="logo-item main-logo-2" v-motion="getLogoMotion(1)">
         <img src="@/assets/yz/01/logos/2.png" alt="主logo2" class="logo-image main" />
-        <span class="logo-text main-text">仪征市融媒体中心</span>
+        <div class="logo-text main-text">
+          <div class="city-name main-city">仪征市</div>
+          <div class="media-center main-media">融媒体中心</div>
+        </div>
       </div>
     </div>
 
@@ -151,7 +154,7 @@ const getLogoMotion = (index: number) => ({
 
 .bottom-logo {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
   gap: 8px;
   min-width: 100px;
@@ -193,15 +196,27 @@ const getLogoMotion = (index: number) => ({
 }
 
 .main-text {
+  text-align: left;
+  white-space: normal !important;
+}
+
+.main-city {
   font-size: 16px;
   font-weight: 600;
   color: #2c3e50;
   letter-spacing: 0.5px;
-  white-space: nowrap;
+  margin-bottom: 2px;
+}
+
+.main-media {
+  font-size: 14px;
+  font-weight: 500;
+  color: #2c3e50;
+  letter-spacing: 0.3px;
 }
 
 .bottom-text {
-  text-align: center;
+  text-align: left;
   white-space: normal !important;
 }
 
@@ -230,6 +245,14 @@ const getLogoMotion = (index: number) => ({
   color: #e74c3c;
 }
 
+.logo-item:hover .main-city {
+  color: #e74c3c;
+}
+
+.logo-item:hover .main-media {
+  color: #e74c3c;
+}
+
 
 /* 响应式调整 */
 @media (max-width: 1200px) {
@@ -250,8 +273,12 @@ const getLogoMotion = (index: number) => ({
     height: 60px;
   }
   
-  .main-text {
+  .main-city {
     font-size: 15px;
+  }
+  
+  .main-media {
+    font-size: 13px;
   }
   
   .city-name {
@@ -285,8 +312,12 @@ const getLogoMotion = (index: number) => ({
     height: 55px;
   }
   
-  .main-text {
+  .main-city {
     font-size: 14px;
+  }
+  
+  .main-media {
+    font-size: 12px;
   }
 }
 
@@ -298,8 +329,8 @@ const getLogoMotion = (index: number) => ({
   }
   
   .main-logo-2 {
-    flex-direction: column;
-    gap: 8px;
+    flex-direction: row;
+    gap: 15px;
   }
   
   .bottom-logos {
@@ -337,16 +368,20 @@ const getLogoMotion = (index: number) => ({
   }
   
   .main-logo-2 {
-    flex-direction: column;
-    gap: 5px;
+    flex-direction: row;
+    gap: 10px;
   }
   
   .logo-image.main {
     height: 45px;
   }
   
-  .main-text {
+  .main-city {
     font-size: 12px;
+  }
+  
+  .main-media {
+    font-size: 10px;
   }
   
   .bottom-logos {
