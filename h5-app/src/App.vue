@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref, onMounted, provide } from 'vue'
+import BottomNavigation from '@/components/BottomNavigation.vue'
 
 const isPlaying = ref(false)
 const audioElement = ref<HTMLAudioElement | null>(null)
@@ -369,6 +370,9 @@ onMounted(async () => {
       >
         <source src="@/assets/background-music.mp3" type="audio/mpeg">
       </audio>
+      
+      <!-- 底部导航栏 -->
+      <BottomNavigation />
     </div>
   </div>
 </template>
@@ -402,6 +406,11 @@ onMounted(async () => {
 }
 
 #app.desktop-mode .app-container {
+	width: 100vw;
+	height: 100vh;
+}
+
+#app.desktop-mode .main-content {
 	width: 100vw;
 	height: 100vh;
 }
