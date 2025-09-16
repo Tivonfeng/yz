@@ -269,13 +269,14 @@
   }
   
   .bottom-logos {
-    gap: 15px;
-    flex-wrap: wrap;
-    justify-content: space-around;
+    gap: 8px;
+    flex-wrap: nowrap;
+    justify-content: center;
   }
   
   .bottom-logo {
-    min-width: 80px;
+    flex: 1;
+    min-width: 0;
   }
   
   .logo-image {
@@ -328,7 +329,9 @@
   }
   
   .bottom-logos {
-    gap: 12px;
+    gap: 5px;
+    flex-wrap: nowrap;
+    justify-content: center;
   }
   
   .logo-image {
