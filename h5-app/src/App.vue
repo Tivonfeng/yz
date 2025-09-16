@@ -155,12 +155,9 @@ const preloadResources = async () => {
       path.includes('yz/01/') || // 首页相关
       path.includes('mustphine.png') || // 桌面提示
       path.includes('background-music.mp3') || // 背景音乐
-	  path.includes('yz/02/') // Page2相关
-    ),
-    
-    // 第二批：导航和公共资源 (快速显示)
-    important: imagePaths.filter(path => 
-      path.includes('yz/03/') // Page3主要元素
+	  path.includes('yz/02/')||
+    path.includes('yz/03/') // Page3主要元素
+    // Page2相关
     ),
     
     // 第三批：城市详情页装饰 (延迟加载)
@@ -233,19 +230,12 @@ const preloadResources = async () => {
       loadingProgress.value = 30
     }
 
-    // 🚀 第二批：重要资源 - 后台加载，不阻塞显示
-    setTimeout(async () => {
-      console.log(`⚡ 第二批: 后台加载 ${priorityGroups.important.length} 个重要资源...`)
-      await Promise.all(priorityGroups.important.map(loadImage))
-      console.log('✅ 第二批资源加载完成')
-    }, 100) // 稍微延迟，确保第一批完全完成
-
     // 🌟 第三批：次要资源 - 延迟加载
     setTimeout(async () => {
       console.log(`📦 第三批: 延迟加载 ${priorityGroups.secondary.length} 个装饰资源...`)
       await Promise.all(priorityGroups.secondary.map(loadImage))
       console.log('✅ 第三批资源加载完成')
-    }, 500)
+    }, 300)
 
     // 🖼️ 第四批：懒加载资源 - 用户可能不会访问
     setTimeout(async () => {
