@@ -34,6 +34,19 @@
       </div>
     </div>
 
+    <!-- 手势滑动提示 -->
+    <div class="swipe-hint" v-motion="swipeHintMotion">
+      <!-- 向左箭头动效 -->
+      <div class="arrow-container">
+        <span class="arrow" v-for="i in 5" :key="i" :style="{ animationDelay: (i - 1) * 0.2 + 's' }">‹</span>
+      </div>
+      <img 
+        src="@/assets/yz/01/hand.png" 
+        alt="滑动手势" 
+        class="hand-gesture"
+        :class="{ 'swiping': isAnimating }"
+      />
+    </div>
 
   </div>
 </template>
@@ -79,14 +92,14 @@ const contentMotion = computed(() => ({
   }
 }))
 
-// 完成提示动画
-const navHintMotion = computed(() => ({
+// 滑动提示动画
+const swipeHintMotion = computed(() => ({
   initial: { opacity: 0, x: 100 },
   enter: { 
     opacity: 1, 
     x: 0,
     transition: { 
-      delay: 1500,
+      delay: 2500,
       duration: 800,
       ease: [0.25, 0.46, 0.45, 0.94]
     }
@@ -116,25 +129,25 @@ const handleTouchEnd = (e: TouchEvent) => {
   const deltaY = endY - startY
   const deltaTime = endTime - startTime
   
-  // 横屏模式下检测向右滑动手势（返回首页）
+  // 横屏模式下检测向左滑动手势（在设备坐标系中是向上滑动）
   if (
-    deltaY > 80 && 
+    deltaY < -80 && 
     Math.abs(deltaX) < 150 && 
     deltaTime < 500
   ) {
-    triggerReturnAnimation()
+    triggerSwipeAnimation()
   }
 }
 
-// 触发返回动画和跳转
-const triggerReturnAnimation = () => {
+// 触发滑动动画和跳转
+const triggerSwipeAnimation = () => {
   if (isAnimating.value) return
   
   isAnimating.value = true
   
-  // 返回首页
+  // 跳转到 Page5
   setTimeout(() => {
-    router.push('/') 
+    router.push('/page5') 
   }, 1000)
 }
 </script>
@@ -235,6 +248,101 @@ const triggerReturnAnimation = () => {
   50% {
     transform: scale(1.1);
     opacity: 1;
+  }
+}
+
+/* 手势滑动提示 */
+.swipe-hint {
+  position: absolute;
+  right: 10%;
+  bottom: 5%;
+  transform: translateY(-50%);
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  user-select: none;
+  pointer-events: none;
+}
+
+.hand-gesture {
+  width: 45px;
+  height: 45px;
+  filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.3));
+  transition: all 0.3s ease;
+  animation: float 2s ease-in-out infinite;
+}
+
+.hand-gesture:hover {
+  transform: scale(1.1);
+  filter: drop-shadow(0 6px 16px rgba(0, 0, 0, 0.4));
+}
+
+/* 滑动动画 */
+.hand-gesture.swiping {
+  animation: swipeLeft 2s ease-in-out forwards;
+}
+
+/* 箭头容器 */
+.arrow-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  margin: 3px 0;
+  height: 24px;
+}
+
+/* 箭头样式 */
+.arrow {
+  font-size: 30px;
+  font-weight: bold;
+  color: #8B0000;
+  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
+  animation: slideLeft 1.5s ease-in-out infinite;
+  opacity: 0;
+}
+
+/* 箭头滑动动画 - 向左 */
+@keyframes slideLeft {
+  0% {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  50% {
+    opacity: 1;
+    transform: translateX(-10px);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+}
+
+/* 滑动动画 - 向左 */
+@keyframes swipeLeft {
+  0% {
+    transform: translateX(0) scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: translateX(-100px) scale(0.8);
+    opacity: 0.8;
+  }
+  100% {
+    transform: translateX(-200px) scale(0.6);
+    opacity: 0;
+  }
+}
+
+/* 浮动动画 */
+@keyframes float {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(-8px);
   }
 }
 </style>

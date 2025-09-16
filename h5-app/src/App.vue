@@ -154,12 +154,12 @@ const preloadResources = async () => {
     critical: imagePaths.filter(path => 
       path.includes('yz/01/') || // 首页相关
       path.includes('mustphine.png') || // 桌面提示
-      path.includes('background-music.mp3') // 背景音乐
+      path.includes('background-music.mp3') || // 背景音乐
+	  path.includes('yz/02/') // Page2相关
     ),
     
     // 第二批：导航和公共资源 (快速显示)
     important: imagePaths.filter(path => 
-      path.includes('yz/02/') || // Page2相关
       path.includes('yz/03/') // Page3主要元素
     ),
     
