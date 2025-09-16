@@ -1,11 +1,11 @@
 <template>
   <div class="page5 landscape-forced">
     <!-- 主要logo区域 -->
-    <div class="main-logos" v-motion="mainLogosMotion">
-      <div class="logo-item main-logo-1" v-motion="getLogoMotion(0)">
+    <div class="main-logos">
+      <div class="logo-item main-logo-1">
         <img src="@/assets/yz/01/logos/1.png" alt="主logo1" class="logo-image main" />
       </div>
-      <div class="logo-item main-logo-2" v-motion="getLogoMotion(1)">
+      <div class="logo-item main-logo-2">
         <img src="@/assets/yz/01/logos/2.png" alt="主logo2" class="logo-image main" />
         <div class="logo-text main-text">
           <div class="city-name main-city">仪征市</div>
@@ -15,36 +15,36 @@
     </div>
 
     <!-- 下方logo区域 -->
-    <div class="bottom-logos" v-motion="bottomLogosMotion">
-      <div class="logo-item bottom-logo" v-motion="getLogoMotion(2)">
+    <div class="bottom-logos">
+      <div class="logo-item bottom-logo">
         <img src="@/assets/yz/01/logos/3.png" alt="来安县" class="logo-image" />
         <div class="logo-text bottom-text">
           <div class="city-name">来安县</div>
           <div class="media-center">融媒体中心</div>
         </div>
       </div>
-      <div class="logo-item bottom-logo" v-motion="getLogoMotion(3)">
+      <div class="logo-item bottom-logo">
         <img src="@/assets/yz/01/logos/4.png" alt="六合区" class="logo-image" />
         <div class="logo-text bottom-text">
           <div class="city-name">六合区</div>
           <div class="media-center">融媒体中心</div>
         </div>
       </div>
-      <div class="logo-item bottom-logo" v-motion="getLogoMotion(4)">
+      <div class="logo-item bottom-logo">
         <img src="@/assets/yz/01/logos/5.png" alt="金湖县" class="logo-image" />
         <div class="logo-text bottom-text">
           <div class="city-name">金湖县</div>
           <div class="media-center">融媒体中心</div>
         </div>
       </div>
-      <div class="logo-item bottom-logo" v-motion="getLogoMotion(5)">
+      <div class="logo-item bottom-logo">
         <img src="@/assets/yz/01/logos/6.png" alt="定远县" class="logo-image" />
         <div class="logo-text bottom-text">
           <div class="city-name">定远县</div>
           <div class="media-center">融媒体中心</div>
         </div>
       </div>
-      <div class="logo-item bottom-logo" v-motion="getLogoMotion(6)">
+      <div class="logo-item bottom-logo">
         <img src="@/assets/yz/01/logos/7.png" alt="盱眙县" class="logo-image" />
         <div class="logo-text bottom-text">
           <div class="city-name">盱眙县</div>
@@ -57,48 +57,6 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
-
-// 主要logo区域动画
-const mainLogosMotion = computed(() => ({
-  initial: { opacity: 0 },
-  enter: { 
-    opacity: 1,
-    transition: { 
-      delay: 300,
-      duration: 500,
-      ease: [0.25, 0.46, 0.45, 0.94]
-    }
-  }
-}))
-
-// 下方logo区域动画
-const bottomLogosMotion = computed(() => ({
-  initial: { opacity: 0 },
-  enter: { 
-    opacity: 1,
-    transition: { 
-      delay: 800,
-      duration: 500,
-      ease: [0.25, 0.46, 0.45, 0.94]
-    }
-  }
-}))
-
-// 单个logo动画
-const getLogoMotion = (index: number) => ({
-  initial: { opacity: 0, y: 30, scale: 0.8 },
-  enter: { 
-    opacity: 1, 
-    y: 0,
-    scale: 1,
-    transition: { 
-      delay: 500 + index * 150, 
-      duration: 600, 
-      ease: [0.34, 1.56, 0.64, 1]
-    }
-  }
-})
 
 </script>
 
