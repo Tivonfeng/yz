@@ -111,9 +111,9 @@ const toggleMusic = () => {
   }
 }
 
-// 分批预加载系统 - 优化加载速度
+// 一次性预加载系统
 const preloadResources = async () => {
-  console.log('🚀 开始分批预加载资源...')
+  console.log('🚀 开始一次性预加载所有资源...')
   
   // 获取所有图片资源
   const imageModules = import.meta.glob('/src/assets/**/*.{png,jpg,jpeg,gif,svg}', { eager: true })
@@ -148,29 +148,10 @@ const preloadResources = async () => {
     new URL('@/assets/yz/04/video/盱眙/7.png', import.meta.url).href,
   ]
 
-  // 按优先级分组资源
-  const priorityGroups = {
-    // 第一批：首页必需资源 (立即显示)
-    critical: imagePaths.filter(path => 
-      path.includes('yz/01/') || // 首页相关
-      path.includes('mustphine.png') || // 桌面提示
-      path.includes('background-music.mp3') || // 背景音乐
-	  path.includes('yz/02/')||
-    path.includes('yz/03/') // Page3主要元素
-    // Page2相关
-    ),
-    
-    // 第三批：城市详情页装饰 (延迟加载)
-    secondary: imagePaths.filter(path => 
-      path.includes('yz/04/') && !path.includes('video') // Page4装饰元素
-    ),
-    
-    // 第四批：视频海报 (按需加载)
-    lazy: posterPaths
-  }
-
+  // 合并所有资源
+  const allImagePaths = [...imagePaths, ...posterPaths]
   let totalLoaded = 0
-  const totalResources = Object.values(priorityGroups).flat().length + 2 // +2音频
+  const totalResources = allImagePaths.length + 2 // +2音频
 
   // 更新进度辅助函数
   const updateProgress = () => {
@@ -216,44 +197,17 @@ const preloadResources = async () => {
     })
 
   try {
-    // 🎯 第一批：关键资源 - 必须完成才能显示应用
-    console.log(`🔥 第一批: 加载 ${priorityGroups.critical.length} 个关键资源...`)
+    // 一次性加载所有资源
+    console.log(`📦 一次性加载 ${totalResources} 个资源...`)
     await Promise.all([
-      ...priorityGroups.critical.map(loadImage),
+      ...allImagePaths.map(loadImage),
       preloadAudio('@/assets/background-music.mp3'),
       preloadAudio('@/assets/open-close.mp3')
     ])
-    console.log('✅ 第一批资源加载完成 - 应用可以显示')
-
-    // 设置最低进度，确保用户看到完整的加载体验
-    if (loadingProgress.value < 30) {
-      loadingProgress.value = 30
-    }
-
-    // 🌟 第三批：次要资源 - 延迟加载
-    setTimeout(async () => {
-      console.log(`📦 第三批: 延迟加载 ${priorityGroups.secondary.length} 个装饰资源...`)
-      await Promise.all(priorityGroups.secondary.map(loadImage))
-      console.log('✅ 第三批资源加载完成')
-    }, 300)
-
-    // 🖼️ 第四批：懒加载资源 - 用户可能不会访问
-    setTimeout(async () => {
-      console.log(`🖼️ 第四批: 懒加载 ${priorityGroups.lazy.length} 个视频海报...`)
-      // 分小批次加载，避免网络拥塞
-      const batchSize = 5
-      for (let i = 0; i < priorityGroups.lazy.length; i += batchSize) {
-        const batch = priorityGroups.lazy.slice(i, i + batchSize)
-        await Promise.all(batch.map(loadImage))
-        // 小批次之间的间隔
-        await new Promise(resolve => setTimeout(resolve, 100))
-      }
-      console.log('✅ 第四批资源加载完成')
-      console.log(`🎉 所有资源预加载完成！总计: ${totalResources} 个资源`)
-    }, 1000)
+    console.log(`🎉 所有资源预加载完成！总计: ${totalResources} 个资源`)
 
   } catch (error) {
-    console.error('❌ 关键资源加载失败:', error)
+    console.error('❌ 资源加载失败:', error)
   }
 }
 
