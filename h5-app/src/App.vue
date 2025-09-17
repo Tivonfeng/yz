@@ -3,7 +3,6 @@ import { ref, onMounted, provide } from 'vue'
 
 const isPlaying = ref(false)
 const audioElement = ref<HTMLAudioElement | null>(null)
-const isWechat = ref(false)
 const isLoading = ref(true)
 const loadingProgress = ref(0)
 const isMobile = ref(true)
@@ -19,11 +18,6 @@ provide('modalState', {
   }
 })
 
-// 检测是否是微信浏览器
-const checkWechat = () => {
-  const ua = navigator.userAgent.toLowerCase()
-  return ua.includes('micromessenger')
-}
 
 // 检测是否是移动端设备
 const checkMobile = () => {
@@ -48,7 +42,6 @@ const checkMobile = () => {
 const initWechatAudio = () => {
   if (!audioElement.value) return
   
-  // 微信浏览器需要在用户交互后才能播放音频
   // 先预加载音频
   audioElement.value.load()
   
@@ -57,9 +50,9 @@ const initWechatAudio = () => {
     if (audioElement.value) {
       audioElement.value.play().then(() => {
         audioElement.value?.pause()
-        console.log('微信音频初始化完成')
+        console.log('音频初始化完成')
       }).catch(err => {
-        console.log('微信音频初始化失败:', err)
+        console.log('音频初始化失败:', err)
       })
     }
   })
@@ -69,9 +62,9 @@ const initWechatAudio = () => {
     if (audioElement.value) {
       audioElement.value.play().then(() => {
         audioElement.value?.pause()
-        console.log('微信音频初始化完成！')
+        console.log('音频初始化完成！')
       }).catch(err => {
-        console.log('微信音频初始化失败:', err)
+        console.log('音频初始化失败:', err)
       })
     }
   }
@@ -87,10 +80,8 @@ const toggleMusic = () => {
     audioElement.value.pause()
     isPlaying.value = false
   } else {
-    // 微信浏览器特殊处理
-    if (isWechat.value) {
-      audioElement.value.currentTime = 0
-    }
+    // 重置播放位置
+    audioElement.value.currentTime = 0
     
     audioElement.value.play().then(() => {
       isPlaying.value = true
@@ -222,8 +213,6 @@ onMounted(async () => {
     return
   }
   
-  isWechat.value = checkWechat()
-  
   // 开始加载资源
   await preloadResources()
   
@@ -238,37 +227,26 @@ onMounted(async () => {
     audioElement.value.volume = 0.3
     audioElement.value.preload = 'auto'
     
-    if (isWechat.value) {
-      initWechatAudio()
-      
-      // 微信环境下，监听用户首次触摸事件自动播放
-      const playOnFirstTouch = () => {
-        if (audioElement.value && !isPlaying.value) {
-          audioElement.value.play().then(() => {
-            isPlaying.value = true
-            console.log('微信环境首次触摸自动播放成功')
-          }).catch(err => {
-            console.log('微信环境自动播放失败:', err)
-          })
-        }
-        // 移除事件监听器，只执行一次
-        document.removeEventListener('touchstart', playOnFirstTouch)
-        document.removeEventListener('click', playOnFirstTouch)
-      }
-      
-      document.addEventListener('touchstart', playOnFirstTouch, { once: true })
-      document.addEventListener('click', playOnFirstTouch, { once: true })
-      
-    } else {
-      // 非微信浏览器延迟播放
-      setTimeout(() => {
-        audioElement.value?.play().then(() => {
+    // 统一使用微信环境的音频初始化
+    initWechatAudio()
+    
+    // 监听用户首次触摸事件自动播放
+    const playOnFirstTouch = () => {
+      if (audioElement.value && !isPlaying.value) {
+        audioElement.value.play().then(() => {
           isPlaying.value = true
+          console.log('首次触摸自动播放成功')
         }).catch(err => {
           console.log('自动播放失败:', err)
         })
-      }, 1000)
+      }
+      // 移除事件监听器，只执行一次
+      document.removeEventListener('touchstart', playOnFirstTouch)
+      document.removeEventListener('click', playOnFirstTouch)
     }
+    
+    document.addEventListener('touchstart', playOnFirstTouch, { once: true })
+    document.addEventListener('click', playOnFirstTouch, { once: true })
   }
 })
 </script>
