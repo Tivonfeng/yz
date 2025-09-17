@@ -147,7 +147,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref, inject, onMounted, onUnmounted } from 'vue'
+import { computed, ref, inject, onMounted, onUnmounted, watch } from 'vue'
 import { useRouter } from 'vue-router'
 import CityModal from '@/components/CityModal.vue'
 
@@ -364,6 +364,42 @@ if (!modalState) {
 }
 
 const { isModalVisible, setModalVisible } = modalState
+
+// 获取音频元素的引用
+const getAudioElement = (): HTMLAudioElement | null => {
+  const audioElement = document.querySelector('audio') as HTMLAudioElement
+  return audioElement
+}
+
+// 暂停背景音乐
+const pauseBackgroundMusic = () => {
+  const audioElement = getAudioElement()
+  if (audioElement && !audioElement.paused) {
+    audioElement.pause()
+    console.log('🔇 背景音乐已暂停（模态框打开）')
+  }
+}
+
+// 恢复背景音乐
+const resumeBackgroundMusic = () => {
+  const audioElement = getAudioElement()
+  if (audioElement && audioElement.paused) {
+    audioElement.play().then(() => {
+      console.log('🔊 背景音乐已恢复（模态框关闭）')
+    }).catch(err => {
+      console.warn('背景音乐恢复播放失败:', err)
+    })
+  }
+}
+
+// 监听模态框状态变化，控制背景音乐
+watch(() => isModalVisible.value, (newVisible: boolean) => {
+  if (newVisible) {
+    pauseBackgroundMusic()
+  } else {
+    resumeBackgroundMusic()
+  }
+})
 
 // 弹窗相关状态
 const selectedCityData = ref<typeof citiesData[keyof typeof citiesData] | null>(null)
