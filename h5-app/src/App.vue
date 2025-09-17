@@ -14,7 +14,7 @@ const audioContext = ref<AudioContext | null>(null)
 const gainNode = ref<GainNode | null>(null)
 const audioSource = ref<MediaElementAudioSourceNode | null>(null)
 const normalVolume = ref(1)
-const lowVolume = ref(0.3)
+const lowVolume = ref(1)
 
 // 城市模态框可见性状态
 const isModalVisible = ref(false)
@@ -333,7 +333,7 @@ onMounted(async () => {
           console.log('首次触摸自动播放成功')
           
           // iOS设备在播放成功后初始化Web Audio API
-          if (isIOS.value) {
+          if (false) {
             console.log('ios设备，开始初始化Web Audio API')
             initWebAudioAPI().catch(err => {
               console.warn('Web Audio API 初始化失败:', err)
