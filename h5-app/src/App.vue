@@ -69,7 +69,7 @@ const initWechatAudio = () => {
     if (audioElement.value) {
       audioElement.value.play().then(() => {
         audioElement.value?.pause()
-        console.log('微信音频初始化完成')
+        console.log('微信音频初始化完成！')
       }).catch(err => {
         console.log('微信音频初始化失败:', err)
       })
