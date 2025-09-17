@@ -1,16 +1,25 @@
 <script setup lang="ts">
-import { ref, onMounted, provide } from 'vue'
+import { ref, onMounted, provide, watch } from 'vue'
+import { useRoute } from 'vue-router'
+import VConsole from 'vconsole'
 
+const route = useRoute()
 const isPlaying = ref(false)
 const audioElement = ref<HTMLAudioElement | null>(null)
 const isLoading = ref(true)
 const loadingProgress = ref(0)
 const isMobile = ref(true)
+const isIOS = ref(false)
+const audioContext = ref<AudioContext | null>(null)
+const gainNode = ref<GainNode | null>(null)
+const audioSource = ref<MediaElementAudioSourceNode | null>(null)
+const normalVolume = ref(1)
+const lowVolume = ref(0.3)
 
 // 城市模态框可见性状态
 const isModalVisible = ref(false)
 
-// 提供模态框状态给子组件
+// 提供模态框状态和音量控制给子组件
 provide('modalState', {
   isModalVisible,
   setModalVisible: (visible: boolean) => {
@@ -18,6 +27,18 @@ provide('modalState', {
   }
 })
 
+provide('audioControl', {
+  setVolume: (volume: number) => setVolume(volume),
+  normalVolume,
+  lowVolume
+})
+
+
+// 检测是否是iOS设备
+const checkIOS = () => {
+  const ua = navigator.userAgent.toLowerCase()
+  return /iphone|ipad|ipod|ios/.test(ua) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1)
+}
 
 // 检测是否是移动端设备
 const checkMobile = () => {
@@ -37,6 +58,58 @@ const checkMobile = () => {
   const hasTouchSupport = 'ontouchstart' in window || navigator.maxTouchPoints > 0
   
   return isMobileUA || (isMobileScreen && hasTouchSupport)
+}
+
+// 初始化Web Audio API (iOS设备)
+const initWebAudioAPI = async () => {
+  if (!audioElement.value || audioContext.value) return
+  console.log('开始初始化Web Audio API')
+  try {
+    // 创建AudioContext
+    audioContext.value = new (window.AudioContext || (window as any).webkitAudioContext)()
+    console.log('AudioContext创建完成，初始状态:', audioContext.value.state)
+    
+    // 确保AudioContext处于运行状态
+    if (audioContext.value.state === 'suspended') {
+      console.log('AudioContext处于suspended状态，尝试resume...')
+      await audioContext.value.resume()
+      console.log('AudioContext resume后状态:', audioContext.value.state)
+    }
+    
+    // 创建GainNode用于音量控制
+    gainNode.value = audioContext.value.createGain()
+    console.log('GainNode创建完成')
+    
+    // 创建MediaElementSource
+    audioSource.value = audioContext.value.createMediaElementSource(audioElement.value)
+    console.log('MediaElementSource创建完成')
+    
+    // 连接音频节点: source -> gainNode -> destination
+    audioSource.value.connect(gainNode.value)
+    gainNode.value.connect(audioContext.value.destination)
+    console.log('音频节点连接完成')
+    
+    // 设置初始音量 (根据当前页面)
+    const currentVolume = route.name === 'page3' ? lowVolume.value : normalVolume.value
+    gainNode.value.gain.value = currentVolume
+    
+    console.log('Web Audio API 初始化完成，最终AudioContext状态:', audioContext.value.state, '音量:', currentVolume)
+  } catch (error) {
+    console.warn('Web Audio API 初始化失败:', error)
+    // 如果Web Audio API初始化失败，标记为非iOS设备处理
+    isIOS.value = false
+  }
+}
+
+// 设置音量
+const setVolume = (volume: number) => {
+  if (isIOS.value && gainNode.value) {
+    // iOS设备使用Web Audio API
+    gainNode.value.gain.setValueAtTime(volume, audioContext.value?.currentTime || 0)
+  } else if (audioElement.value) {
+    // 非iOS设备直接设置audioElement音量
+    audioElement.value.volume = volume
+  }
 }
 
 const initWechatAudio = () => {
@@ -202,9 +275,27 @@ const preloadResources = async () => {
   }
 }
 
+// 监听路由变化，在Page3页面降低音量
+watch(() => route.name, (newRouteName) => {
+	console.log('切换路由')
+  if (newRouteName === 'page3') {
+	console.log('切换路由')
+    setVolume(lowVolume.value)
+  } else {
+    setVolume(normalVolume.value)
+  }
+})
+
 onMounted(async () => {
-  // 检测移动端设备
+  // 初始化vconsole调试工具
+  if (import.meta.env.DEV) {
+    new VConsole()
+    console.log('VConsole 调试工具已启用')
+  }
+  
+  // 检测移动端设备和iOS设备
   isMobile.value = checkMobile()
+  isIOS.value = checkIOS()
   
   // 如果不是移动端，添加桌面模式class并停止初始化
   if (!isMobile.value) {
@@ -224,28 +315,43 @@ onMounted(async () => {
   
   if (audioElement.value) {
     audioElement.value.loop = true
-    audioElement.value.volume = 0.3
+    audioElement.value.volume = normalVolume.value
     audioElement.value.preload = 'auto'
     
     // 统一使用微信环境的音频初始化
     initWechatAudio()
     
     // 监听用户首次触摸事件自动播放
-    const playOnFirstTouch = () => {
+    const playOnFirstTouch = async (event: Event) => {
+      console.log('触发事件类型:', event.type)
+      
       if (audioElement.value && !isPlaying.value) {
-        audioElement.value.play().then(() => {
+        try {
+          // 先开始播放音频
+          await audioElement.value.play()
           isPlaying.value = true
           console.log('首次触摸自动播放成功')
-        }).catch(err => {
+          
+          // iOS设备在播放成功后初始化Web Audio API
+          if (isIOS.value) {
+            console.log('ios设备，开始初始化Web Audio API')
+            initWebAudioAPI().catch(err => {
+              console.warn('Web Audio API 初始化失败:', err)
+            })
+          }
+          
+          // 播放成功后移除所有事件监听器
+          document.removeEventListener('touchend', playOnFirstTouch)
+          document.removeEventListener('click', playOnFirstTouch)
+        } catch (err) {
           console.log('自动播放失败:', err)
-        })
+          isPlaying.value = false
+        }
       }
-      // 移除事件监听器，只执行一次
-      document.removeEventListener('touchstart', playOnFirstTouch)
-      document.removeEventListener('click', playOnFirstTouch)
     }
     
-    document.addEventListener('touchstart', playOnFirstTouch, { once: true })
+    // 使用touchend而不是touchstart，避免滑动时的误触发
+    document.addEventListener('touchend', playOnFirstTouch, { once: true })
     document.addEventListener('click', playOnFirstTouch, { once: true })
   }
 })
