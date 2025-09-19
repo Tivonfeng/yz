@@ -365,39 +365,23 @@ if (!modalState) {
 
 const { isModalVisible, setModalVisible } = modalState
 
-// 获取音频元素的引用
-const getAudioElement = (): HTMLAudioElement | null => {
-  const audioElement = document.querySelector('audio') as HTMLAudioElement
-  return audioElement
-}
+// 注入音频控制
+const audioControl = inject<{
+  pauseMusic: () => void
+  resumeMusic: () => void
+  isPlaying: () => boolean
+}>('audioControl')
 
-// 暂停背景音乐
-const pauseBackgroundMusic = () => {
-  const audioElement = getAudioElement()
-  if (audioElement && !audioElement.paused) {
-    audioElement.pause()
-    console.log('🔇 背景音乐已暂停（模态框打开）')
-  }
-}
-
-// 恢复背景音乐
-const resumeBackgroundMusic = () => {
-  const audioElement = getAudioElement()
-  if (audioElement && audioElement.paused) {
-    audioElement.play().then(() => {
-      console.log('🔊 背景音乐已恢复（模态框关闭）')
-    }).catch(err => {
-      console.warn('背景音乐恢复播放失败:', err)
-    })
-  }
+if (!audioControl) {
+  throw new Error('Audio control not provided')
 }
 
 // 监听模态框状态变化，控制背景音乐
 watch(() => isModalVisible.value, (newVisible: boolean) => {
   if (newVisible) {
-    pauseBackgroundMusic()
+    audioControl.pauseMusic()
   } else {
-    resumeBackgroundMusic()
+    audioControl.resumeMusic()
   }
 })
 

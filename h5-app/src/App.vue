@@ -30,7 +30,23 @@ provide('modalState', {
 provide('audioControl', {
   setVolume: (volume: number) => setVolume(volume),
   normalVolume,
-  lowVolume
+  lowVolume,
+  pauseMusic: () => {
+    if (audioElement.value && !audioElement.value.paused) {
+      audioElement.value.pause()
+      console.log('🔇 背景音乐已暂停（模态框打开）')
+    }
+  },
+  resumeMusic: () => {
+    if (audioElement.value && audioElement.value.paused) {
+      audioElement.value.play().then(() => {
+        console.log('🔊 背景音乐已恢复（模态框关闭）')
+      }).catch(err => {
+        console.warn('背景音乐恢复播放失败:', err)
+      })
+    }
+  },
+  isPlaying: () => audioElement.value ? !audioElement.value.paused : false
 })
 
 
