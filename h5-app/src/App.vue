@@ -10,11 +10,8 @@ const isLoading = ref(true)
 const loadingProgress = ref(0)
 const isMobile = ref(true)
 const isIOS = ref(false)
-const audioContext = ref<AudioContext | null>(null)
-const gainNode = ref<GainNode | null>(null)
-const audioSource = ref<MediaElementAudioSourceNode | null>(null)
 const normalVolume = ref(1)
-const lowVolume = ref(1)
+const lowVolume = ref(0.3)
 
 // 城市模态框可见性状态
 const isModalVisible = ref(false)
@@ -76,54 +73,10 @@ const checkMobile = () => {
   return isMobileUA || (isMobileScreen && hasTouchSupport)
 }
 
-// 初始化Web Audio API (iOS设备)
-const initWebAudioAPI = async () => {
-  if (!audioElement.value || audioContext.value) return
-  console.log('开始初始化Web Audio API')
-  try {
-    // 创建AudioContext
-    audioContext.value = new (window.AudioContext || (window as any).webkitAudioContext)()
-    console.log('AudioContext创建完成，初始状态:', audioContext.value.state)
-    
-    // 确保AudioContext处于运行状态
-    if (audioContext.value.state === 'suspended') {
-      console.log('AudioContext处于suspended状态，尝试resume...')
-      await audioContext.value.resume()
-      console.log('AudioContext resume后状态:', audioContext.value.state)
-    }
-    
-    // 创建GainNode用于音量控制
-    gainNode.value = audioContext.value.createGain()
-    console.log('GainNode创建完成')
-    
-    // 创建MediaElementSource
-    audioSource.value = audioContext.value.createMediaElementSource(audioElement.value)
-    console.log('MediaElementSource创建完成')
-    
-    // 连接音频节点: source -> gainNode -> destination
-    audioSource.value.connect(gainNode.value)
-    gainNode.value.connect(audioContext.value.destination)
-    console.log('音频节点连接完成')
-    
-    // 设置初始音量 (根据当前页面)
-    const currentVolume = route.name === 'page3' ? lowVolume.value : normalVolume.value
-    gainNode.value.gain.value = currentVolume
-    
-    console.log('Web Audio API 初始化完成，最终AudioContext状态:', audioContext.value.state, '音量:', currentVolume)
-  } catch (error) {
-    console.warn('Web Audio API 初始化失败:', error)
-    // 如果Web Audio API初始化失败，标记为非iOS设备处理
-    isIOS.value = false
-  }
-}
 
 // 设置音量
 const setVolume = (volume: number) => {
-  if (isIOS.value && gainNode.value) {
-    // iOS设备使用Web Audio API
-    gainNode.value.gain.setValueAtTime(volume, audioContext.value?.currentTime || 0)
-  } else if (audioElement.value) {
-    // 非iOS设备直接设置audioElement音量
+  if (audioElement.value) {
     audioElement.value.volume = volume
   }
 }
@@ -347,14 +300,6 @@ onMounted(async () => {
           await audioElement.value.play()
           isPlaying.value = true
           console.log('首次触摸自动播放成功')
-          
-          // iOS设备在播放成功后初始化Web Audio API
-          if (false) {
-            console.log('ios设备，开始初始化Web Audio API')
-            initWebAudioAPI().catch(err => {
-              console.warn('Web Audio API 初始化失败:', err)
-            })
-          }
           
           // 播放成功后移除所有事件监听器
           document.removeEventListener('touchend', playOnFirstTouch)
