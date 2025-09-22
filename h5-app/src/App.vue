@@ -323,7 +323,7 @@ onMounted(async () => {
     <!-- 非移动端提示页面 -->
     <div v-if="!isMobile" class="mobile-only-container">
       <div class="mobile-only-content">
-        <img src="@/assets/yz/mustphine.png" alt="请使用手机浏览" class="mobile-hint-image" />
+        <img src="@/assets/yz/mustphine.jpg" alt="请使用手机浏览" class="mobile-hint-image" />
       </div>
     </div>
 
