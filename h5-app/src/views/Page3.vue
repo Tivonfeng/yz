@@ -555,13 +555,13 @@ const citiesData = {
         description: '80多年前，面对国民党顽固派进攻，刘少奇、徐海东等指挥新四军打响定远自卫反击战。将士们协同作战7天获胜，建华中首个县级抗日民主政权，为抗战胜利筑牢屏障，精神永垂。',
         title: '定远自卫战​',
         src: 'https://qiniuyun.lqcode.fun/yzdst/%E5%AE%9A%E8%BF%9C/%E7%83%BD%E7%81%AB%E7%AC%AC%E4%BA%8C%E5%B8%88%E5%AE%89%E5%BE%BD%E5%AE%9A%E8%BF%9C%E7%AF%87%EF%BC%88%E4%BA%8C%EF%BC%89%E7%AD%91%E7%89%A2%E5%8D%8E%E4%B8%AD%E6%8A%97%E6%97%A5%E6%A0%B9%E6%8D%AE%E5%9C%B0%E7%9A%84%E5%9D%9A%E5%AE%9E%E5%B1%8F%E9%9A%9C%E2%80%94%E2%80%94%E5%AE%9A%E8%BF%9C%E8%87%AA%E5%8D%AB%E5%8F%8D%E5%87%BB%E6%88%98%201.mp4',
-		poster: posterImages['dingyuan-1']
+		poster: posterImages['dingyuan-2']
 	},
 	  {
         description: '80多年前，“虎将”徐海东带病赴华中，任新四军江北指挥部副指挥，指挥周家岗反 “扫荡” 首胜日军。他9次负伤仍坚守，以忠诚勇猛书写传奇，激励后人传承革命精神。',
         title: '虎将徐海东​',
         src: 'https://qiniuyun.lqcode.fun/yzdst/%E5%AE%9A%E8%BF%9C/%E7%83%BD%E7%81%AB%E7%AC%AC%E4%BA%8C%E5%B8%88%E5%AE%89%E5%BE%BD%E5%AE%9A%E8%BF%9C%E7%AF%87%EF%BC%88%E4%B8%80%EF%BC%89%E5%BE%90%E6%B5%B7%E4%B8%9C%EF%BC%9A%E5%AF%B9%E4%B8%AD%E5%9B%BD%E9%9D%A9%E5%91%BD%E6%9C%89%E5%A4%A7%E5%8A%9F%E7%9A%84%E4%BA%BA%201.mp4',
-		poster: posterImages['dingyuan-2']
+		poster: posterImages['dingyuan-1']
 	},
 	  {
         description: '80多年前，定远作为抗日根据地核心，新四军二师浴血奋战。王小庙安葬1200余名无名烈士，如今“寻亲队伍”与学界为其寻名，英烈精神永被铭记。',
